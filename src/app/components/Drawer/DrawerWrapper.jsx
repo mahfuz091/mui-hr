@@ -18,7 +18,40 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import HomeIcon from "@mui/icons-material/Home";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import {
+  MdAttachMoney,
+  MdHome,
+  MdShoppingBag,
+  MdSupervisedUserCircle,
+} from "react-icons/md";
+import { useRouter } from "next/navigation";
+
 // import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
+
+const menuItems = [
+  {
+    title: "Home",
+    path: "/dashboard",
+    icon: <HomeIcon />,
+  },
+  {
+    title: "Profile",
+    path: "/dashboard/profile",
+    icon: <AccountBoxIcon />,
+  },
+  {
+    title: "Products",
+    path: "/dashboard/products",
+    icon: <MdShoppingBag />,
+  },
+  {
+    title: "Transactions",
+    path: "/dashboard/transactions",
+    icon: <MdAttachMoney />,
+  },
+];
 
 const drawerWidth = 240;
 
@@ -71,6 +104,10 @@ const Drawer = styled(MuiDrawer, {
 
 const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const theme = useTheme();
+  const router = useRouter();
+  const handleClick = (path) => {
+    router.push(path);
+  };
   return (
     <Drawer variant='permanent' open={open}>
       <DrawerHeader>
@@ -84,9 +121,10 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
       </DrawerHeader>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {menuItems.map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
+              onClick={() => handleClick(text.path)}
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
@@ -100,9 +138,13 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
                   justifyContent: "center",
                 }}
               >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
+                {text.icon}
               </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              <ListItemText
+                primary={text.title}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
