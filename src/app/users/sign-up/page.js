@@ -87,7 +87,7 @@ const SignUpPage = () => {
         sx={{
           padding: "50px 30px",
           marginTop: "50px",
-          background: "#FFF",
+
           borderRadius: "16px",
         }}
       >
@@ -207,7 +207,7 @@ const SignUpPage = () => {
             variant='contained'
             color='primary'
             //   onClick={handleLogin}
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "20px", padding: "15px", fontSize: "18px" }}
           >
             Sign Up
           </Button>

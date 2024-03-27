@@ -88,7 +88,7 @@ const SignInPage = () => {
             variant='contained'
             color='primary'
             //   onClick={handleLogin}
-            sx={{ marginTop: "20px" }}
+            sx={{ marginTop: "20px", padding: "15px", fontSize: "18px" }}
           >
             Sign In
           </Button>
