@@ -64,11 +64,11 @@ const NavBar = ({ handleDrawerOpen, open }) => {
         <Box sx={{ flexGrow: 1 }} />
         <Box>
           {user ? (
+            <UserDropdown></UserDropdown>
+          ) : (
             <Button onClick={handleLogIn} color='inherit'>
               Login
             </Button>
-          ) : (
-            <UserDropdown></UserDropdown>
           )}
         </Box>
       </Toolbar>
