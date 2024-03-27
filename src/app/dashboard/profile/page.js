@@ -66,8 +66,8 @@ const ProfilePage = () => {
           />
         </Badge>
         <Box sx={{ marginBottom: "20px" }}>
-          <Typography varient='h3'>{user?.auth?.name}</Typography>
-          <Typography varient='body2'>
+          <Typography variant='h4'>{user?.auth?.name}</Typography>
+          <Typography variant='body2'>
             {user?.auth?.designation?.title}
           </Typography>
         </Box>
