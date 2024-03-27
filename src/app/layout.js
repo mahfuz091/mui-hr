@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-
+import * as React from "react";
+import HrProvider from "@/context/HrProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -10,8 +11,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang='en'>
+      <body className={inter.className}>
+        <HrProvider>{children}</HrProvider>
+      </body>
     </html>
   );
 }
