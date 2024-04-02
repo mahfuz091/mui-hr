@@ -1,4 +1,5 @@
 "use client";
+import { HrContext } from "@/context/HrProvider";
 import {
   Box,
   Button,
@@ -10,11 +11,12 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { MdEdit } from "react-icons/md";
 
-const PersonalCard = () => {
-  const [isEditing, setEditing] = useState(false);
+const PersonalCard = ({ handleUpdateProfile, setGender }) => {
+  const { user, isEditing, setEditing } = useContext(HrContext);
+  console.log("user", user);
   return (
     <Card
       sx={{
@@ -44,27 +46,33 @@ const PersonalCard = () => {
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
-          <form action=''>
+          <form action='' onSubmit={handleUpdateProfile}>
             <FormControl fullwidth>
               <Typography>Employee Id</Typography>
             </FormControl>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Name'
+              placeholder={user?.auth?.name}
               label='Name'
+              name='name'
+              defaultValue={user?.auth?.name}
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Email'
+              placeholder={user?.auth?.email}
+              name='email'
               label='Email'
+              defaultValue={user?.auth?.email}
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Date of birth'
+              placeholder={user?.auth?.date_of_birth}
               label='Date of birth'
+              defaultValue={user?.auth?.date_of_birth}
+              name='date_of_birth'
             ></TextField>
             <FormControl fullWidth margin='normal'>
               <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
@@ -73,14 +81,18 @@ const PersonalCard = () => {
                 id='demo-simple-select'
                 // value={age}
                 label='Gender'
-                // onChange={handleChange}
+                onChange={(e) => setGender(e.target.value)}
               >
-                <MenuItem value={10}>Male</MenuItem>
-                <MenuItem value={20}>Female</MenuItem>
+                <MenuItem value={"Male"}>Male</MenuItem>
+                <MenuItem value={"Female"}>Female</MenuItem>
               </Select>
             </FormControl>
             <Box sx={{ textAlign: "right", marginTop: "10px" }}>
-              <Button variant='contained' onClick={() => setEditing(false)}>
+              <Button
+                variant='contained'
+                type='submit'
+                // onClick={() => setEditing(false)}
+              >
                 Save
               </Button>
             </Box>
@@ -97,9 +109,9 @@ const PersonalCard = () => {
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <Typography variant='body2'>Employee Id</Typography>
-            <Typography variant='body2'>Name</Typography>
-            <Typography variant='body2'>Email</Typography>
-            <Typography variant='body2'>Date Of Birth</Typography>
+            <Typography variant='body2'>{user?.auth?.name}</Typography>
+            <Typography variant='body2'>{user?.auth?.email}</Typography>
+            <Typography variant='body2'>{user?.auth?.date_of_birth}</Typography>
             <Typography variant='body2'>Gender</Typography>
           </Box>
         </Box>

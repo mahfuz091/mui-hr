@@ -7,14 +7,17 @@ import ContactCard from "./ContactCard";
 import SocialCard from "./SocialCard";
 import BankCard from "./BankCard";
 
-const Personal = () => {
+const Personal = ({ handleUpdateProfile, user, setGender }) => {
   return (
     <div>
       <h5>Personal</h5>
       <Box>
         <Grid container spacing={2}>
           <Grid item xs={8}>
-            <PersonalCard></PersonalCard>
+            <PersonalCard
+              handleUpdateProfile={handleUpdateProfile}
+              setGender={setGender}
+            ></PersonalCard>
             <ContactCard></ContactCard>
             <SocialCard></SocialCard>
             <BankCard></BankCard>

@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
+import logo from "@/assets/images/logo.png";
 import UserDropdown from "../UserDropdown/UserDropdown";
 import { HrContext } from "@/context/HrProvider";
 import { Button } from "@mui/material";

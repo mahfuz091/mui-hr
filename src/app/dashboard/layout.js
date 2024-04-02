@@ -1,11 +1,11 @@
 "use client";
-import * as React from "react";
 
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import NavBar from "../components/AppBar/NavBar";
 import DrawerWrapper from "../components/Drawer/DrawerWrapper";
+import { useEffect, useState } from "react";
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -17,7 +17,13 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 const DashboardLayout = ({ children }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    const isMediumDevice = window.matchMedia("(max-width: 768px)").matches;
+    console.log(isMediumDevice);
+    setOpen(!isMediumDevice);
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);

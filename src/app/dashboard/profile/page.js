@@ -16,6 +16,10 @@ import InformationOutline from "mdi-material-ui/InformationOutline";
 import PersonalCard from "@/app/components/Personal/PersonalCard";
 import Personal from "@/app/components/Personal/Personal";
 
+// Axios
+
+import axiosInstance from "@/lib/axios-instance";
+
 // ** Styled Components
 
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -45,10 +49,40 @@ const TabName = styled("span")(({ theme }) => ({
 }));
 const ProfilePage = () => {
   const [value, setValue] = useState("account");
+  const [gender, setGender] = useState("");
+  // console.log(gender);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { user } = useContext(HrContext);
+  const { user, setEditing, control, setControl } = useContext(HrContext);
+  const designation_id = user?.auth?.designation_id;
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const date_of_birth = e.target.date_of_birth.value;
+    const user = { name, email, date_of_birth, gender, designation_id };
+    const token = localStorage.getItem("accessToken");
+
+    console.log("1", user, token);
+
+    try {
+      const response = await axiosInstance.post("/api/profile", user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = response.data.data;
+      console.log(data);
+
+      setControl(!control);
+      setEditing(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   console.log(user);
   return (
     <Fragment>
@@ -129,7 +163,11 @@ const ProfilePage = () => {
           </TabList>
 
           <TabPanel sx={{ p: 0 }} value='account'>
-            <Personal />
+            <Personal
+              user={user}
+              handleUpdateProfile={handleUpdateProfile}
+              setGender={setGender}
+            />
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='security'>
             {/* <TabSecurity /> */}

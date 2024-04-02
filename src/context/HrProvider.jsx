@@ -7,6 +7,7 @@ export const HrContext = createContext(null);
 const HrProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [control, setControl] = useState(false);
+  const [isEditing, setEditing] = useState(false);
 
   const getUser = async () => {
     const token = localStorage.getItem("accessToken");
@@ -20,11 +21,17 @@ const HrProvider = ({ children }) => {
     setUser(data);
   };
 
+  useEffect(() => {
+    getUser();
+  }, [control]);
+
   const hrToolInfo = {
     user,
     control,
     setControl,
     getUser,
+    setEditing,
+    isEditing,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };
