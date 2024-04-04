@@ -27,7 +27,9 @@ import LogoutVariant from "mdi-material-ui/LogoutVariant";
 import AccountOutline from "mdi-material-ui/AccountOutline";
 import MessageOutline from "mdi-material-ui/MessageOutline";
 import HelpCircleOutline from "mdi-material-ui/HelpCircleOutline";
+import { ArrowCircleDown } from "@mui/icons-material";
 import { HrContext } from "@/context/HrProvider";
+import { ArrowDown, ChevronDown } from "mdi-material-ui";
 
 // ** Styled Components
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -48,18 +50,6 @@ const UserDropdown = () => {
   // const [user, setUser] = useState([]);
 
   useEffect(() => {
-    // const token = localStorage.getItem("accessToken");
-    // console.log(token);
-
-    // const getUser = async () => {
-    //   const response = await axiosInstance.get("/api/profile", {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   const data = response.data.data;
-    //   setUser(data);
-    // };
     getUser();
   }, []);
 
@@ -120,20 +110,32 @@ const UserDropdown = () => {
 
   return (
     <Fragment>
-      <Badge
-        overlap='circular'
+      <Box
         onClick={handleDropdownOpen}
-        sx={{ ml: 2, cursor: "pointer" }}
-        badgeContent={<BadgeContentSpan />}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "5px",
+          cursor: "pointer",
+        }}
       >
-        <Avatar
-          alt='John Doe'
-          onClick={handleDropdownOpen}
-          sx={{ width: 40, height: 40 }}
-          src={user?.auth?.avatar}
-        />
-      </Badge>
+        <Badge
+          overlap='circular'
+          sx={{ ml: 2, cursor: "pointer" }}
+          badgeContent={<BadgeContentSpan />}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        >
+          <Avatar
+            alt='John Doe'
+            sx={{ width: 40, height: 40 }}
+            src={user?.auth?.avatar}
+          />
+        </Badge>
+        <Typography variant='body2' sx={{ fontSize: "0.8rem" }}>
+          {user?.auth?.name || "Name"}
+        </Typography>
+        <ChevronDown />
+      </Box>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

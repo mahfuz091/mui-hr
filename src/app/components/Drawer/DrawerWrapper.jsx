@@ -27,6 +27,7 @@ import {
   MdSupervisedUserCircle,
 } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { Person, UsbRounded } from "@mui/icons-material";
 
 // import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 
@@ -35,6 +36,11 @@ const menuItems = [
     title: "Home",
     path: "/dashboard",
     icon: <HomeIcon />,
+  },
+  {
+    title: "Me",
+    path: "/dashboard/me",
+    icon: <Person />,
   },
   {
     title: "Profile",

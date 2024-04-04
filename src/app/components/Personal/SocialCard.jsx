@@ -9,12 +9,38 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Link,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
+import axiosInstance from "@/lib/axios-instance";
+import { HrContext } from "@/context/HrProvider";
 
 const SocialCard = () => {
   const [isEditing, setEditing] = useState(false);
+  console.log(isEditing);
+  const { user, setControl, control, getUser } = useContext(HrContext);
+  console.log(user);
+  const handleSocial = async (e) => {
+    e.preventDefault();
+    const facebook = e.target.facebook.value;
+    const linkedin = e.target.linkedin.value;
+    const social = { facebook, linkedin };
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.post("/api/profile/social", social, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+      console.log(data);
+      setControl(!control);
+      setEditing(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Card
@@ -45,22 +71,30 @@ const SocialCard = () => {
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
-          <form action=''>
+          <form action='' onSubmit={handleSocial}>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Facebook Url'
+              placeholder={user?.auth?.socials?.facebook || "facebook url"}
               label='Facebook Url'
+              defaultValue={user?.auth?.socials?.facebook || ""}
+              name='facebook'
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Linkedin Url'
+              placeholder={user?.auth?.socials?.linkedin || "linkedin url"}
               label='Linkedin Url'
+              defaultValue={user?.auth?.socials?.linkedin || ""}
+              name='linkedin'
             ></TextField>
 
             <Box sx={{ textAlign: "right", marginTop: "10px" }}>
-              <Button variant='contained' onClick={() => setEditing(false)}>
+              <Button
+                variant='contained'
+                type='submit'
+                // onClick={() => setEditing(false)}
+              >
                 Save
               </Button>
             </Box>
@@ -73,8 +107,12 @@ const SocialCard = () => {
             <Typography variant='body2'>Linkedin Url</Typography>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Employee Id</Typography>
-            <Typography variant='body2'>Name</Typography>
+            <Link href={user?.auth?.socials?.facebook}>
+              {user?.auth?.socials?.facebook}
+            </Link>
+            <Link href={user?.auth?.socials?.linkedin}>
+              {user?.auth?.socials?.linkedin}
+            </Link>
           </Box>
         </Box>
       )}

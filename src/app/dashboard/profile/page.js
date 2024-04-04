@@ -19,6 +19,7 @@ import Personal from "@/app/components/Personal/Personal";
 // Axios
 
 import axiosInstance from "@/lib/axios-instance";
+import Job from "@/app/components/Job/Job";
 
 // ** Styled Components
 
@@ -169,8 +170,8 @@ const ProfilePage = () => {
               setGender={setGender}
             />
           </TabPanel>
-          <TabPanel sx={{ p: 0 }} value='security'>
-            {/* <TabSecurity /> */}
+          <TabPanel sx={{ p: 0 }} value='job'>
+            <Job></Job>
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='info'>
             {/* <TabInfo /> */}

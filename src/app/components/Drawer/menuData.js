@@ -19,8 +19,8 @@ export const menuItems = [
     icon: <MdHome />,
   },
   {
-    title: "Users",
-    path: "/dashboard/users",
+    title: "Me",
+    path: "/dashboard/me",
     icon: <MdSupervisedUserCircle />,
   },
   {

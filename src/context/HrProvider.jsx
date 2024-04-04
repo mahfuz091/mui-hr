@@ -11,16 +11,21 @@ const HrProvider = ({ children }) => {
 
   const getUser = async () => {
     const token = localStorage.getItem("accessToken");
-    console.log(token);
-    const response = await axiosInstance.get("/api/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = response.data.data;
-    setUser(data);
+
+    try {
+      const response = await axiosInstance.get("/api/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  console.log(user);
   useEffect(() => {
     getUser();
   }, [control]);

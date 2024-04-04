@@ -1,10 +1,10 @@
 import React from "react";
-import Chart from "../components/Chart/Chart";
+// import Chart from "../components/Chart/Chart";
 
 const DashboardPage = () => {
   return (
     <div>
-      <Chart />
+      <h1>Home</h1>
     </div>
   );
 };

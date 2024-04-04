@@ -158,7 +158,8 @@ const SignUpPage = () => {
                 sx={{ width: "100%" }}
                 fullWidth
                 label='Date Of Birth'
-                // value={dateOfBirth}                onChange={(newValue) => setDateOfBirth(newValue)}
+                // value={dateOfBirth}
+                onChange={(newValue) => setDateOfBirth(newValue)}
               />
             </DemoContainer>
           </LocalizationProvider>
