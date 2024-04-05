@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Card,
+  Grid,
   Typography,
   TextField,
   FormControl,
@@ -99,22 +100,50 @@ const PersonalCard = ({ handleUpdateProfile, setGender }) => {
           </form>
         </Box>
       ) : (
-        <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Employee Id</Typography>
-            <Typography variant='body2'>Name</Typography>
-            <Typography variant='body2'>Email</Typography>
-            <Typography variant='body2'>Date Of Birth</Typography>
-            <Typography variant='body2'>Gender</Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Employee Id</Typography>
-            <Typography variant='body2'>{user?.auth?.name}</Typography>
-            <Typography variant='body2'>{user?.auth?.email}</Typography>
-            <Typography variant='body2'>{user?.auth?.date_of_birth}</Typography>
-            <Typography variant='body2'>Gender</Typography>
-          </Box>
-        </Box>
+        <Grid container sx={{ padding: "20px" }}>
+          <Grid item xs={4}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <Typography variant='body2'>Employee Id</Typography>
+              <Typography variant='body2'>Name</Typography>
+              <Typography variant='body2'>Email</Typography>
+              <Typography variant='body2'>Date Of Birth</Typography>
+              <Typography variant='body2'>Gender</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={8}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <Typography variant='body2'>Employee Id</Typography>
+              <Typography variant='body2'>{user?.auth?.name}</Typography>
+              <Typography variant='body2'>{user?.auth?.email}</Typography>
+              <Typography variant='body2'>
+                {user?.auth?.date_of_birth}
+              </Typography>
+              <Typography variant='body2'>Gender</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+        // <Box
+        //   sx={{
+        //     padding: "20px",
+        //     display: "flex",
+        //     justifyContent: "space-between",
+        //   }}
+        // >
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Typography variant='body2'>Employee Id</Typography>
+        //     <Typography variant='body2'>Name</Typography>
+        //     <Typography variant='body2'>Email</Typography>
+        //     <Typography variant='body2'>Date Of Birth</Typography>
+        //     <Typography variant='body2'>Gender</Typography>
+        //   </Box>
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Typography variant='body2'>Employee Id</Typography>
+        //     <Typography variant='body2'>{user?.auth?.name}</Typography>
+        //     <Typography variant='body2'>{user?.auth?.email}</Typography>
+        //     <Typography variant='body2'>{user?.auth?.date_of_birth}</Typography>
+        //     <Typography variant='body2'>Gender</Typography>
+        //   </Box>
+        // </Box>
       )}
     </Card>
   );

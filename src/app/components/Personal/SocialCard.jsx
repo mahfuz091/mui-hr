@@ -10,6 +10,7 @@ import {
   Select,
   MenuItem,
   Link,
+  Grid,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
@@ -101,20 +102,56 @@ const SocialCard = () => {
           </form>
         </Box>
       ) : (
-        <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Facebook Url</Typography>
-            <Typography variant='body2'>Linkedin Url</Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Link href={user?.auth?.socials?.facebook}>
-              {user?.auth?.socials?.facebook}
-            </Link>
-            <Link href={user?.auth?.socials?.linkedin}>
-              {user?.auth?.socials?.linkedin}
-            </Link>
-          </Box>
-        </Box>
+        <Grid container sx={{ padding: "20px" }}>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <Typography variant='body2'>Facebook Url</Typography>
+              <Typography variant='body2'>Linkedin Url</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={8} fullWidth>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <Link
+                sx={{ maxWidth: "100%" }}
+                href={user?.auth?.socials?.facebook}
+              >
+                {user?.auth?.socials?.facebook}
+              </Link>
+              <Link
+                sx={{ maxWidth: "100%" }}
+                href={user?.auth?.socials?.linkedin}
+              >
+                {user?.auth?.socials?.linkedin}
+              </Link>
+            </Box>
+          </Grid>
+        </Grid>
+        // <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Typography variant='body2'>Facebook Url</Typography>
+        //     <Typography variant='body2'>Linkedin Url</Typography>
+        //   </Box>
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Link href={user?.auth?.socials?.facebook}>
+        //       {user?.auth?.socials?.facebook}
+        //     </Link>
+        //     <Link href={user?.auth?.socials?.linkedin}>
+        //       {user?.auth?.socials?.linkedin}
+        //     </Link>
+        //   </Box>
+        // </Box>
       )}
     </Card>
   );

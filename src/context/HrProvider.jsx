@@ -11,17 +11,18 @@ const HrProvider = ({ children }) => {
 
   const getUser = async () => {
     const token = localStorage.getItem("accessToken");
-
-    try {
-      const response = await axiosInstance.get("/api/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data;
-      setUser(data);
-    } catch (error) {
-      console.log(error);
+    if (token) {
+      try {
+        const response = await axiosInstance.get("/api/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.data;
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 

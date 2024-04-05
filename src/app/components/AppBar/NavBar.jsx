@@ -13,6 +13,7 @@ import UserDropdown from "../UserDropdown/UserDropdown";
 import { HrContext } from "@/context/HrProvider";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { ControlCamera } from "@mui/icons-material";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -34,7 +35,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const NavBar = ({ handleDrawerOpen, open }) => {
-  const { user, getUser } = useContext(HrContext);
+  const { user, getUser, control } = useContext(HrContext);
   const router = useRouter();
   const handleLogIn = () => {
     router.push("/users/sign-in");
@@ -42,9 +43,9 @@ const NavBar = ({ handleDrawerOpen, open }) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [control]);
 
-  console.log(user);
+  // console.log(user);
   return (
     <AppBar position='fixed' open={open}>
       <Toolbar>

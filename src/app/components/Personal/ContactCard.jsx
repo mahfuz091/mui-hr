@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Card, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, TextField, Typography, Grid } from "@mui/material";
 import React, { useState } from "react";
 import { MdEdit } from "react-icons/md";
 
@@ -67,20 +67,38 @@ const ContactCard = () => {
           </form>
         </Box>
       ) : (
-        <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Mobile No</Typography>
-            <Typography variant='body2'>Work Phone No</Typography>
-            <Typography variant='body2'>Skype Username</Typography>
-            <Typography variant='body2'>Discord Username</Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <Typography variant='body2'>Mobile No</Typography>
-            <Typography variant='body2'>Work Phone No</Typography>
-            <Typography variant='body2'>Skype Username</Typography>
-            <Typography variant='body2'>Discord Username</Typography>
-          </Box>
-        </Box>
+        <Grid container sx={{ padding: "20px" }}>
+          <Grid item xs={4}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <Typography variant='body2'>Mobile No</Typography>
+              <Typography variant='body2'>Work Phone No</Typography>
+              <Typography variant='body2'>Skype Username</Typography>
+              <Typography variant='body2'>Discord Username</Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={8}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              <Typography variant='body2'>Mobile No</Typography>
+              <Typography variant='body2'>Work Phone No</Typography>
+              <Typography variant='body2'>Skype Username</Typography>
+              <Typography variant='body2'>Discord Username</Typography>
+            </Box>
+          </Grid>
+        </Grid>
+        // <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Typography variant='body2'>Mobile No</Typography>
+        //     <Typography variant='body2'>Work Phone No</Typography>
+        //     <Typography variant='body2'>Skype Username</Typography>
+        //     <Typography variant='body2'>Discord Username</Typography>
+        //   </Box>
+        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //     <Typography variant='body2'>Mobile No</Typography>
+        //     <Typography variant='body2'>Work Phone No</Typography>
+        //     <Typography variant='body2'>Skype Username</Typography>
+        //     <Typography variant='body2'>Discord Username</Typography>
+        //   </Box>
+        // </Box>
       )}
     </Card>
   );

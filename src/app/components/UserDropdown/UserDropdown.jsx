@@ -131,7 +131,13 @@ const UserDropdown = () => {
             src={user?.auth?.avatar}
           />
         </Badge>
-        <Typography variant='body2' sx={{ fontSize: "0.8rem" }}>
+        <Typography
+          variant='body2'
+          sx={{
+            display: { xs: "none", md: "block" },
+            fontSize: "0.8rem",
+          }}
+        >
           {user?.auth?.name || "Name"}
         </Typography>
         <ChevronDown />

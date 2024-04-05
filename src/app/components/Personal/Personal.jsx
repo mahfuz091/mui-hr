@@ -7,6 +7,7 @@ import ContactCard from "./ContactCard";
 import SocialCard from "./SocialCard";
 import BankCard from "./BankCard";
 import EducationCard from "./EducationCard";
+import SkillCard from "./SkillCard";
 
 const Personal = ({ handleUpdateProfile, user, setGender }) => {
   return (
@@ -23,6 +24,7 @@ const Personal = ({ handleUpdateProfile, user, setGender }) => {
             <SocialCard></SocialCard>
             <BankCard></BankCard>
             <EducationCard />
+            <SkillCard />
           </Grid>
           <Grid item xs={12} md={4}>
             <p>hi</p>
