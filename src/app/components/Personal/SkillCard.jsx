@@ -5,14 +5,12 @@ import {
   Typography,
   Button,
   Modal,
-  TextField,
   IconButton,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   List,
-  ListSubheader,
   ListItem,
 } from "@mui/material";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
@@ -102,7 +100,7 @@ const SkillCard = () => {
     }
   };
   const [skill, setSkill] = useState("");
-  const [level, setLevel] = useState("");
+  //   const [level, setLevel] = useState("");
 
   const handleChange = (event) => {
     setSkill(event.target.value);

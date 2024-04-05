@@ -1,4 +1,4 @@
 const Home = () => {
-  return <Box sx={{ display: "flex" }}></Box>;
+  return <div></div>;
 };
 export default Home;
