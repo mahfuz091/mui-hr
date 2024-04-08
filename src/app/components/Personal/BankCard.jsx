@@ -90,6 +90,7 @@ const BankCard = () => {
               placeholder='Account Name'
               label='Account Name'
               name='accountName'
+              defaultValue={user?.auth?.bank_details?.account_name}
             ></TextField>
             <TextField
               fullWidth
@@ -97,6 +98,7 @@ const BankCard = () => {
               placeholder='Bank Name'
               label='Bank Name'
               name='bankName'
+              defaultValue={user?.auth?.bank_details?.bank_name}
             ></TextField>
             <TextField
               fullWidth
@@ -104,6 +106,7 @@ const BankCard = () => {
               placeholder='Branch Name'
               label='Branch Name'
               name='branchName'
+              defaultValue={user?.auth?.bank_details?.branch_name}
             ></TextField>
             <TextField
               fullWidth
@@ -111,13 +114,17 @@ const BankCard = () => {
               placeholder='Account No'
               label='Account No'
               name='accountNumber'
+              defaultValue={user?.auth?.bank_details?.account_number}
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder='Routing No'
+              placeholder={
+                user?.auth?.bank_details?.routing_number || "Routing No"
+              }
               label='Routing No'
               name='routingNumber'
+              defaultValue={user?.auth?.bank_details?.routing_number || ""}
             ></TextField>
 
             <Box sx={{ textAlign: "right", marginTop: "10px" }}>

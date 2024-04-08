@@ -7,13 +7,19 @@ import {
   Modal,
   TextField,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdAdd } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 
 import CloseIcon from "@mui/icons-material/Close";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 import { HrContext } from "@/context/HrProvider";
+import SchoolIcon from "@mui/icons-material/School";
+import EditEducation from "../EditEducation/EditEducation";
 const style = {
   position: "absolute",
   top: "50%",
@@ -28,9 +34,30 @@ const style = {
 
 const EducationCard = () => {
   const { control, setControl } = useContext(HrContext);
+  const [educations, setEducations] = useState([]);
+  const getEducation = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.get("/api/profile/educations", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+      setEducations(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getEducation();
+  }, [control]);
+  console.log(educations);
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const handleEducation = async (e) => {
     e.preventDefault();
     const school = e.target.school.value;
@@ -69,6 +96,7 @@ const EducationCard = () => {
       console.log(error);
     }
   };
+
   return (
     <Card
       sx={{
@@ -87,8 +115,12 @@ const EducationCard = () => {
           borderTopRightRadius: "10px",
         }}
       >
-        {" "}
-        <Typography variant='h6'>Education</Typography>
+        <Typography
+          variant='h6'
+          sx={{ display: "flex", gap: "5px", alignItems: "center" }}
+        >
+          <SchoolIcon /> Education
+        </Typography>
         <Button
           variant='outlined'
           sx={{ color: "#000", display: "flex", gap: "5px" }}
@@ -96,6 +128,14 @@ const EducationCard = () => {
         >
           <MdAdd /> Add
         </Button>
+      </Box>
+      <Box>
+        {educations?.educations?.map((education) => (
+          <EditEducation
+            key={education.id}
+            education={education}
+          ></EditEducation>
+        ))}
       </Box>
       <Modal
         open={open}

@@ -36,6 +36,7 @@ const SkillCard = () => {
   const { control, setControl } = useContext(HrContext);
   const [open, setOpen] = useState(false);
   const [skills, setSkills] = useState([]);
+  const [level, setLevel] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -104,6 +105,9 @@ const SkillCard = () => {
 
   const handleChange = (event) => {
     setSkill(event.target.value);
+  };
+  const handleLevelChange = (event) => {
+    setLevel(event.target.value);
   };
   return (
     <Card
@@ -178,6 +182,22 @@ const SkillCard = () => {
                         {skill.name}
                       </MenuItem>
                     ))}
+                  </Select>
+                </FormControl>
+              </Box>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={skill}
+                    label='Skill'
+                    onChange={handleLevelChange}
+                  >
+                    <MenuItem>Basic</MenuItem>
+                    <MenuItem>Proficient</MenuItem>
+                    <MenuItem>Expert</MenuItem>
                   </Select>
                 </FormControl>
               </Box>
