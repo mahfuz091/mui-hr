@@ -53,9 +53,9 @@ const EditEducation = ({ education }) => {
   //   Delete Education
 
   const handleEduDelete = async (id) => {
-    console.log(id);
+    // console.log(id);
     const token = localStorage.getItem("accessToken");
-    console.log(token);
+    // console.log(token);
     try {
       const response = await axiosInstance.delete(
         `/api/profile/educations/${id}`,

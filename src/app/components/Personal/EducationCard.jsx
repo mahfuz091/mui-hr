@@ -206,7 +206,16 @@ const EducationCard = () => {
                 name='end_year'
               ></TextField>
 
-              <Box sx={{ textAlign: "right", marginTop: "10px" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "10px",
+                }}
+              >
+                <Button onClick={handleClose} variant='outlined'>
+                  Cancel
+                </Button>
                 <Button variant='contained' type='submit'>
                   Save
                 </Button>

@@ -88,12 +88,17 @@ const PersonalCard = ({ handleUpdateProfile, setGender }) => {
                 <MenuItem value={"Female"}>Female</MenuItem>
               </Select>
             </FormControl>
-            <Box sx={{ textAlign: "right", marginTop: "10px" }}>
-              <Button
-                variant='contained'
-                type='submit'
-                // onClick={() => setEditing(false)}
-              >
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                marginTop: "10px",
+              }}
+            >
+              <Button onClick={() => setEditing(false)} variant='outlined'>
+                Cancel
+              </Button>
+              <Button variant='contained' type='submit'>
                 Save
               </Button>
             </Box>

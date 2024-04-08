@@ -124,7 +124,7 @@ const SkillCard = () => {
   useEffect(() => {
     getUserSkills();
   }, [control]);
-  console.log(userSkills);
+  // console.log(userSkills);
   return (
     <Card
       sx={{

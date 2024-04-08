@@ -77,7 +77,7 @@ const DashboardProfile = () => {
       });
 
       const data = response.data.data;
-      console.log(data);
+      // console.log(data);
 
       setControl(!control);
       setEditing(false);

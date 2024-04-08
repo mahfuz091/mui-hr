@@ -131,7 +131,10 @@ const UserDropdown = () => {
             src={user?.auth?.avatar}
           />
         </Badge>
-        <Typography variant='body2' sx={{ fontSize: "0.8rem" }}>
+        <Typography
+          variant='body2'
+          sx={{ fontSize: "0.8rem", display: { xs: "none", md: "block" } }}
+        >
           {user?.auth?.name || "Name"}
         </Typography>
         <ChevronDown />
@@ -190,24 +193,7 @@ const UserDropdown = () => {
             Account Settings
           </Box>
         </MenuItem>
-        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <AccountOutline sx={{ marginRight: 2 }} />
-            Profile
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <EmailOutline sx={{ marginRight: 2 }} />
-            Inbox
-          </Box>
-        </MenuItem>
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
-          <Box sx={styles}>
-            <MessageOutline sx={{ marginRight: 2 }} />
-            Chat
-          </Box>
-        </MenuItem> */}
+
         <Divider />
 
         <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
