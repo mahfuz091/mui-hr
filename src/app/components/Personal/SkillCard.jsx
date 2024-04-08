@@ -20,6 +20,7 @@ import axiosInstance from "@/lib/axios-instance";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { HrContext } from "@/context/HrProvider";
+import EditSkill from "../EditSkill/EditSkill";
 const style = {
   position: "absolute",
   top: "50%",
@@ -62,30 +63,20 @@ const SkillCard = () => {
     getSkill();
   }, []);
 
-  const handleEducation = async (e) => {
+  const [skill, setSkill] = useState("");
+  const [userSkills, setUserSkills] = useState([]);
+
+  const handleSkillAdd = async (e) => {
     e.preventDefault();
-    const school = e.target.school.value;
+    const skill_id = skill;
 
-    const degree = e.target.degree.value;
-    const grade = e.target.grade.value;
-    const field_of_study = e.target.field_of_study.value;
-    const start_year = e.target.start_year.value;
-    const end_year = e.target.end_year.value;
-
-    const education = {
-      school,
-      degree,
-      grade,
-      field_of_study,
-      start_year,
-      end_year,
-    };
-    console.log(education);
+    const userSkill = { skill_id, level };
+    console.log("Clicked", userSkill);
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.post(
-        "/api/profile/educations",
-        education,
+        "/api/profile/skills",
+        userSkill,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,12 +87,12 @@ const SkillCard = () => {
       console.log(data);
       setControl(!control);
       handleClose();
+      // setLevel("");
+      // setSkills("");
     } catch (error) {
       console.log(error);
     }
   };
-  const [skill, setSkill] = useState("");
-  //   const [level, setLevel] = useState("");
 
   const handleChange = (event) => {
     setSkill(event.target.value);
@@ -109,6 +100,31 @@ const SkillCard = () => {
   const handleLevelChange = (event) => {
     setLevel(event.target.value);
   };
+  // Get User Skill
+  const getUserSkills = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.get(
+        "/api/profile/skills",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.data;
+      // console.log(data);
+
+      setUserSkills(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUserSkills();
+  }, [control]);
+  console.log(userSkills);
   return (
     <Card
       sx={{
@@ -141,6 +157,11 @@ const SkillCard = () => {
           <MdAdd /> Add
         </Button>
       </Box>
+      <Box>
+        {userSkills?.skills?.map((skill) => (
+          <EditSkill key={skill.id} skill={skill}></EditSkill>
+        ))}
+      </Box>
       <Modal
         open={open}
         onClose={handleClose}
@@ -166,38 +187,38 @@ const SkillCard = () => {
           </Box>
 
           <Box sx={{ padding: "20px" }}>
-            <form action='' onSubmit={handleEducation}>
+            <form action='' onSubmit={handleSkillAdd}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+                  <InputLabel id='demo-simple-select-label'>Skills</InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={skill}
+                    // value={skill}
                     label='Skill'
                     onChange={handleChange}
                   >
                     {skills?.skills?.map((skill, index) => (
-                      <MenuItem key={index} value={skill.name} skill={skill}>
+                      <MenuItem key={index} value={skill.id} skill={skill}>
                         {skill.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Box>
-              <Box sx={{ minWidth: 120 }}>
+              <Box sx={{ minWidth: 120, marginTop: "10px" }}>
                 <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Age</InputLabel>
+                  <InputLabel id='demo-simple-select-label'>Level</InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
                     id='demo-simple-select'
-                    value={skill}
-                    label='Skill'
+                    // value={level}
+                    label='Level'
                     onChange={handleLevelChange}
                   >
-                    <MenuItem>Basic</MenuItem>
-                    <MenuItem>Proficient</MenuItem>
-                    <MenuItem>Expert</MenuItem>
+                    <MenuItem value='Basic'>Basic</MenuItem>
+                    <MenuItem value='Proficient'>Proficient</MenuItem>
+                    <MenuItem value='Expert'>Expert</MenuItem>
                   </Select>
                 </FormControl>
               </Box>

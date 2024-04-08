@@ -19,9 +19,9 @@ import { HrContext } from "@/context/HrProvider";
 
 const SocialCard = () => {
   const [isEditing, setEditing] = useState(false);
-  console.log(isEditing);
+  // console.log(isEditing);
   const { user, setControl, control, getUser } = useContext(HrContext);
-  console.log(user);
+  // console.log(user);
   const handleSocial = async (e) => {
     e.preventDefault();
     const facebook = e.target.facebook.value;

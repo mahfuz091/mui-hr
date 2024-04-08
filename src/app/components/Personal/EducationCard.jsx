@@ -52,7 +52,7 @@ const EducationCard = () => {
   useEffect(() => {
     getEducation();
   }, [control]);
-  console.log(educations);
+  // console.log(educations);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -76,7 +76,7 @@ const EducationCard = () => {
       start_year,
       end_year,
     };
-    console.log(education);
+    // console.log(education);
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.post(
@@ -89,7 +89,7 @@ const EducationCard = () => {
         }
       );
       const data = response.data.data;
-      console.log(data);
+      // console.log(data);
       setControl(!control);
       handleClose();
     } catch (error) {

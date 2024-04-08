@@ -67,7 +67,7 @@ const DashboardProfile = () => {
     const user = { name, email, date_of_birth, gender, designation_id };
     const token = localStorage.getItem("accessToken");
 
-    console.log("1", user, token);
+    // console.log("1", user, token);
 
     try {
       const response = await axiosInstance.post("/api/profile", user, {
@@ -85,7 +85,7 @@ const DashboardProfile = () => {
       console.error("Error:", error);
     }
   };
-  console.log(user);
+  // console.log(user);
   return (
     <Fragment>
       <Box sx={{ display: "flex", alignItems: "flex-end", gap: "20px" }}>

@@ -17,7 +17,7 @@ import { MdEdit } from "react-icons/md";
 
 const PersonalCard = ({ handleUpdateProfile, setGender }) => {
   const { user, isEditing, setEditing } = useContext(HrContext);
-  console.log("user", user);
+  // console.log("user", user);
   return (
     <Card
       sx={{
