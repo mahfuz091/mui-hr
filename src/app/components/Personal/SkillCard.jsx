@@ -176,6 +176,7 @@ const SkillCard = () => {
               borderBottom: "1px solid #dce5ef",
               display: "flex",
               justifyContent: "space-between",
+              borderRadius: "10px 10px 0 0",
             }}
           >
             <Typography id='modal-modal-title' variant='h6' component='h2'>
@@ -223,12 +224,18 @@ const SkillCard = () => {
                 </FormControl>
               </Box>
 
-              <Typography variant='body2'>
+              <Typography
+                sx={{ fontSize: "16px", marginTop: "10px" }}
+                variant='body2'
+              >
                 You have a common knowledge level of understanding in this area
                 and a basic understanding of the skills and techniques required
                 to practically apply this skill.
               </Typography>
-              <Typography variant='body2'>
+              <Typography
+                sx={{ fontSize: "16px", marginTop: "10px" }}
+                variant='body2'
+              >
                 You have identified this as a key area of interest and are
                 interested in developing it further.
               </Typography>

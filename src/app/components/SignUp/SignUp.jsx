@@ -6,13 +6,14 @@ import React, { useState } from "react";
 import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import { DatePicker } from "@mui/x-date-pickers";
+import { MdCalendarMonth } from "react-icons/md";
+import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
 // import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import axiosInstance from "@/lib/axios-instance";
 import dayjs from "dayjs";
+import axiosInstance from "@/lib/axios-instance";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -24,9 +25,9 @@ const SignUp = () => {
   const [designationId, setDesignationId] = useState("");
   const router = useRouter();
 
-  const date = `${dateOfBirth.$y}-${(dateOfBirth.$M + 1)
+  const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
     .toString()
-    .padStart(2, "0")}-${dateOfBirth.$D.toString().padStart(2, "0")}`;
+    .padStart(2, "0")}-${dateOfBirth?.$D.toString().padStart(2, "0")}`;
   // console.log(date);
 
   const [imgSrc, setImgSrc] = useState("/1.png");
@@ -152,14 +153,29 @@ const SignUp = () => {
         onChange={(e) => setDateOfBirth(e.target.value)}
       /> */}
           <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker", "DatePicker"]}>
-              <DatePicker
+            <DemoContainer
+              components={["DatePicker", "DatePicker"]}
+              sx={{ position: "relative" }}
+            >
+              <MobileDatePicker
+                views={["year", "month", "day"]}
                 sx={{ width: "100%" }}
                 fullWidth
                 label='Date Of Birth'
-                // value={dateOfBirth}
+                // defaul tValue={dayjs(date_of_birth)}
                 onChange={(newValue) => setDateOfBirth(newValue)}
               />
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "20px",
+                  marginTop: "0 !important",
+                  fontSize: "24px",
+                }}
+              >
+                <MdCalendarMonth sx={{ fontSize: "24px" }} />
+              </Box>
             </DemoContainer>
           </LocalizationProvider>
           <TextField

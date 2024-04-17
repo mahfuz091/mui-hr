@@ -198,10 +198,11 @@ const EditSkill = ({ skill }) => {
               borderBottom: "1px solid #dce5ef",
               display: "flex",
               justifyContent: "space-between",
+              borderRadius: "10px 10px 0 0",
             }}
           >
             <Typography id='modal-modal-title' variant='h6' component='h2'>
-              Edit Education
+              Edit Skill
             </Typography>
             <IconButton onClick={handleClose2}>
               <CloseIcon />

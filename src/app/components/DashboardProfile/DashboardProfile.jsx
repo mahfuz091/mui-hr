@@ -21,6 +21,9 @@ import Personal from "@/app/components/Personal/Personal";
 import axiosInstance from "@/lib/axios-instance";
 import Job from "@/app/components/Job/Job";
 
+// Day js
+import dayjs from "dayjs";
+
 // ** Styled Components
 
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -52,7 +55,12 @@ const TabName = styled("span")(({ theme }) => ({
 const DashboardProfile = () => {
   const [value, setValue] = useState("account");
   const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(dayjs);
   // console.log(gender);
+
+  const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
+    .toString()
+    .padStart(2, "0")}-${dateOfBirth?.$D.toString().padStart(2, "0")}`;
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,7 +71,7 @@ const DashboardProfile = () => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
-    const date_of_birth = e.target.date_of_birth.value;
+    const date_of_birth = date;
     const user = { name, email, date_of_birth, gender, designation_id };
     const token = localStorage.getItem("accessToken");
 
@@ -88,7 +96,14 @@ const DashboardProfile = () => {
   // console.log(user);
   return (
     <Fragment>
-      <Box sx={{ display: "flex", alignItems: "flex-end", gap: "20px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "flex-start", md: "flex-end" },
+          gap: "20px",
+        }}
+      >
         <Badge
           overlap='circular'
           sx={{ cursor: "pointer" }}
@@ -102,8 +117,13 @@ const DashboardProfile = () => {
           />
         </Badge>
         <Box sx={{ marginBottom: "20px" }}>
-          <Typography variant='h4'>{user?.auth?.name}</Typography>
-          <Typography variant='body2'>
+          <Typography
+            variant='h4'
+            sx={{ fontSize: { xs: "24px", md: "32px" }, fontWeight: 700 }}
+          >
+            {user?.auth?.name}
+          </Typography>
+          <Typography variant='body2' sx={{ color: "rgb(108 134 159)" }}>
             {user?.auth?.designation?.title}
           </Typography>
         </Box>
@@ -169,6 +189,8 @@ const DashboardProfile = () => {
               user={user}
               handleUpdateProfile={handleUpdateProfile}
               setGender={setGender}
+              setDateOfBirth={setDateOfBirth}
+              dateOfBirth={dateOfBirth}
             />
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='job'>

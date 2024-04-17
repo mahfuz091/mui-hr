@@ -76,6 +76,7 @@ const UserDropdown = () => {
       setAnchorEl(null);
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
+      document.cookie = "session=; expires=new Date(0); path=/;";
       router.push("/users/sign-in");
     } catch (error) {
       console.error("Error:", error);
@@ -133,11 +134,17 @@ const UserDropdown = () => {
         </Badge>
         <Typography
           variant='body2'
-          sx={{ fontSize: "0.8rem", display: { xs: "none", md: "block" } }}
+          sx={{
+            fontSize: "1rem",
+            fontWeight: "500",
+            display: { xs: "none", md: "block" },
+          }}
         >
           {user?.auth?.name || "Name"}
         </Typography>
-        <ChevronDown />
+        <Box sx={{ marginTop: "5px", display: { xs: "none", md: "block" } }}>
+          <ChevronDown />
+        </Box>
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -196,7 +203,7 @@ const UserDropdown = () => {
 
         <Divider />
 
-        <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
+        {/* <MenuItem sx={{ p: 0 }} onClick={() => handleDropdownClose()}>
           <Box sx={styles}>
             <CurrencyUsd sx={{ marginRight: 2 }} />
             Pricing
@@ -208,7 +215,7 @@ const UserDropdown = () => {
             FAQ
           </Box>
         </MenuItem>
-        <Divider />
+        <Divider /> */}
         <MenuItem sx={{ py: 2 }} onClick={() => handleLogOut()}>
           <LogoutVariant
             sx={{

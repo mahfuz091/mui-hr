@@ -26,8 +26,9 @@ import {
   MdShoppingBag,
   MdSupervisedUserCircle,
 } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Person, UsbRounded } from "@mui/icons-material";
+import { handleURLQueries } from "@/lib/utils";
 
 // import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 
@@ -111,6 +112,17 @@ const Drawer = styled(MuiDrawer, {
 const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const theme = useTheme();
   const router = useRouter();
+  const pathname = usePathname();
+  console.log(pathname);
+
+  const isNavLinkActive = (path) => {
+    console.log("path", path);
+    if (pathname === path) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const handleClick = (path) => {
     router.push(path);
   };
@@ -128,7 +140,12 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
       <Divider />
       <List>
         {menuItems.map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          <ListItem
+            className={isNavLinkActive(text.path) ? "active" : ""}
+            key={text}
+            disablePadding
+            sx={{ display: "block" }}
+          >
             <ListItemButton
               onClick={() => handleClick(text.path)}
               sx={{
@@ -160,6 +177,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
+              activeClassName='active'
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",

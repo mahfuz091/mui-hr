@@ -13,10 +13,24 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdCalendarMonth } from "react-icons/md";
+import { DatePicker } from "@mui/x-date-pickers";
+import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
+import dayjs from "dayjs";
 
-const PersonalCard = ({ handleUpdateProfile, setGender }) => {
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+const PersonalCard = ({
+  handleUpdateProfile,
+  setGender,
+  setDateOfBirth,
+  dateOfBirth,
+}) => {
   const { user, isEditing, setEditing } = useContext(HrContext);
+  const date_of_birth = user?.auth?.date_of_birth;
+
   // console.log("user", user);
   return (
     <Card
@@ -67,14 +81,40 @@ const PersonalCard = ({ handleUpdateProfile, setGender }) => {
               label='Email'
               defaultValue={user?.auth?.email}
             ></TextField>
-            <TextField
+            <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
+              <DemoContainer
+                components={["DatePicker", "DatePicker"]}
+                sx={{ position: "relative" }}
+              >
+                <MobileDatePicker
+                  views={["year", "month", "day"]}
+                  sx={{ width: "100%" }}
+                  fullWidth
+                  label='Date Of Birth'
+                  defaultValue={dayjs(date_of_birth)}
+                  onChange={(newValue) => setDateOfBirth(newValue)}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "20px",
+                    marginTop: "0 !important",
+                    fontSize: "24px",
+                  }}
+                >
+                  <MdCalendarMonth sx={{ fontSize: "24px" }} />
+                </Box>
+              </DemoContainer>
+            </LocalizationProvider>
+            {/* <TextField
               fullWidth
               margin='normal'
               placeholder={user?.auth?.date_of_birth}
               label='Date of birth'
               defaultValue={user?.auth?.date_of_birth}
               name='date_of_birth'
-            ></TextField>
+            ></TextField> */}
             <FormControl fullWidth margin='normal'>
               <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
               <Select
@@ -105,28 +145,76 @@ const PersonalCard = ({ handleUpdateProfile, setGender }) => {
           </form>
         </Box>
       ) : (
-        <Grid container sx={{ padding: "20px" }}>
-          <Grid item xs={4}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <Box>
+          <Grid
+            container
+            sx={{ padding: { xs: "5px 20px", md: "20px 20px 0 20px" } }}
+            spacing={1}
+          >
+            <Grid item xs={12} sm={4}>
               <Typography variant='body2'>Employee Id</Typography>
-              <Typography variant='body2'>Name</Typography>
-              <Typography variant='body2'>Email</Typography>
-              <Typography variant='body2'>Date Of Birth</Typography>
-              <Typography variant='body2'>Gender</Typography>
-            </Box>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Typography variant='body2'>Employee Id</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={8}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-              <Typography variant='body2'>Employee Id</Typography>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Name</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>{user?.auth?.name}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Email</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>{user?.auth?.email}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Date Of Birth</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.date_of_birth}
               </Typography>
-              <Typography variant='body2'>Gender</Typography>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Gender</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Typography variant='body2'>Gender</Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        // <Grid container sx={{ padding: "20px" }}>
+        //   <Grid item xs={4}>
+        //     <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //       <Typography variant='body2'>Employee Id</Typography>
+        //       <Typography variant='body2'>Name</Typography>
+        //       <Typography variant='body2'>Email</Typography>
+        //       <Typography variant='body2'>Date Of Birth</Typography>
+        //       <Typography variant='body2'>Gender</Typography>
+        //     </Box>
+        //   </Grid>
+        //   <Grid item xs={8}>
+        //     <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //       <Typography variant='body2'>Employee Id</Typography>
+        //       <Typography variant='body2'>{user?.auth?.name}</Typography>
+        //       <Typography variant='body2'>{user?.auth?.email}</Typography>
+        //       <Typography variant='body2'>
+        //         {user?.auth?.date_of_birth}
+        //       </Typography>
+        //       <Typography variant='body2'>Gender</Typography>
+        //     </Box>
+        //   </Grid>
+        // </Grid>
         // <Box
         //   sx={{
         //     padding: "20px",

@@ -7,6 +7,9 @@ import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios-instance";
 import { useRouter } from "next/navigation";
+// import { login } from "@/lib/auth";
+// import { handleAuth, login } from "../../../auth";
+// import { cookies } from "next/headers";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +20,12 @@ const SignIn = () => {
     event.preventDefault();
 
     const user = { email, password };
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 1);
+
+    // Format the expiration date as a string in UTC format
+    const expiresUTC = expirationDate.toUTCString();
+
     console.log(user);
     try {
       const response = await axiosInstance.post("/api/login", user);
@@ -25,8 +34,15 @@ const SignIn = () => {
       console.log(data);
 
       localStorage.setItem("accessToken", accessToken);
+
       localStorage.setItem("user", JSON.stringify(data));
-      router.push("/dashboard");
+
+      // set cookie
+
+      // Set the cookie with the expiration time
+      document.cookie = `session=${email}; expires=${expiresUTC}; path=/;`;
+
+      router.push("/dashboard/me");
     } catch (error) {
       console.error("Error:", error);
     }

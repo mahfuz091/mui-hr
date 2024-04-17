@@ -142,26 +142,66 @@ const ContactCard = () => {
           </form>
         </Box>
       ) : (
-        <Grid container sx={{ padding: "20px" }}>
-          <Grid item xs={4}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <Box>
+          <Grid
+            container
+            sx={{ padding: { xs: "5px 20px", md: "20px 20px 0 20px" } }}
+            spacing={1}
+          >
+            <Grid item xs={12} sm={4}>
               <Typography variant='body2'>Mobile No</Typography>
-              <Typography variant='body2'>Work Phone No</Typography>
-              <Typography variant='body2'>Skype Username</Typography>
-              <Typography variant='body2'>Discord Username</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={8}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>{contact?.mobile_number}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Work Phone No</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {contact?.work_phone_number}
               </Typography>
-              <Typography variant='body2'>{contact?.skype}</Typography>
-              <Typography variant='body2'>{contact?.discord}</Typography>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Skype Username</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Typography variant='body2'>{contact?.skype}</Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Discord Username</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              <Typography variant='body2'>{contact?.discord}</Typography>
+            </Grid>
+          </Grid>
+        </Box>
+        // <Grid container sx={{ padding: "20px" }}>
+        //   <Grid item xs={4}>
+        //     <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //       <Typography variant='body2'>Mobile No</Typography>
+        //       <Typography variant='body2'>Work Phone No</Typography>
+        //       <Typography variant='body2'>Skype Username</Typography>
+        //       <Typography variant='body2'>Discord Username</Typography>
+        //     </Box>
+        //   </Grid>
+        //   <Grid item xs={8}>
+        //     <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //       <Typography variant='body2'>{contact?.mobile_number}</Typography>
+        //       <Typography variant='body2'>
+        //         {contact?.work_phone_number}
+        //       </Typography>
+        //       <Typography variant='body2'>{contact?.skype}</Typography>
+        //       <Typography variant='body2'>{contact?.discord}</Typography>
+        //     </Box>
+        //   </Grid>
+        // </Grid>
         // <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
         //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         //     <Typography variant='body2'>Mobile No</Typography>

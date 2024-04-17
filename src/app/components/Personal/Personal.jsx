@@ -1,15 +1,22 @@
 import { Typography, Box, Card, CardHeader, Grid, Button } from "@mui/material";
 
 import React from "react";
-import { MdEdit } from "react-icons/md";
+
 import PersonalCard from "./PersonalCard";
 import ContactCard from "./ContactCard";
 import SocialCard from "./SocialCard";
 import BankCard from "./BankCard";
 import EducationCard from "./EducationCard";
 import SkillCard from "./SkillCard";
+import SideContactCard from "./SideContactCard";
 
-const Personal = ({ handleUpdateProfile, user, setGender }) => {
+const Personal = ({
+  handleUpdateProfile,
+  user,
+  setGender,
+  setDateOfBirth,
+  dateOfBirth,
+}) => {
   return (
     <div>
       <h5>Personal</h5>
@@ -19,6 +26,8 @@ const Personal = ({ handleUpdateProfile, user, setGender }) => {
             <PersonalCard
               handleUpdateProfile={handleUpdateProfile}
               setGender={setGender}
+              setDateOfBirth={setDateOfBirth}
+              dateOfBirth={dateOfBirth}
             ></PersonalCard>
             <ContactCard></ContactCard>
             <SocialCard></SocialCard>
@@ -27,7 +36,7 @@ const Personal = ({ handleUpdateProfile, user, setGender }) => {
             <SkillCard />
           </Grid>
           <Grid item xs={12} md={4}>
-            <p>hi</p>
+            <SideContactCard></SideContactCard>
           </Grid>
         </Grid>
       </Box>

@@ -156,22 +156,24 @@ const EditEducation = ({ education }) => {
           {education.start_year} - {education.end_year}
         </Typography>
       </Box>
-      <Button
-        id='basic-button'
-        aria-controls={openDrop ? "basic-menu" : undefined}
-        aria-haspopup='true'
-        aria-expanded={openDrop ? "true" : undefined}
-        onClick={handleClick}
-        sx={{
-          padding: ".22rem .75rem",
-          "&:hover": {
-            // Styles for hover state
-            background: "#D3DFEB",
-          },
-        }}
-      >
-        <MoreHorizIcon />
-      </Button>
+      <Box>
+        <Button
+          id='basic-button'
+          aria-controls={openDrop ? "basic-menu" : undefined}
+          aria-haspopup='true'
+          aria-expanded={openDrop ? "true" : undefined}
+          onClick={handleClick}
+          sx={{
+            padding: ".22rem .75rem",
+            "&:hover": {
+              // Styles for hover state
+              background: "#D3DFEB",
+            },
+          }}
+        >
+          <MoreHorizIcon />
+        </Button>
+      </Box>
 
       <Menu
         id='basic-menu'
