@@ -1,4 +1,5 @@
-import React from "react";
+import DashboardHome from "../components/DashboardHome/DashboardHome";
+
 // import Chart from "../components/Chart/Chart";
 export const metadata = {
   title: "Dashboard - Oyolloo HR",
@@ -6,11 +7,7 @@ export const metadata = {
 };
 
 const DashboardPage = () => {
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
+  return <DashboardHome />;
 };
 
 export default DashboardPage;
