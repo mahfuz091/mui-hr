@@ -48,7 +48,7 @@ const HrProvider = ({ children }) => {
     }
   };
 
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     getUser();
     getContact();

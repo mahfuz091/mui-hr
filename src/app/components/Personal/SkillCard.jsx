@@ -21,6 +21,8 @@ import axiosInstance from "@/lib/axios-instance";
 import CloseIcon from "@mui/icons-material/Close";
 import { HrContext } from "@/context/HrProvider";
 import EditSkill from "../EditSkill/EditSkill";
+
+// style
 const style = {
   position: "absolute",
   top: "50%",
