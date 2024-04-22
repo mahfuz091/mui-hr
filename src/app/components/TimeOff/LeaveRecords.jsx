@@ -15,8 +15,7 @@ import dayjs from "dayjs";
 
 const LeaveRecords = () => {
   const { userLeaves, leaves } = useContext(HrContext);
-
-  console.log(leaves);
+  console.log(userLeaves);
   return (
     <Fragment>
       <Paper sx={{ padding: "20px" }}>
@@ -41,7 +40,7 @@ const LeaveRecords = () => {
                   <TableCell>
                     {
                       leaves?.leaveTypes?.find(
-                        (leave) => leave.id === userLeave.id
+                        (leave) => leave.id === userLeave.leave_type_id
                       )?.name
                     }
                   </TableCell>
