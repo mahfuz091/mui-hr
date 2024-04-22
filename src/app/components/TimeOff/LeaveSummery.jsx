@@ -6,6 +6,7 @@ import TimeOffReq from "../TimeOffReq/TimeOffReq";
 const LeaveSummery = () => {
   const { userLeaves, myLeaveBalance } = useContext(HrContext);
   console.log(myLeaveBalance);
+  console.log(userLeaves);
   return (
     <Fragment>
       <Paper sx={{ padding: "20px", marginTop: "20px", borderRadius: "10px" }}>

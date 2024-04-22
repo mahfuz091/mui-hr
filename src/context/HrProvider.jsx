@@ -10,6 +10,7 @@ const HrProvider = ({ children }) => {
   const [isEditing, setEditing] = useState(false);
   const [contact, setContact] = useState(null);
   const [authU, setAuthU] = useState(false);
+  const [leaves, setLeaves] = useState(null);
   const [userLeaves, setUserLeaves] = useState(null);
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   console.log(user);
@@ -44,6 +45,22 @@ const HrProvider = ({ children }) => {
         });
         const data = response.data.data;
         setUser(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const getLeaves = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const response = await axiosInstance.get("/api/leave-types", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.data;
+        setLeaves(data);
       } catch (error) {
         console.log(error);
       }
@@ -89,6 +106,7 @@ const HrProvider = ({ children }) => {
   useEffect(() => {
     getUser();
     getContact();
+    getLeaves();
     getUserLeaves();
     getMyLeaveBalance();
   }, [control]);
@@ -105,6 +123,7 @@ const HrProvider = ({ children }) => {
     setAuthU,
     userLeaves,
     myLeaveBalance,
+    leaves,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

@@ -14,8 +14,9 @@ import { Fragment, useContext } from "react";
 import dayjs from "dayjs";
 
 const LeaveRecords = () => {
-  const { userLeaves } = useContext(HrContext);
-  console.log(userLeaves?.leaveTypes);
+  const { userLeaves, leaves } = useContext(HrContext);
+
+  console.log(leaves);
   return (
     <Fragment>
       <Paper sx={{ padding: "20px" }}>
@@ -37,7 +38,13 @@ const LeaveRecords = () => {
             <TableBody>
               {userLeaves?.leaveTypes?.map((userLeave) => (
                 <TableRow key={userLeave.id}>
-                  <TableCell>userLeave</TableCell>
+                  <TableCell>
+                    {
+                      leaves?.leaveTypes?.find(
+                        (leave) => leave.id === userLeave.id
+                      )?.name
+                    }
+                  </TableCell>
                   <TableCell>
                     {/* {userLeave.start_date} to {userLeave.end_date} */}
                     {dayjs(userLeave.start_date).format("DD MMM, YYYY")} to{" "}
