@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from "react";
 import { HrContext } from "@/context/HrProvider";
 import { Box, Paper, Typography, Grid } from "@mui/material";
 import TimeOffReq from "../TimeOffReq/TimeOffReq";
+import LeaveSummeryTable from "./LeaveSummeryTable";
 
 const LeaveSummery = () => {
   const { userLeaves, myLeaveBalance } = useContext(HrContext);
@@ -79,7 +80,10 @@ const LeaveSummery = () => {
                   >
                     {leave.name}
                   </Box>
-                  <Typography variant='body2' sx={{ color: "red" }}>
+                  <Typography
+                    variant='body2'
+                    sx={{ color: "red", fontSize: "18px" }}
+                  >
                     Available:{leave.balance}
                   </Typography>
                 </Box>
@@ -98,6 +102,7 @@ const LeaveSummery = () => {
             <Grid item xs={12} md={12}></Grid> */}
           </Grid>
         </Box>
+        <LeaveSummeryTable />
       </Paper>
     </Fragment>
   );
