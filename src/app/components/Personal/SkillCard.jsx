@@ -73,7 +73,7 @@ const SkillCard = () => {
     const skill_id = skill;
 
     const userSkill = { skill_id, level };
-    console.log("Clicked", userSkill);
+    // console.log("Clicked", userSkill);
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.post(
@@ -86,7 +86,7 @@ const SkillCard = () => {
         }
       );
       const data = response.data.data;
-      console.log(data);
+      // console.log(data);
       setControl(!control);
       handleClose();
       // setLevel("");

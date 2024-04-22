@@ -7,7 +7,7 @@ import React, { useContext, useEffect, useState } from "react";
 const AccountEdit = () => {
   const [open, setOpen] = useState(false);
   const { user, getUser } = useContext(HrContext);
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     getUser();
   }, []);

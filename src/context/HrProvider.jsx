@@ -10,7 +10,9 @@ const HrProvider = ({ children }) => {
   const [isEditing, setEditing] = useState(false);
   const [contact, setContact] = useState(null);
   const [authU, setAuthU] = useState(false);
-  // console.log(contact);
+  const [userLeaves, setUserLeaves] = useState(null);
+  const [myLeaveBalance, setMyLeaveBalance] = useState(null);
+  console.log(user);
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -47,11 +49,48 @@ const HrProvider = ({ children }) => {
       }
     }
   };
+  const getUserLeaves = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const response = await axiosInstance.get(
+          `/api/leaves?orderBy&orderDirection=&paginate=false&page=1&perPage=2&user_id=${user?.auth?.id}&status`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = response.data.data;
+        setUserLeaves(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const getMyLeaveBalance = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const response = await axiosInstance.get("/api/leaves/available", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.data;
+        setMyLeaveBalance(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
-  // console.log(user);
+  console.log(userLeaves);
   useEffect(() => {
     getUser();
     getContact();
+    getUserLeaves();
+    getMyLeaveBalance();
   }, [control]);
 
   const hrToolInfo = {
@@ -64,6 +103,8 @@ const HrProvider = ({ children }) => {
     contact,
     authU,
     setAuthU,
+    userLeaves,
+    myLeaveBalance,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

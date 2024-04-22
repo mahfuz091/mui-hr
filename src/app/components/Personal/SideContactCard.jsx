@@ -18,7 +18,7 @@ import PhoneIcon from "@mui/icons-material/Phone";
 
 const SideContactCard = () => {
   const { user, contact } = useContext(HrContext);
-  console.log(contact);
+  // console.log(contact);
   return (
     <Card>
       <Box sx={{ padding: "20px" }}>

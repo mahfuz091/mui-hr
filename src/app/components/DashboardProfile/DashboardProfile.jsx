@@ -23,6 +23,7 @@ import Job from "@/app/components/Job/Job";
 
 // Day js
 import dayjs from "dayjs";
+import TimeOff from "../TimeOff/TimeOff";
 
 // ** Styled Components
 
@@ -56,7 +57,6 @@ const DashboardProfile = () => {
   const [value, setValue] = useState("account");
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
-  // console.log(gender);
 
   const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
     .toString()
@@ -196,8 +196,11 @@ const DashboardProfile = () => {
           <TabPanel sx={{ p: 0 }} value='job'>
             <Job></Job>
           </TabPanel>
-          <TabPanel sx={{ p: 0 }} value='info'>
-            {/* <TabInfo /> */}
+          <TabPanel sx={{ p: 0 }} value='timeoff'>
+            <TimeOff />
+          </TabPanel>
+          <TabPanel sx={{ p: 0 }} value='documents'>
+            {/* <TimeOff /> */}
           </TabPanel>
         </TabContext>
       </Box>

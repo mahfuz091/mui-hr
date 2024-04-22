@@ -113,10 +113,10 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
+  // console.log(pathname);
 
   const isNavLinkActive = (path) => {
-    console.log("path", path);
+    // console.log("path", path);
     if (pathname === path) {
       return true;
     } else {

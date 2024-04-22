@@ -29,6 +29,8 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { differenceInDays } from "date-fns";
+import TodoCard from "../TodoCard/TodoCard";
+import TimeOffReq from "../TimeOffReq/TimeOffReq";
 
 // Style
 const style = {
@@ -46,101 +48,30 @@ const style = {
 const DashboardHome = () => {
   const { user, setControl, control } = useContext(HrContext);
   const [greet, setGreet] = useState("");
-  const [open, setOpen] = useState(false);
-  const [leaveTypes, setLeaveTypes] = useState([]);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  console.log(leaveTypes);
 
-  const [startDate, setStartDate] = useState(dayjs);
-  const [endDate, setEndDate] = useState(dayjs);
+  // console.log(leaveTypes);
 
-  const difference = differenceInDays(new Date(endDate), new Date(startDate));
-
-  console.log(`Difference in days: ${difference}`);
+  // console.log(`Difference in days: ${difference}`);
 
   useEffect(() => {
     const myDate = new Date();
     const hrs = myDate.getHours();
+    // console.log(hrs);
 
     let greeting;
 
-    if (hrs < 12) {
+    if (hrs >= 4 && hrs < 12) {
       greeting = "Good Morning";
-    } else if (hrs >= 12 && hrs <= 17) {
+    } else if (hrs >= 12 && hrs <= 16) {
       greeting = "Good Afternoon";
-    } else if (hrs >= 17 && hrs <= 24) {
+    } else if (hrs >= 16 && hrs <= 24) {
       greeting = "Good Evening";
+    } else {
+      greeting = "Good Night";
     }
 
     setGreet(greeting);
   }, []);
-
-  useEffect(() => {
-    const getLeaveTypes = async () => {
-      console.log("Clicked");
-      const token = localStorage.getItem("accessToken");
-      try {
-        const response = await axiosInstance.get(
-          "api/leave-types?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data.data;
-        console.log(data);
-        setLeaveTypes(data);
-
-        setControl(!control);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getLeaveTypes();
-  }, []);
-
-  const [leaveType, setLeaveType] = useState("");
-
-  const handleLeaveTypeChange = (event) => {
-    setLeaveType(event.target.value);
-  };
-
-  const handleLeaveReq = async (e) => {
-    e.preventDefault();
-    const leave_type_id = leaveType;
-    const start_date = `${startDate?.$y}-${(startDate?.$M + 1)
-      .toString()
-      .padStart(2, "0")}-${startDate?.$D.toString().padStart(2, "0")}`;
-    const end_date = `${endDate?.$y}-${(endDate?.$M + 1)
-      .toString()
-      .padStart(2, "0")}-${endDate?.$D.toString().padStart(2, "0")}`;
-    const days_taken = difference + 1;
-    const reason = e.target.reason.value;
-    const leaveReq = {
-      leave_type_id,
-      start_date,
-      end_date,
-      days_taken,
-      reason,
-    };
-    console.log(leaveReq);
-    const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.post("/api/leaves", leaveReq, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data;
-      console.log(data);
-
-      setControl(!control);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Box>
@@ -157,146 +88,13 @@ const DashboardHome = () => {
           {user?.auth?.name || "Name"}
         </Typography>
       </Box>
-      <Button
-        sx={{
-          textTransform: "capitalize",
-          display: "flex",
-          alignItems: "flex-end",
-          gap: "8px",
-          marginY: "20px",
-        }}
-        onClick={handleOpen}
-        variant='outlined'
-      >
-        <NordicWalkingIcon sx={{ width: "20px" }} /> Request Time Off
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'
-      >
-        <Box sx={style}>
-          <Box
-            sx={{
-              background: "#fbfcfe",
-              padding: "20px",
-              borderBottom: "1px solid #dce5ef",
-              display: "flex",
-              justifyContent: "space-between",
-              borderRadius: "10px 10px 0 0",
-            }}
-          >
-            <Typography id='modal-modal-title' variant='h6' component='h2'>
-              Request Time Off
-            </Typography>
-            <IconButton onClick={handleClose}>
-              <CloseIcon />
-            </IconButton>
-          </Box>
-          <Box>
-            <form action='' onSubmit={handleLeaveReq}>
-              <Box sx={{ minWidth: 120, margin: "20px 0", padding: "0 20px" }}>
-                <FormControl fullWidth>
-                  <InputLabel id='demo-simple-select-label'>Skills</InputLabel>
-                  <Select
-                    labelId='demo-simple-select-label'
-                    id='demo-simple-select'
-                    // value={skill}
-                    defaultValue={0}
-                    label='Skill'
-                    onChange={handleLeaveTypeChange}
-                  >
-                    <MenuItem value='0' disabled>
-                      --Select--
-                    </MenuItem>
-                    {leaveTypes?.leaveTypes?.map((leaveType, index) => (
-                      <MenuItem
-                        key={index}
-                        value={leaveType.id}
-                        leaveType={leaveType}
-                      >
-                        {leaveType.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-              <Grid
-                container
-                spacing={4}
-                sx={{ marginBottom: "20px", padding: "0 20px" }}
-              >
-                <Grid item xs={6}>
-                  <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker", "DatePicker"]}
-                      sx={{ position: "relative" }}
-                    >
-                      <MobileDatePicker
-                        views={["year", "month", "day"]}
-                        sx={{ width: "100%" }}
-                        fullWidth
-                        label='Start Date'
-                        // defaul tValue={dayjs(date_of_birth)}
-                        onChange={(newValue) => setStartDate(newValue)}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Grid>
-                <Grid item xs={6}>
-                  <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
-                    <DemoContainer
-                      components={["DatePicker", "DatePicker"]}
-                      sx={{ position: "relative" }}
-                    >
-                      <MobileDatePicker
-                        views={["year", "month", "day"]}
-                        sx={{ width: "100%" }}
-                        fullWidth
-                        label='End Date'
-                        // defaul tValue={dayjs(date_of_birth)}
-                        onChange={(newValue) => setEndDate(newValue)}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </Grid>
-              </Grid>
-              <Box sx={{ padding: "0px 20px 20px" }}>
-                <Typography>
-                  Days Taken : {difference + 1 || "0"} days
-                </Typography>
-              </Box>
-              <Box sx={{ padding: "0 20px" }}>
-                <TextField
-                  fullWidth
-                  id='outlined-multiline-static'
-                  label='Reason'
-                  multiline
-                  rows={5}
-                  variant='outlined'
-                  name='reason'
-                ></TextField>
-              </Box>
-              <Box
-                sx={{
-                  background: "#fbfcfe",
-                  marginTop: "20px",
-                  padding: "20px",
-                  borderTop: "1px solid #dce5ef",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  borderRadius: "0px 0px 10px 10px",
-                }}
-              >
-                <Button variant='contained' type='Submit'>
-                  Save
-                </Button>
-              </Box>
-            </form>
-          </Box>
-        </Box>
-      </Modal>
+      <TimeOffReq />
+      <Grid container spacing={4}>
+        <Grid item xs={12} lg={8}>
+          <TodoCard></TodoCard>
+        </Grid>
+        <Grid item xs={12} lg={4}></Grid>
+      </Grid>
     </Box>
   );
 };
