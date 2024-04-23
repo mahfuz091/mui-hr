@@ -286,7 +286,6 @@ const TimeOffReq = () => {
           </Box>
         </Box>
       </Modal>
-      <Toaster />
     </Fragment>
   );
 };
