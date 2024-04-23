@@ -28,6 +28,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { differenceInDays } from "date-fns";
 import { HrContext } from "@/context/HrProvider";
+import Swal from "sweetalert2";
 
 // Style
 const style = {
@@ -80,22 +81,67 @@ const TimeOffReq = () => {
       days_taken,
       reason,
     };
-    // console.log(leaveReq);
-    const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.post("/api/leaves", leaveReq, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data;
-      // console.log(data);
-      handleClose();
+    const diff = differenceInDays(new Date(startDate), new Date()) + 1;
+    // const diff = dayjs.diff(startDate, "days");
 
-      setControl(!control);
-    } catch (error) {
-      console.log(error);
+    const token = localStorage.getItem("accessToken");
+    console.log(leave_type_id);
+
+    if (diff < 4) {
+      handleClose();
+      setStartDate("");
+      setLeaveType("");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    } else {
+      const balance = myLeaveBalance?.leaveTypes?.find(
+        (leaveBalance) => leaveBalance?.id === leave_type_id
+      );
+
+      if (balance?.balance < days_taken) {
+        handleClose();
+        setStartDate("");
+        setLeaveType("");
+        Swal.fire({
+          icon: "error",
+          position: "top-end",
+          title: "Oops...",
+          text: "You Can't apply more than your balance",
+        });
+      } else {
+        try {
+          const response = await axiosInstance.post("/api/leaves", leaveReq, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const data = response.data.data;
+          // console.log(data);
+          handleClose();
+
+          setControl(!control);
+          setLeaveType("");
+        } catch (error) {
+          console.log(error);
+          handleClose();
+
+          setControl(!control);
+          setLeaveType("");
+          if (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Something went wrong!",
+            });
+          }
+        }
+      }
     }
+
+    // console.log(leaveReq);
   };
 
   return (
@@ -240,6 +286,7 @@ const TimeOffReq = () => {
           </Box>
         </Box>
       </Modal>
+      <Toaster />
     </Fragment>
   );
 };

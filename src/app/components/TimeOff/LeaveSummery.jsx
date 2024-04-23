@@ -11,14 +11,14 @@ const LeaveSummery = () => {
   return (
     <Fragment>
       <Paper sx={{ padding: "20px", marginTop: "20px", borderRadius: "10px" }}>
-        <Box>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant='h6' sx={{ padding: "20px 0 " }} color='inherit'>
             My Leave Summary
           </Typography>
           <TimeOffReq />
-          <hr />
         </Box>
-        <Box sx={{ padding: "30px 0" }}>
+        <hr />
+        <Box sx={{ padding: "30px 0", display: "none" }}>
           <Grid container sx={{ marginTop: "20px" }}>
             {myLeaveBalance?.leaveTypes?.map((leave) => (
               <Grid sx={{ margin: "0 auto" }} item xs={12} md={4}>

@@ -9,13 +9,32 @@ import {
   TableRow,
   Box,
   TableContainer,
+  Button,
 } from "@mui/material";
 import { Fragment, useContext } from "react";
 import dayjs from "dayjs";
+import axiosInstance from "@/lib/axios-instance";
 
 const LeaveRecords = () => {
-  const { userLeaves, leaves } = useContext(HrContext);
+  const { userLeaves, leaves, control, setControl } = useContext(HrContext);
   console.log(userLeaves);
+  const handleLeaveDelete = async (id) => {
+    console.log(id);
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.delete(`/api/leaves/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+      // console.log(data);
+
+      setControl(!control);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Fragment>
       <Paper sx={{ padding: "20px" }}>
@@ -61,13 +80,33 @@ const LeaveRecords = () => {
                           userLeave.status === "pending"
                             ? "#f6a95c"
                             : "#20c5ca",
+                        textTransform: "capitalize",
                       }}
                     >
                       {userLeave.status}
                     </Box>
                   </TableCell>
                   <TableCell>Remarks</TableCell>
-                  <TableCell>Actions</TableCell>
+                  <TableCell>
+                    {userLeave.status === "approved" ? (
+                      ""
+                    ) : (
+                      <Button
+                        sx={{
+                          background: "#f6a95c",
+                          color: "white",
+                          textTransform: "lowercase",
+                          "&:hover": {
+                            background: "#20c5ca", // Change background color on hover
+                            // Add any other hover styles here
+                          },
+                        }}
+                        onClick={() => handleLeaveDelete(userLeave.id)}
+                      >
+                        Withdraw
+                      </Button>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
               {/* <TableRow>

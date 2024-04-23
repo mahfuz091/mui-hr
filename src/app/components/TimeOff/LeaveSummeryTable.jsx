@@ -42,7 +42,7 @@ const LeaveSummeryTable = () => {
                   <TableCell>{userLeave?.name}</TableCell>
                   <TableCell>{userLeave.total_days}</TableCell>
                   <TableCell> {userLeave.total_days}</TableCell>
-                  <TableCell>{userLeave.total_days}</TableCell>
+                  <TableCell>{userLeave.balance}</TableCell>
                   <TableCell>{userLeave.balance}</TableCell>
                 </TableRow>
               ))}
