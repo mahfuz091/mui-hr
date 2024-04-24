@@ -43,37 +43,14 @@ const smallDeviceStyle = {
 };
 
 const SkillCard = () => {
-  const { control, setControl } = useContext(HrContext);
+  const { control, setControl, skills, userSkills } = useContext(HrContext);
   const [open, setOpen] = useState(false);
-  const [skills, setSkills] = useState([]);
+
   const [level, setLevel] = useState(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  useEffect(() => {
-    const getSkill = async () => {
-      const token = localStorage.getItem("accessToken");
-      try {
-        const response = await axiosInstance.get(
-          "/api/skills?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data.data;
-        setSkills(data);
-
-        setControl(!control);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getSkill();
-  }, []);
 
   const [skill, setSkill] = useState("");
-  const [userSkills, setUserSkills] = useState([]);
 
   const handleSkillAdd = async (e) => {
     e.preventDefault();
@@ -109,30 +86,7 @@ const SkillCard = () => {
   const handleLevelChange = (event) => {
     setLevel(event.target.value);
   };
-  // Get User Skill
-  const getUserSkills = async () => {
-    const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.get(
-        "/api/profile/skills",
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = response.data.data;
-      // console.log(data);
-
-      setUserSkills(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getUserSkills();
-  }, [control]);
   // console.log(userSkills);
   return (
     <Card

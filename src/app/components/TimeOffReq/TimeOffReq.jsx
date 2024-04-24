@@ -29,6 +29,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { differenceInDays } from "date-fns";
 import { HrContext } from "@/context/HrProvider";
 import Swal from "sweetalert2";
+import { calculateBusinessDays } from "@/lib/utils";
 
 // Style
 const style = {
@@ -57,9 +58,10 @@ const TimeOffReq = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const businessDays = calculateBusinessDays(startDate, endDate);
   const difference = differenceInDays(new Date(endDate), new Date(startDate));
 
-  console.log(`Difference in days: ${difference}`);
+  console.log(`Difference in days: ${businessDays}`);
   const [leaveType, setLeaveType] = useState("");
 
   const handleLeaveTypeChange = (event) => {
@@ -75,7 +77,7 @@ const TimeOffReq = () => {
     const end_date = `${endDate?.$y}-${(endDate?.$M + 1)
       .toString()
       .padStart(2, "0")}-${endDate?.$D.toString().padStart(2, "0")}`;
-    const days_taken = difference + 1;
+    const days_taken = businessDays;
     const reason = e.target.reason.value;
     const leaveReq = {
       leave_type_id,
@@ -84,13 +86,13 @@ const TimeOffReq = () => {
       days_taken,
       reason,
     };
-    const diff = differenceInDays(new Date(startDate), new Date()) + 1;
+    // const diff = differenceInDays(new Date(startDate), new Date()) + 1;
     // const diff = dayjs.diff(startDate, "days");
 
     const token = localStorage.getItem("accessToken");
     console.log(leave_type_id);
 
-    if (diff < 4) {
+    if (businessDays < 4) {
       handleClose();
       setStartDate("");
       setLeaveType("");
@@ -255,9 +257,7 @@ const TimeOffReq = () => {
                 </Grid>
               </Grid>
               <Box sx={{ padding: "0px 20px 20px" }}>
-                <Typography>
-                  Days Taken : {difference + 1 || "0"} days
-                </Typography>
+                <Typography>Days Taken : {businessDays || "0"} days</Typography>
               </Box>
               <Box sx={{ padding: "0 20px" }}>
                 <TextField

@@ -1,4 +1,5 @@
 "use client";
+5741;
 import React, { useContext, useState } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import logo from "../../../assets/images/oyolloo-logo-color-horizontal.png";
@@ -8,6 +9,8 @@ import Link from "next/link";
 import axiosInstance from "@/lib/axios-instance";
 import { useRouter } from "next/navigation";
 import { HrContext } from "@/context/HrProvider";
+
+import ErrorIcon from "@mui/icons-material/Error";
 // import { login } from "@/lib/auth";
 // import { handleAuth, login } from "../../../auth";
 // import { cookies } from "next/headers";
@@ -16,6 +19,7 @@ const SignIn = () => {
   const { setControl, control } = useContext(HrContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (event) => {
@@ -48,6 +52,7 @@ const SignIn = () => {
       setControl(!control);
     } catch (error) {
       console.error("Error:", error);
+      setError(true);
     }
   };
   return (
@@ -83,7 +88,28 @@ const SignIn = () => {
           Welcome to Oyolloo
         </Typography>
         <form onSubmit={handleSubmit}>
+          {error ? (
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                border: "1px solid #f1c959",
+                background: "#F6F9FB",
+                boxShadow: "rgba(9, 8, 61, 0.08) 0px 1px 4px;",
+                borderRadius: "4px",
+                padding: "10px",
+                fontSize: ".75rem",
+              }}
+            >
+              {" "}
+              <ErrorIcon sx={{ color: "#f1c959" }} /> Invalid email or password
+            </Typography>
+          ) : (
+            ""
+          )}
           <TextField
+            required
             fullWidth
             margin='normal'
             label='Email'
@@ -92,6 +118,7 @@ const SignIn = () => {
           />
           <TextField
             fullWidth
+            required
             margin='normal'
             label='Password'
             type='password'

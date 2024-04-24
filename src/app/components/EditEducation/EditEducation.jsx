@@ -35,10 +35,6 @@ const style = {
   },
 };
 
-const smallDeviceStyle = {
-  width: "80%", // Change width to 80% for small devices
-};
-
 const EditEducation = ({ education }) => {
   const { control, setControl } = useContext(HrContext);
   // Edit Modal

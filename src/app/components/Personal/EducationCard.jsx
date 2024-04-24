@@ -40,25 +40,9 @@ const smallDeviceStyle = {
 };
 
 const EducationCard = () => {
-  const { control, setControl } = useContext(HrContext);
-  const [educations, setEducations] = useState([]);
-  const getEducation = async () => {
-    const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.get("/api/profile/educations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data;
-      setEducations(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getEducation();
-  }, [control]);
+  const { control, setControl, educations } = useContext(HrContext);
+
+
   // console.log(educations);
   const [open, setOpen] = useState(false);
 

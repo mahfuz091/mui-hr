@@ -12,3 +12,6 @@ body {
 .active svg {
   fill: #fff;
 }
+.rdrDefinedRangesWrapper {
+  display: none;
+}

@@ -7,28 +7,10 @@ import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 
 const ContactCard = () => {
-  const { control, setControl } = useContext(HrContext);
+  const { control, setControl, contact } = useContext(HrContext);
   const [isEditing, setEditing] = useState(false);
-  const [contact, setContact] = useState(null);
+  // const [contact, setContact] = useState(null);
   // console.log(contact);
-  const getContact = async () => {
-    const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.get("/api/profile/contacts", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data.contacts;
-      setContact(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getContact();
-  }, [control]);
 
   const handleContact = async (e) => {
     e.preventDefault();

@@ -9,11 +9,14 @@ const HrProvider = ({ children }) => {
   const [control, setControl] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [contact, setContact] = useState(null);
+  const [educations, setEducations] = useState([]);
   const [authU, setAuthU] = useState(false);
   const [leaves, setLeaves] = useState(null);
   const [userLeaves, setUserLeaves] = useState(null);
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
-  console.log(myLeaveBalance);
+  const [skills, setSkills] = useState([]);
+  const [userSkills, setUserSkills] = useState([]);
+  // console.log(myLeaveBalance);
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
@@ -49,6 +52,21 @@ const HrProvider = ({ children }) => {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const getEducation = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.get("/api/profile/educations", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = response.data.data;
+      setEducations(data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -105,6 +123,49 @@ const HrProvider = ({ children }) => {
       }
     }
   };
+  // Get User Skill
+  const getUserSkills = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axiosInstance.get(
+        "/api/profile/skills",
+
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.data;
+      // console.log(data);
+
+      setUserSkills(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getSkill = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const response = await axiosInstance.get(
+          "/api/skills?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = response.data.data;
+        setSkills(data);
+
+        setControl(!control);
+      } catch (error) {
+        console.log(error);
+      }
+    } else return;
+  };
 
   useEffect(() => {
     getUser();
@@ -112,6 +173,9 @@ const HrProvider = ({ children }) => {
     getLeaves();
     getUserLeaves();
     getMyLeaveBalance();
+    getEducation();
+    getSkill();
+    getUserSkills();
   }, [control]);
 
   const hrToolInfo = {
@@ -127,6 +191,9 @@ const HrProvider = ({ children }) => {
     userLeaves,
     myLeaveBalance,
     leaves,
+    educations,
+    skills,
+    userSkills,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };
