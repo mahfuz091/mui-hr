@@ -25,11 +25,14 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "40%",
+  width: "50%",
   bgcolor: "#fff",
   border: "1px solid #91A4B7",
   boxShadow: "0px 6px 16px rgba(9, 8, 61, 0.12)",
   borderRadius: "10px",
+  "@media (max-width: 640px)": {
+    width: "80%" /* adjust width for medium screens */,
+  },
 };
 
 const smallDeviceStyle = {
@@ -147,9 +150,7 @@ const EducationCard = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box
-          sx={{ ...style, ...(window?.innerWidth <= 600 && smallDeviceStyle) }}
-        >
+        <Box sx={style}>
           <Box
             sx={{
               background: "#fbfcfe",
