@@ -34,6 +34,9 @@ const style = {
   boxShadow: "0px 6px 16px rgba(9, 8, 61, 0.12)",
   borderRadius: "10px",
 };
+const smallDeviceStyle = {
+  width: "80%", // Change width to 80% for small devices
+};
 
 const EditSkill = ({ skill }) => {
   const { control, setControl } = useContext(HrContext);
@@ -190,7 +193,9 @@ const EditSkill = ({ skill }) => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box
+          sx={{ ...style, ...(window?.innerWidth <= 600 && smallDeviceStyle) }}
+        >
           <Box
             sx={{
               background: "#fbfcfe",

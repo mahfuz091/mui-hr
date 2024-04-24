@@ -148,7 +148,7 @@ const EducationCard = () => {
         aria-describedby='modal-modal-description'
       >
         <Box
-          sx={{ ...style, ...(window.innerWidth <= 600 && smallDeviceStyle) }}
+          sx={{ ...style, ...(window?.innerWidth <= 600 && smallDeviceStyle) }}
         >
           <Box
             sx={{
