@@ -145,62 +145,120 @@ const BankCard = () => {
           </form>
         </Box>
       ) : (
-        <Grid container sx={{ padding: "20px" }}>
-          <Grid item xs={4}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        <Box>
+          <Grid container sx={{ padding: "10px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
               <Typography variant='body2'>Account Name</Typography>
-              <Typography variant='body2'>Bank Name</Typography>
-              <Typography variant='body2'>Branch Name</Typography>
-              <Typography variant='body2'>Account No</Typography>
-              <Typography variant='body2'>Routing No</Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={8}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.bank_details?.account_name}
               </Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "10px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Bank Name</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.bank_details?.bank_name}
               </Typography>
+            </Grid>
+          </Grid>
+
+          <Grid container sx={{ padding: "10px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Branch Name</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.bank_details?.branch_name}
               </Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "10px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Account No</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.bank_details?.account_number}
               </Typography>
+            </Grid>
+          </Grid>
+          <Grid container sx={{ padding: "10px 20px" }} spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <Typography variant='body2'>Routing No</Typography>
+            </Grid>
+            <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
                 {user?.auth?.bank_details?.routing_number}
               </Typography>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-        // <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
-        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        //     <Typography variant='body2'>Account Name</Typography>
-        //     <Typography variant='body2'>Bank Name</Typography>
-        //     <Typography variant='body2'>Branch Name</Typography>
-        //     <Typography variant='body2'>Account No</Typography>
-        //     <Typography variant='body2'>Routing No</Typography>
+        </Box>
+        //  <Grid container sx={{ padding: "20px" }}>
+        //   <Grid item xs={4}>
+        //     <Box
+        //       sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        //     >
+        //       <Typography variant='body2'>Account Name</Typography>
+        //       <Typography variant='body2'>Bank Name</Typography>
+        //       <Typography variant='body2'>Branch Name</Typography>
+        //       <Typography variant='body2'>Account No</Typography>
+        //       <Typography variant='body2'>Routing No</Typography>
+        //     </Box>
+        //   </Grid>
+        //   <Grid item xs={8}>
+        //     <Box
+        //       sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+        //     >
+        //       <Typography variant='body2'>
+        //         {user?.auth?.bank_details?.account_name}
+        //       </Typography>
+        //       <Typography variant='body2'>
+        //         {user?.auth?.bank_details?.bank_name}
+        //       </Typography>
+        //       <Typography variant='body2'>
+        //         {user?.auth?.bank_details?.branch_name}
+        //       </Typography>
+        //       <Typography variant='body2'>
+        //         {user?.auth?.bank_details?.account_number}
+        //       </Typography>
+        //       <Typography variant='body2'>
+        //         {user?.auth?.bank_details?.routing_number}
+        //       </Typography>
+        //     </Box>
+        //   </Grid>
+        // </Grid>
+
+        //  <Box sx={{ padding: "20px", display: "flex", gap: "200px" }}>
+        //   //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //   //     <Typography variant='body2'>Account Name</Typography>
+        //   //     <Typography variant='body2'>Bank Name</Typography>
+        //   //     <Typography variant='body2'>Branch Name</Typography>
+        //   //     <Typography variant='body2'>Account No</Typography>
+        //   //     <Typography variant='body2'>Routing No</Typography>
+        //   //   </Box>
+        //   //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+        //   //     <Typography variant='body2'>
+        //   //       {user?.auth?.bank_details?.account_name}
+        //   //     </Typography>
+        //   //     <Typography variant='body2'>
+        //   //       {user?.auth?.bank_details?.bank_name}
+        //   //     </Typography>
+        //   //     <Typography variant='body2'>
+        //   //       {user?.auth?.bank_details?.branch_name}
+        //   //     </Typography>
+        //   //     <Typography variant='body2'>
+        //   //       {user?.auth?.bank_details?.account_number}
+        //   //     </Typography>
+        //   //     <Typography variant='body2'>
+        //   //       {user?.auth?.bank_details?.routing_number}
+        //   //     </Typography>
+        //   //   </Box>
         //   </Box>
-        //   <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-        //     <Typography variant='body2'>
-        //       {user?.auth?.bank_details?.account_name}
-        //     </Typography>
-        //     <Typography variant='body2'>
-        //       {user?.auth?.bank_details?.bank_name}
-        //     </Typography>
-        //     <Typography variant='body2'>
-        //       {user?.auth?.bank_details?.branch_name}
-        //     </Typography>
-        //     <Typography variant='body2'>
-        //       {user?.auth?.bank_details?.account_number}
-        //     </Typography>
-        //     <Typography variant='body2'>
-        //       {user?.auth?.bank_details?.routing_number}
-        //     </Typography>
-        //   </Box>
-        // </Box>
       )}
     </Card>
   );

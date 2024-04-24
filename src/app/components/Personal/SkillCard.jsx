@@ -35,6 +35,10 @@ const style = {
   borderRadius: "10px",
 };
 
+const smallDeviceStyle = {
+  width: "80%", // Change width to 80% for small devices
+};
+
 const SkillCard = () => {
   const { control, setControl } = useContext(HrContext);
   const [open, setOpen] = useState(false);
@@ -170,7 +174,9 @@ const SkillCard = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box
+          sx={{ ...style, ...(window.innerWidth <= 600 && smallDeviceStyle) }}
+        >
           <Box
             sx={{
               background: "#fbfcfe",

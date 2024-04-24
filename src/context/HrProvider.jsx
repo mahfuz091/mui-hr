@@ -14,6 +14,7 @@ const HrProvider = ({ children }) => {
   const [userLeaves, setUserLeaves] = useState(null);
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   console.log(user);
+
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -50,6 +51,7 @@ const HrProvider = ({ children }) => {
       }
     }
   };
+
   const getLeaves = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -66,6 +68,7 @@ const HrProvider = ({ children }) => {
       }
     }
   };
+
   const getUserLeaves = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -85,6 +88,7 @@ const HrProvider = ({ children }) => {
       }
     }
   };
+
   const getMyLeaveBalance = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -102,7 +106,6 @@ const HrProvider = ({ children }) => {
     }
   };
 
-  console.log(userLeaves);
   useEffect(() => {
     getUser();
     getContact();

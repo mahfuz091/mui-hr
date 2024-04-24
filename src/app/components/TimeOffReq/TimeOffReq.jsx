@@ -33,7 +33,7 @@ import Swal from "sweetalert2";
 // Style
 const style = {
   position: "absolute",
-  top: "30%",
+  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: "50%",
@@ -42,7 +42,9 @@ const style = {
   boxShadow: "0px 6px 16px rgba(9, 8, 61, 0.12)",
   borderRadius: "10px",
 };
-
+const smallDeviceStyle = {
+  width: "80%", // Change width to 80% for small devices
+};
 const TimeOffReq = () => {
   const { user, setControl, control, myLeaveBalance } = useContext(HrContext);
   const [open, setOpen] = useState(false);
@@ -165,7 +167,9 @@ const TimeOffReq = () => {
         aria-labelledby='modal-modal-title'
         aria-describedby='modal-modal-description'
       >
-        <Box sx={style}>
+        <Box
+          sx={{ ...style, ...(window.innerWidth <= 600 && smallDeviceStyle) }}
+        >
           <Box
             sx={{
               background: "#fbfcfe",
@@ -216,7 +220,7 @@ const TimeOffReq = () => {
                 spacing={4}
                 sx={{ marginBottom: "20px", padding: "0 20px" }}
               >
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
                     <DemoContainer
                       components={["DatePicker", "DatePicker"]}
@@ -233,7 +237,7 @@ const TimeOffReq = () => {
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
                     <DemoContainer
                       components={["DatePicker", "DatePicker"]}
