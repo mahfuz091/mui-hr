@@ -41,6 +41,8 @@ const BadgeContentSpan = styled("span")(({ theme }) => ({
 }));
 
 const UserDropdown = () => {
+  const { user, control, setControl, getUser } = useContext(HrContext);
+
   // ** States
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -77,6 +79,7 @@ const UserDropdown = () => {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("user");
       document.cookie = "session=; expires=new Date(0); path=/;";
+      setControl(!control);
       router.push("/users/sign-in");
     } catch (error) {
       console.error("Error:", error);
@@ -106,7 +109,6 @@ const UserDropdown = () => {
 
   //   Contex Api
 
-  const { user, control, setControl, getUser } = useContext(HrContext);
   // console.log(user);
 
   return (

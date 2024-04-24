@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import logo from "../../../assets/images/oyolloo-logo-color-horizontal.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,11 +7,13 @@ import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import axiosInstance from "@/lib/axios-instance";
 import { useRouter } from "next/navigation";
+import { HrContext } from "@/context/HrProvider";
 // import { login } from "@/lib/auth";
 // import { handleAuth, login } from "../../../auth";
 // import { cookies } from "next/headers";
 
 const SignIn = () => {
+  const { setControl, control } = useContext(HrContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -43,6 +45,7 @@ const SignIn = () => {
       document.cookie = `session=${email}; expires=${expiresUTC}; path=/;`;
 
       router.push("/dashboard/me");
+      setControl(!control);
     } catch (error) {
       console.error("Error:", error);
     }

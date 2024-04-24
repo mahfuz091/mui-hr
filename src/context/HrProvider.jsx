@@ -13,7 +13,7 @@ const HrProvider = ({ children }) => {
   const [leaves, setLeaves] = useState(null);
   const [userLeaves, setUserLeaves] = useState(null);
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
-  console.log(user);
+  console.log(myLeaveBalance);
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");

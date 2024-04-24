@@ -52,7 +52,7 @@ const TimeOffReq = () => {
   const [leaveTypes, setLeaveTypes] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // console.log(leaveTypes);
+  console.log(myLeaveBalance);
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
