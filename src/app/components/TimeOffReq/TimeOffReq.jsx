@@ -56,7 +56,8 @@ const ErrorText = {
 };
 
 const TimeOffReq = () => {
-  const { user, setControl, control, myLeaveBalance } = useContext(HrContext);
+  const { user, leaveControl, setLeaveControl, myLeaveBalance } =
+    useContext(HrContext);
   const [open, setOpen] = useState(false);
   const [leaveTypes, setLeaveTypes] = useState([]);
   const [error, setError] = useState(false);
@@ -151,12 +152,12 @@ const TimeOffReq = () => {
           });
           const data = response.data.data;
           handleClose();
-          setControl(!control);
+          setLeaveControl(!leaveControl);
           setLeaveType("");
         } catch (error) {
           console.log(error);
           handleClose();
-          setControl(!control);
+          setLeaveControl(!leaveControl);
           setLeaveType("");
           if (error) {
             Swal.fire({

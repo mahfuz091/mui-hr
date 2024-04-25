@@ -16,7 +16,8 @@ import dayjs from "dayjs";
 import axiosInstance from "@/lib/axios-instance";
 
 const LeaveRecords = () => {
-  const { userLeaves, leaves, control, setControl } = useContext(HrContext);
+  const { userLeaves, leaves, leaveControl, setLeaveControl } =
+    useContext(HrContext);
   // console.log(userLeaves);
   const handleLeaveDelete = async (id) => {
     // console.log(id);
@@ -30,7 +31,7 @@ const LeaveRecords = () => {
       const data = response.data.data;
       // console.log(data);
 
-      setControl(!control);
+      setLeaveControl(!leaveControl);
     } catch (error) {
       console.log(error);
     }

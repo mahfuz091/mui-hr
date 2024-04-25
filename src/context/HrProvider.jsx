@@ -7,6 +7,7 @@ export const HrContext = createContext(null);
 const HrProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [control, setControl] = useState(false);
+  const [leaveControl, setLeaveControl] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [contact, setContact] = useState(null);
   const [educations, setEducations] = useState([]);
@@ -16,7 +17,8 @@ const HrProvider = ({ children }) => {
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   const [skills, setSkills] = useState([]);
   const [userSkills, setUserSkills] = useState([]);
-  // console.log(myLeaveBalance);
+  // console.log(userLeaves);
+  // console.log(leaveControl);
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
@@ -106,20 +108,26 @@ const HrProvider = ({ children }) => {
 
   const getUserLeaves = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const response = await axiosInstance.get(
-          `/api/leaves?orderBy&orderDirection=&paginate=false&page=1&perPage=2&user_id=${user?.auth?.id}&status`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data.data;
-        setUserLeaves(data);
-      } catch (error) {
-        console.log(error);
+    if (!token) {
+      setUserLeaves(null);
+    } else {
+      if (!user) {
+        setUserLeaves(null);
+      } else {
+        try {
+          const response = await axiosInstance.get(
+            `/api/leaves?user_id=${user?.auth?.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const data = response.data.data;
+          setUserLeaves(data);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -177,7 +185,12 @@ const HrProvider = ({ children }) => {
     getEducation();
     getSkill();
     getUserSkills();
-  }, [control]);
+  }, []);
+  useEffect(() => {
+    getLeaves();
+    getUserLeaves();
+    getMyLeaveBalance();
+  }, [user, leaveControl]);
 
   const hrToolInfo = {
     user,
@@ -195,6 +208,10 @@ const HrProvider = ({ children }) => {
     educations,
     skills,
     userSkills,
+    leaveControl,
+    setLeaveControl,
+    getSkill,
+    getUserSkills,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

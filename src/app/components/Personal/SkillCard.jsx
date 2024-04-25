@@ -43,7 +43,8 @@ const smallDeviceStyle = {
 };
 
 const SkillCard = () => {
-  const { control, setControl, skills, userSkills } = useContext(HrContext);
+  const { control, setControl, skills, userSkills, getUserSkills } =
+    useContext(HrContext);
   const [open, setOpen] = useState(false);
 
   const [level, setLevel] = useState(null);
@@ -73,8 +74,6 @@ const SkillCard = () => {
       // console.log(data);
       setControl(!control);
       handleClose();
-      // setLevel("");
-      // setSkills("");
     } catch (error) {
       console.log(error);
     }
