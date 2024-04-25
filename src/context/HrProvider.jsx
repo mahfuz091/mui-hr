@@ -87,6 +87,23 @@ const HrProvider = ({ children }) => {
     }
   };
 
+  const getMyLeaveBalance = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      try {
+        const response = await axiosInstance.get("/api/leaves/available", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.data;
+        setMyLeaveBalance(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   const getUserLeaves = async () => {
     const token = localStorage.getItem("accessToken");
     if (token) {
@@ -107,22 +124,6 @@ const HrProvider = ({ children }) => {
     }
   };
 
-  const getMyLeaveBalance = async () => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const response = await axiosInstance.get("/api/leaves/available", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = response.data.data;
-        setMyLeaveBalance(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
   // Get User Skill
   const getUserSkills = async () => {
     const token = localStorage.getItem("accessToken");

@@ -106,6 +106,7 @@ const TimeOffReq = () => {
       days_taken,
       reason,
     };
+    console.log(leaveReq);
     // const diff = differenceInDays(new Date(startDate), new Date()) + 1;
     // const diff = dayjs.diff(startDate, "days");
 
@@ -149,15 +150,12 @@ const TimeOffReq = () => {
             },
           });
           const data = response.data.data;
-          // console.log(data);
           handleClose();
-
           setControl(!control);
           setLeaveType("");
         } catch (error) {
           console.log(error);
           handleClose();
-
           setControl(!control);
           setLeaveType("");
           if (error) {

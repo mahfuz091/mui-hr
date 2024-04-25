@@ -17,9 +17,9 @@ import axiosInstance from "@/lib/axios-instance";
 
 const LeaveRecords = () => {
   const { userLeaves, leaves, control, setControl } = useContext(HrContext);
-  console.log(userLeaves);
+  // console.log(userLeaves);
   const handleLeaveDelete = async (id) => {
-    console.log(id);
+    // console.log(id);
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.delete(`/api/leaves/${id}`, {

@@ -14,7 +14,7 @@ import {
 
 const LeaveSummeryTable = () => {
   const { userLeaves, myLeaveBalance } = useContext(HrContext);
-  console.log(userLeaves, myLeaveBalance);
+  // console.log(userLeaves, myLeaveBalance);
   return (
     <Fragment>
       <Paper
