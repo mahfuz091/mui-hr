@@ -15,7 +15,22 @@ body {
 .rdrDefinedRangesWrapper {
   display: none;
 }
-:where(.css-dev-only-do-not-override-mzwlov).ant-picker-dropdown {
+
+.ant-picker {
+  width: 100%; /* Adjust the width as needed */
+}
+
+/* Adjust height */
+.ant-picker {
+  height: 55px; /* Adjust the height as needed */
+}
+.ant-picker-dropdown {
+  z-index: 9999;
+}
+.ant-picker .ant-picker-input > input {
+  font-size: 18px;
+}
+/* :where(.css-dev-only-do-not-override-mzwlov).ant-picker-dropdown {
   z-index: 9999;
 }
 .range {
@@ -29,4 +44,4 @@ body {
   .ant-picker-input
   > input {
   font-size: 18px;
-}
+} */
