@@ -5,6 +5,8 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import dayjs from "dayjs";
 import { TextField, Box } from "@mui/material";
+import { DatePicker } from "antd";
+const { RangePicker } = DatePicker;
 
 const page = () => {
   const [date, setDate] = useState({
@@ -12,10 +14,13 @@ const page = () => {
     endDate: new Date(),
     key: "selection",
   });
-  const start_dateObj = dayjs(date.startDate);
-  const start_date = start_dateObj.format("YYYY-MM-DD");
-  const end_dateObj = dayjs(date.endDate);
-  const end_date = end_dateObj.format("YYYY-MM-DD");
+  const [dates, setDates] = useState([]);
+  // const start_dateObj = dayjs(date.startDate);
+  // const start_date = start_dateObj.format("YYYY-MM-DD");
+  // const end_dateObj = dayjs(date.endDate);
+  // const end_date = end_dateObj.format("YYYY-MM-DD");
+  const start_date = dates[0];
+  const end_date = dates[1];
 
   console.log(start_date, "-", end_date);
   const handleChange = (ranges) => {
@@ -25,8 +30,17 @@ const page = () => {
   return (
     <>
       <Box>
-        <TextField placeholder={`${start_date} - ${end_date}`} />
+        <TextField disabled placeholder={`${start_date} - ${end_date}`} />
         <DateRangePicker onChange={handleChange} ranges={[date]} />
+        <RangePicker
+          onChange={(values) =>
+            setDates(
+              values.map((item) => {
+                return dayjs(item).format("YYYY-MM-DD");
+              })
+            )
+          }
+        />
       </Box>
     </>
   );

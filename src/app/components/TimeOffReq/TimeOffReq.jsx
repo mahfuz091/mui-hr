@@ -19,6 +19,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import NordicWalkingIcon from "@mui/icons-material/NordicWalking";
 import axiosInstance from "@/lib/axios-instance";
+import ErrorIcon from "@mui/icons-material/Error";
 
 //
 import { DatePicker, MobileDatePicker } from "@mui/x-date-pickers";
@@ -30,6 +31,7 @@ import { differenceInDays } from "date-fns";
 import { HrContext } from "@/context/HrProvider";
 import Swal from "sweetalert2";
 import { calculateBusinessDays } from "@/lib/utils";
+import DateRangePicker from "../DateRangePicker/DateRangePicker";
 
 // Style
 const style = {
@@ -47,21 +49,39 @@ const style = {
   },
 };
 
+const ErrorText = {
+  before3day:
+    "Your request is required to have a minimum of 3 days notice period",
+  balance: "You Can't apply more than your balance",
+};
+
 const TimeOffReq = () => {
   const { user, setControl, control, myLeaveBalance } = useContext(HrContext);
   const [open, setOpen] = useState(false);
   const [leaveTypes, setLeaveTypes] = useState([]);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  console.log(myLeaveBalance);
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [dates, setDates] = useState([]);
 
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const handleOpen = () => setOpen(true);
+
+  const handleClose = () => {
+    setDates([]);
+    setOpen(false);
+    setError(false);
+  };
+
+  // const [endDate, setEndDate] = useState("");
+  const startDate = dates && dates.length > 0 ? dates[0] : "";
+  const endDate = dates && dates.length > 0 ? dates[1] : "";
+  // console.log(startDate, endDate);
 
   const businessDays = calculateBusinessDays(startDate, endDate);
-  const difference = differenceInDays(new Date(endDate), new Date(startDate));
+  const difference = differenceInDays(new Date(startDate), new Date());
 
-  console.log(`Difference in days: ${businessDays}`);
+  // console.log(difference);
+
+  // console.log(`Difference in days: ${businessDays}`);
   const [leaveType, setLeaveType] = useState("");
 
   const handleLeaveTypeChange = (event) => {
@@ -90,32 +110,37 @@ const TimeOffReq = () => {
     // const diff = dayjs.diff(startDate, "days");
 
     const token = localStorage.getItem("accessToken");
-    console.log(leave_type_id);
 
-    if (businessDays < 4) {
-      handleClose();
-      setStartDate("");
-      setLeaveType("");
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Something went wrong!",
-      });
+    if (difference < 3) {
+      // handleClose();
+      setError(true);
+      setErrorText(
+        "Your request is required to have a minimum of 3 days notice period"
+      );
+
+      // setLeaveType("");
+      // Swal.fire({
+      //   icon: "error",
+      //   title: "Oops...",
+      //   text: "Something went wrong!",
+      // });
     } else {
       const balance = myLeaveBalance?.leaveTypes?.find(
         (leaveBalance) => leaveBalance?.id === leave_type_id
       );
 
       if (balance?.balance < days_taken) {
-        handleClose();
-        setStartDate("");
+        // handleClose();
+
         setLeaveType("");
-        Swal.fire({
-          icon: "error",
-          position: "top-end",
-          title: "Oops...",
-          text: "You Can't apply more than your balance",
-        });
+        setError(true);
+        setErrorText("You Can't apply more than your balance");
+        // Swal.fire({
+        //   icon: "error",
+        //   position: "top-end",
+        //   title: "Oops...",
+        //   text: "You Can't apply more than your balance",
+        // });
       } else {
         try {
           const response = await axiosInstance.post("/api/leaves", leaveReq, {
@@ -188,6 +213,58 @@ const TimeOffReq = () => {
               <CloseIcon />
             </IconButton>
           </Box>
+          {error ? (
+            <Box
+              sx={{
+                padding: "10px 20px",
+                margin: "20px 20px",
+                border: "1px solid #f1c959",
+                background: "#f6f9fb",
+                boxShadow: "rgba(9, 8, 61, 0.08) 0px 1px 4px;",
+                borderRadius: "4px",
+              }}
+            >
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+
+                  padding: " 10px 0",
+                  fontSize: "13px",
+                }}
+              >
+                {" "}
+                <ErrorIcon sx={{ color: "#f1c959" }} /> Oops! Change a few
+                things and try again.
+              </Typography>
+              <Box
+                sx={{
+                  padding: "0 20px",
+                  background: "#FFF",
+                  boxShadow: "0px 1px 4px rgba(9, 8, 61, 0.08)",
+                  border: "1px solid #D3DFEB",
+                  borderRadius: "4px",
+                }}
+              >
+                <List sx={{ listStyleType: "disc", pl: 2 }}>
+                  <ListItem
+                    sx={{
+                      display: "list-item",
+                      pl: 0,
+                      fontSize: "13px",
+                      pt: 0,
+                      pb: 0,
+                    }}
+                  >
+                    {errorText}
+                  </ListItem>
+                </List>
+              </Box>
+            </Box>
+          ) : (
+            ""
+          )}
           <Box>
             <form action='' onSubmit={handleLeaveReq}>
               <Box sx={{ minWidth: 120, margin: "20px 0", padding: "0 20px" }}>
@@ -216,7 +293,7 @@ const TimeOffReq = () => {
                   </Select>
                 </FormControl>
               </Box>
-              <Grid
+              {/* <Grid
                 container
                 spacing={4}
                 sx={{ marginBottom: "20px", padding: "0 20px" }}
@@ -255,7 +332,10 @@ const TimeOffReq = () => {
                     </DemoContainer>
                   </LocalizationProvider>
                 </Grid>
-              </Grid>
+              </Grid> */}
+              <Box sx={{ padding: "0px 20px 20px" }}>
+                <DateRangePicker dates={dates} setDates={setDates} />
+              </Box>
               <Box sx={{ padding: "0px 20px 20px" }}>
                 <Typography>Days Taken : {businessDays || "0"} days</Typography>
               </Box>

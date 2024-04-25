@@ -15,3 +15,18 @@ body {
 .rdrDefinedRangesWrapper {
   display: none;
 }
+:where(.css-dev-only-do-not-override-mzwlov).ant-picker-dropdown {
+  z-index: 9999;
+}
+.range {
+  width: 100%;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-picker-outlined {
+  width: 100%;
+  height: 55px;
+}
+:where(.css-dev-only-do-not-override-mzwlov).ant-picker
+  .ant-picker-input
+  > input {
+  font-size: 18px;
+}
