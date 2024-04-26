@@ -42,7 +42,6 @@ const smallDeviceStyle = {
 const EducationCard = () => {
   const { control, setControl, educations } = useContext(HrContext);
 
-
   // console.log(educations);
   const [open, setOpen] = useState(false);
 
@@ -67,7 +66,7 @@ const EducationCard = () => {
       start_year,
       end_year,
     };
-    // console.log(education);
+    console.log(education);
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axiosInstance.post(

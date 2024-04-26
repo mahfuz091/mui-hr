@@ -185,7 +185,7 @@ const HrProvider = ({ children }) => {
     getEducation();
     getSkill();
     getUserSkills();
-  }, []);
+  }, [control]);
   useEffect(() => {
     getLeaves();
     getUserLeaves();

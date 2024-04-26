@@ -56,7 +56,7 @@ const EditEducation = ({ education }) => {
   //   Delete Education
 
   const handleEduDelete = async (id) => {
-    // console.log(id);
+    console.log(id);
     const token = localStorage.getItem("accessToken");
     // console.log(token);
     try {
