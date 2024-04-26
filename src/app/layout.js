@@ -2,7 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import * as React from "react";
 import HrProvider from "@/context/HrProvider";
-import Layout from "./components/Layout/Layout";
+import Layout from "@/components/Layout/Layout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

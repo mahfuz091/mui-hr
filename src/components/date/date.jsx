@@ -8,7 +8,7 @@ import { TextField, Box } from "@mui/material";
 import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 
-const page = () => {
+const date = () => {
   const [date, setDate] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -46,4 +46,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default date;

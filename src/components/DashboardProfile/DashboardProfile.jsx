@@ -13,13 +13,13 @@ import AccountOutline from "mdi-material-ui/AccountOutline";
 import LockOpenOutline from "mdi-material-ui/LockOpenOutline";
 import InformationOutline from "mdi-material-ui/InformationOutline";
 
-import PersonalCard from "@/app/components/Personal/PersonalCard";
-import Personal from "@/app/components/Personal/Personal";
+import PersonalCard from "@/components/Personal/PersonalCard";
+import Personal from "@/components/Personal/Personal";
 
 // Axios
 
 import axiosInstance from "@/lib/axios-instance";
-import Job from "@/app/components/Job/Job";
+import Job from "@/components/Job/Job";
 
 // Day js
 import dayjs from "dayjs";
