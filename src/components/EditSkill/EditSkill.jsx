@@ -42,7 +42,7 @@ const smallDeviceStyle = {
 };
 
 const EditSkill = ({ skill }) => {
-  const { control, setControl } = useContext(HrContext);
+  const { control, setControl, getUserSkills } = useContext(HrContext);
 
   // Edit Modal
 
@@ -73,7 +73,8 @@ const EditSkill = ({ skill }) => {
       });
       const data = response.data.data;
       handleDropClose();
-      setControl(!control);
+      // setControl(!control);
+      getUserSkills();
     } catch (error) {
       console.log(error);
     }

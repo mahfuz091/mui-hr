@@ -76,7 +76,8 @@ const SkillCard = () => {
       );
       const data = response.data.data;
       // console.log(data);
-      setControl(!control);
+      // setControl(!control);
+      getUserSkills();
       handleClose();
     } catch (error) {
       console.log(error);
