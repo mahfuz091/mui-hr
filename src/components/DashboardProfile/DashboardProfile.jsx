@@ -76,8 +76,6 @@ const DashboardProfile = () => {
     const user = { name, email, date_of_birth, gender, designation_id };
     const token = localStorage.getItem("accessToken");
 
-    // console.log("1", user, token);
-
     try {
       const response = await axiosInstance.post("/api/profile", user, {
         headers: {

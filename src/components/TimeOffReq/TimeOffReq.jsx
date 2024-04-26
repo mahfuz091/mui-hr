@@ -56,8 +56,14 @@ const ErrorText = {
 };
 
 const TimeOffReq = () => {
-  const { user, leaveControl, setLeaveControl, myLeaveBalance } =
-    useContext(HrContext);
+  const {
+    user,
+    leaveControl,
+    setLeaveControl,
+    myLeaveBalance,
+    getMyLeaveBalance,
+    getUserLeaves,
+  } = useContext(HrContext);
   const [open, setOpen] = useState(false);
   const [leaveTypes, setLeaveTypes] = useState([]);
   const [error, setError] = useState(false);
@@ -152,8 +158,10 @@ const TimeOffReq = () => {
           });
           const data = response.data.data;
           handleClose();
-          setLeaveControl(!leaveControl);
+          // setLeaveControl(!leaveControl);
           setLeaveType("");
+          getMyLeaveBalance();
+          getUserLeaves();
         } catch (error) {
           console.log(error);
           handleClose();

@@ -179,9 +179,6 @@ const HrProvider = ({ children }) => {
   useEffect(() => {
     getUser();
     getContact();
-    getLeaves();
-    getUserLeaves();
-    getMyLeaveBalance();
     getEducation();
     getSkill();
     getUserSkills();
@@ -213,6 +210,9 @@ const HrProvider = ({ children }) => {
     getSkill,
     getUserSkills,
     getEducation,
+    getLeaves,
+    getUserLeaves,
+    getMyLeaveBalance,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };
