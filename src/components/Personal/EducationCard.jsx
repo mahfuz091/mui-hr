@@ -162,6 +162,7 @@ const EducationCard = () => {
             <form action='' onSubmit={handleEducation}>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='School'
                 label='School '
@@ -169,6 +170,7 @@ const EducationCard = () => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='Degree'
                 label='Degree'
@@ -176,6 +178,7 @@ const EducationCard = () => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='Grade'
                 label='Grade'
@@ -183,6 +186,7 @@ const EducationCard = () => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='Field of study'
                 label='Field of study'
@@ -190,6 +194,7 @@ const EducationCard = () => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='Start Year'
                 label='Start Year'
@@ -197,6 +202,7 @@ const EducationCard = () => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder='End Year'
                 label='End Year'

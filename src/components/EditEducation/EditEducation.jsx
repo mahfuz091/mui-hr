@@ -114,7 +114,8 @@ const EditEducation = ({ education }) => {
       const data = response.data.data;
       handleDropClose();
       handleClose2();
-      setControl(!control);
+      getEducation();
+      // setControl(!control);
     } catch (error) {
       console.log(error);
     }
@@ -228,6 +229,7 @@ const EditEducation = ({ education }) => {
             <form action='' onSubmit={handleEduEdit}>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.school}
                 label='School '
@@ -236,6 +238,7 @@ const EditEducation = ({ education }) => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.degree}
                 label='Degree'
@@ -244,6 +247,7 @@ const EditEducation = ({ education }) => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.grade}
                 label='Grade'
@@ -252,6 +256,7 @@ const EditEducation = ({ education }) => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.field_of_study}
                 label='Field of study'
@@ -260,6 +265,7 @@ const EditEducation = ({ education }) => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.start_year}
                 label='Start Year'
@@ -268,6 +274,7 @@ const EditEducation = ({ education }) => {
               ></TextField>
               <TextField
                 fullWidth
+                required
                 margin='normal'
                 placeholder={education.end_year}
                 label='End Year'

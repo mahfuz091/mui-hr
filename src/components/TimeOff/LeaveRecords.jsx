@@ -66,7 +66,7 @@ const LeaveRecords = () => {
                   <TableCell>
                     {
                       leaves?.leaveTypes?.find(
-                        (leave) => leave.id === userLeave.leave_type_id
+                        (leave) => leave.id === userLeave?.leave_type_id
                       )?.name
                     }
                   </TableCell>
@@ -116,14 +116,6 @@ const LeaveRecords = () => {
                   </TableCell>
                 </TableRow>
               ))}
-              {/* <TableRow>
-                <TableCell>Leave Type</TableCell>
-                <TableCell>Dates</TableCell>
-                <TableCell>Total Days</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Remarks</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow> */}
             </TableBody>
           </Table>
         </TableContainer>
