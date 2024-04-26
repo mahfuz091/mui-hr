@@ -36,7 +36,7 @@ const style = {
 };
 
 const EditEducation = ({ education }) => {
-  const { control, setControl } = useContext(HrContext);
+  const { control, setControl, getEducation } = useContext(HrContext);
   // Edit Modal
 
   const [open2, setOpen2] = useState(false);
@@ -70,7 +70,8 @@ const EditEducation = ({ education }) => {
       );
       const data = response.data.data;
       handleDropClose();
-      setControl(!control);
+      // setControl(!control);
+      getEducation();
     } catch (error) {
       console.log(error);
     }

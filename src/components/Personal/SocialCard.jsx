@@ -36,7 +36,8 @@ const SocialCard = () => {
       });
       const data = response.data.data;
       console.log(data);
-      setControl(!control);
+      // setControl(!control);
+      getUser();
       setEditing(false);
     } catch (error) {
       console.log(error);

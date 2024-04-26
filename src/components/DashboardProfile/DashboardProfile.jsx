@@ -65,7 +65,8 @@ const DashboardProfile = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { user, setEditing, control, setControl } = useContext(HrContext);
+  const { user, setEditing, control, setControl, getUser } =
+    useContext(HrContext);
   const designation_id = user?.auth?.designation_id;
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
@@ -86,8 +87,8 @@ const DashboardProfile = () => {
 
       const data = response.data.data;
       // console.log(data);
-
-      setControl(!control);
+      getUser();
+      // setControl(!control);
       setEditing(false);
     } catch (error) {
       console.error("Error:", error);

@@ -40,7 +40,8 @@ const smallDeviceStyle = {
 };
 
 const EducationCard = () => {
-  const { control, setControl, educations } = useContext(HrContext);
+  const { control, setControl, educations, getEducation } =
+    useContext(HrContext);
 
   // console.log(educations);
   const [open, setOpen] = useState(false);
@@ -80,7 +81,8 @@ const EducationCard = () => {
       );
       const data = response.data.data;
       // console.log(data);
-      setControl(!control);
+      // setControl(!control);
+      getEducation();
       handleClose();
     } catch (error) {
       console.log(error);

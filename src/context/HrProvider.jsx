@@ -212,6 +212,7 @@ const HrProvider = ({ children }) => {
     setLeaveControl,
     getSkill,
     getUserSkills,
+    getEducation,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

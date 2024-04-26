@@ -49,7 +49,8 @@ const BankCard = () => {
       );
       const data = response.data.data;
       // console.log("bank", data);
-      setControl(!control);
+      getUser();
+      // setControl(!control);
       setEditing(false);
     } catch (error) {
       console.log(error);
