@@ -43,6 +43,10 @@ const EducationCard = () => {
   const { control, setControl, educations, getEducation } =
     useContext(HrContext);
 
+  useEffect(() => {
+    getEducation();
+  }, []);
+
   // console.log(educations);
   const [open, setOpen] = useState(false);
 

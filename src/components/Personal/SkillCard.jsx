@@ -45,6 +45,10 @@ const smallDeviceStyle = {
 const SkillCard = () => {
   const { control, setControl, skills, userSkills, getUserSkills } =
     useContext(HrContext);
+
+  useEffect(() => {
+    getUserSkills();
+  }, []);
   const [open, setOpen] = useState(false);
 
   const [level, setLevel] = useState(null);

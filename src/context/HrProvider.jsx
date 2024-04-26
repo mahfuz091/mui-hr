@@ -188,13 +188,13 @@ const HrProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
-    getUser();
-    if (token && user) {
-      getContact();
-      getEducation();
-      getSkill();
-      getUserSkills();
-    }
+    // getUser();
+    // if (token && user) {
+    //   getContact();
+    //   getEducation();
+    //   getSkill();
+    //   getUserSkills();
+    // }
   }, [user]);
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -229,6 +229,7 @@ const HrProvider = ({ children }) => {
     getLeaves,
     getUserLeaves,
     getMyLeaveBalance,
+    getContact,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = () => {
-  const { setControl, control } = useContext(HrContext);
+  const { setControl, control, getUser } = useContext(HrContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -48,7 +48,8 @@ const SignIn = () => {
       document.cookie = `session=${email}; expires=${expiresUTC}; path=/;`;
 
       router.push("/dashboard/me");
-      setControl(!control);
+      // setControl(!control);
+      getUser();
     } catch (error) {
       console.error("Error:", error);
       setError(true);

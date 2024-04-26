@@ -7,10 +7,14 @@ import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 
 const ContactCard = () => {
-  const { control, setControl, contact } = useContext(HrContext);
+  const { control, setControl, contact, getContact } = useContext(HrContext);
   const [isEditing, setEditing] = useState(false);
   // const [contact, setContact] = useState(null);
   // console.log(contact);
+
+  useEffect(() => {
+    getContact();
+  }, []);
 
   const handleContact = async (e) => {
     e.preventDefault();
@@ -39,7 +43,8 @@ const ContactCard = () => {
       );
       const data = response.data.data;
 
-      setControl(!control);
+      // setControl(!control);
+      getContact();
       setEditing(false);
     } catch (error) {
       console.log(error);
