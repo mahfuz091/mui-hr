@@ -125,13 +125,6 @@ const TimeOffReq = () => {
       setErrorText(
         "Your request is required to have a minimum of 3 days notice period"
       );
-
-      // setLeaveType("");
-      // Swal.fire({
-      //   icon: "error",
-      //   title: "Oops...",
-      //   text: "Something went wrong!",
-      // });
     } else {
       const balance = myLeaveBalance?.leaveTypes?.find(
         (leaveBalance) => leaveBalance?.id === leave_type_id
