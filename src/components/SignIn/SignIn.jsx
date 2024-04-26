@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
-import logo from "../../../assets/images/oyolloo-logo-color-horizontal.png";
+import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 
 import Link from "next/link";
 import axiosInstance from "@/lib/axios-instance";
