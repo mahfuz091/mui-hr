@@ -189,12 +189,12 @@ const HrProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     // getUser();
-    // if (token && user) {
-    //   getContact();
-    //   getEducation();
-    //   getSkill();
-    //   getUserSkills();
-    // }
+    if (token && user) {
+      // getContact();
+      // getEducation();
+      getSkill();
+      // getUserSkills();
+    }
   }, [user]);
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
