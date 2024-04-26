@@ -48,10 +48,10 @@ const TodoCard = () => {
           <path
             d='M10.8594 104.403H111.625'
             stroke='#EBF0F6'
-            stroke-width='2'
-            stroke-miterlimit='10'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='2'
+            strokeMiterlimit='10'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           ></path>
           <path
             d='M92.0578 19.9664V101.36C92.0578 102.833 90.8839 104.109 89.3186 104.109H29.3486C27.8812 104.109 26.6094 102.931 26.6094 101.36V19.9664C26.6094 18.4936 27.8812 17.3154 29.3486 17.3154H89.4164C90.8839 17.3154 92.0578 18.4936 92.0578 19.9664Z'
@@ -177,9 +177,9 @@ const TodoCard = () => {
               width='77.4229'
               height='77.8262'
               filterUnits='userSpaceOnUse'
-              color-interpolation-filters='sRGB'
+              colorInterpolationFilters='sRGB'
             >
-              <feFlood flood-opacity='0' result='BackgroundImageFix'></feFlood>
+              <feFlood floodOpacity='0' result='BackgroundImageFix'></feFlood>
               <feColorMatrix
                 in='SourceAlpha'
                 type='matrix'
@@ -211,9 +211,9 @@ const TodoCard = () => {
               width='51.0527'
               height='51.2119'
               filterUnits='userSpaceOnUse'
-              color-interpolation-filters='sRGB'
+              colorInterpolationFilters='sRGB'
             >
-              <feFlood flood-opacity='0' result='BackgroundImageFix'></feFlood>
+              <feFlood floodOpacity='0' result='BackgroundImageFix'></feFlood>
               <feColorMatrix
                 in='SourceAlpha'
                 type='matrix'
@@ -246,8 +246,8 @@ const TodoCard = () => {
               y2='85.108'
               gradientUnits='userSpaceOnUse'
             >
-              <stop stop-color='#83A6FF'></stop>
-              <stop offset='1' stop-color='#5A78FF'></stop>
+              <stop stopColor='#83A6FF'></stop>
+              <stop offset='1' stopColor='#5A78FF'></stop>
             </linearGradient>
             <linearGradient
               id='paint1_linear_5679_308151'
@@ -257,8 +257,8 @@ const TodoCard = () => {
               y2='94.852'
               gradientUnits='userSpaceOnUse'
             >
-              <stop stop-color='#4F6AFF'></stop>
-              <stop offset='1' stop-color='#657EFF' stop-opacity='0'></stop>
+              <stop stopColor='#4F6AFF'></stop>
+              <stop offset='1' stopColor='#657EFF' stopOpacity='0'></stop>
             </linearGradient>
             <linearGradient
               id='paint2_linear_5679_308151'
@@ -268,8 +268,8 @@ const TodoCard = () => {
               y2='82.561'
               gradientUnits='userSpaceOnUse'
             >
-              <stop offset='0.0113208' stop-color='#C2D1FF'></stop>
-              <stop offset='1' stop-color='white'></stop>
+              <stop offset='0.0113208' stopColor='#C2D1FF'></stop>
+              <stop offset='1' stopColor='white'></stop>
             </linearGradient>
             <linearGradient
               id='paint3_linear_5679_308151'
@@ -279,8 +279,8 @@ const TodoCard = () => {
               y2='78.2566'
               gradientUnits='userSpaceOnUse'
             >
-              <stop offset='0.0113208' stop-color='#C2D1FF'></stop>
-              <stop offset='1' stop-color='white'></stop>
+              <stop offset='0.0113208' stopColor='#C2D1FF'></stop>
+              <stop offset='1' stopColor='white'></stop>
             </linearGradient>
           </defs>
         </svg>

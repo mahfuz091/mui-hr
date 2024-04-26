@@ -177,7 +177,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              activeClassName='active'
+              // activeClassName='active'
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",

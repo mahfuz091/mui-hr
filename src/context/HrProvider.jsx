@@ -42,7 +42,10 @@ const HrProvider = ({ children }) => {
 
   const getUser = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
+    if (!token && !user) {
+      console.log("Clicked");
+      setUser(null);
+    } else {
       try {
         const response = await axiosInstance.get("/api/profile", {
           headers: {
@@ -59,22 +62,26 @@ const HrProvider = ({ children }) => {
 
   const getEducation = async () => {
     const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.get("/api/profile/educations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = response.data.data;
-      setEducations(data);
-    } catch (error) {
-      console.log(error);
+    if (!token && !user) {
+      setEducations([]);
+    } else {
+      try {
+        const response = await axiosInstance.get("/api/profile/educations", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = response.data.data;
+        setEducations(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   const getLeaves = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
+    if (token && user) {
       try {
         const response = await axiosInstance.get("/api/leave-types", {
           headers: {
@@ -91,7 +98,7 @@ const HrProvider = ({ children }) => {
 
   const getMyLeaveBalance = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
+    if (token && user) {
       try {
         const response = await axiosInstance.get("/api/leaves/available", {
           headers: {
@@ -108,7 +115,7 @@ const HrProvider = ({ children }) => {
 
   const getUserLeaves = async () => {
     const token = localStorage.getItem("accessToken");
-    if (!token) {
+    if (!token && !user) {
       setUserLeaves(null);
     } else {
       if (!user) {
@@ -135,22 +142,25 @@ const HrProvider = ({ children }) => {
   // Get User Skill
   const getUserSkills = async () => {
     const token = localStorage.getItem("accessToken");
-    try {
-      const response = await axiosInstance.get(
-        "/api/profile/skills",
+    if (!token && !user) {
+      setUserSkills([]);
+    } else {
+      try {
+        const response = await axiosInstance.get(
+          "/api/profile/skills",
 
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      const data = response.data.data;
-      // console.log(data);
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = response.data.data;
 
-      setUserSkills(data);
-    } catch (error) {
-      console.log(error);
+        setUserSkills(data);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -177,16 +187,22 @@ const HrProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("accessToken");
     getUser();
-    getContact();
-    getEducation();
-    getSkill();
-    getUserSkills();
-  }, [control]);
+    if (token && user) {
+      getContact();
+      getEducation();
+      getSkill();
+      getUserSkills();
+    }
+  }, [user]);
   useEffect(() => {
-    getLeaves();
-    getUserLeaves();
-    getMyLeaveBalance();
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      getLeaves();
+      getUserLeaves();
+      getMyLeaveBalance();
+    }
   }, [user, leaveControl]);
 
   const hrToolInfo = {
