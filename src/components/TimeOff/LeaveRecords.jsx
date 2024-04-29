@@ -72,7 +72,7 @@ const LeaveRecords = () => {
                   </TableCell>
                   <TableCell>
                     {/* {userLeave.start_date} to {userLeave.end_date} */}
-                    {dayjs(userLeave.start_date).format("DD MMM, YYYY")} to{" "}
+                    {dayjs(userLeave.start_date).format("DD MMM, YYYY")} to
                     {dayjs(userLeave.end_date).format("DD MMM, YYYY")}
                   </TableCell>
                   <TableCell>{userLeave.days_taken}</TableCell>
@@ -104,8 +104,7 @@ const LeaveRecords = () => {
                           color: "white",
                           textTransform: "lowercase",
                           "&:hover": {
-                            background: "#20c5ca", // Change background color on hover
-                            // Add any other hover styles here
+                            background: "#20c5ca",
                           },
                         }}
                         onClick={() => handleLeaveDelete(userLeave.id)}

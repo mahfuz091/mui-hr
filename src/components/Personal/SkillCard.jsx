@@ -38,10 +38,6 @@ const style = {
   },
 };
 
-const smallDeviceStyle = {
-  width: "80%", // Change width to 80% for small devices
-};
-
 const SkillCard = () => {
   const { control, setControl, skills, userSkills, getUserSkills } =
     useContext(HrContext);
@@ -49,6 +45,13 @@ const SkillCard = () => {
   useEffect(() => {
     getUserSkills();
   }, []);
+
+  const restSkill = skills?.skills?.filter(
+    (skill) => !userSkills?.skills?.find((sk) => sk.id === skill.id)
+  );
+
+  // console.log(restSkill);
+
   const [open, setOpen] = useState(false);
 
   const [level, setLevel] = useState(null);
@@ -166,8 +169,8 @@ const SkillCard = () => {
                     label='Skill'
                     onChange={handleChange}
                   >
-                    {skills?.skills?.map((skill, index) => (
-                      <MenuItem key={index} value={skill.id} skill={skill}>
+                    {restSkill?.map((skill, index) => (
+                      <MenuItem key={skill.id} value={skill.id} skill={skill}>
                         {skill.name}
                       </MenuItem>
                     ))}

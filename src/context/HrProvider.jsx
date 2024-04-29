@@ -118,23 +118,19 @@ const HrProvider = ({ children }) => {
     if (!token && !user) {
       setUserLeaves(null);
     } else {
-      if (!user) {
-        setUserLeaves(null);
-      } else {
-        try {
-          const response = await axiosInstance.get(
-            `/api/leaves?user_id=${user?.auth?.id}`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          const data = response.data.data;
-          setUserLeaves(data);
-        } catch (error) {
-          console.log(error);
-        }
+      try {
+        const response = await axiosInstance.get(
+          `/api/leaves?user_id=${user?.auth?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = response.data.data;
+        setUserLeaves(data);
+      } catch (error) {
+        console.log(error);
       }
     }
   };

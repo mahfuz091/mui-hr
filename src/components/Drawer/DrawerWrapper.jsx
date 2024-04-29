@@ -113,10 +113,8 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
-  // console.log(pathname);
 
   const isNavLinkActive = (path) => {
-    // console.log("path", path);
     if (pathname === path) {
       return true;
     } else {
@@ -175,9 +173,8 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
       <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
+          <ListItem key={index} disablePadding sx={{ display: "block" }}>
             <ListItemButton
-              // activeClassName='active'
               sx={{
                 minHeight: 48,
                 justifyContent: open ? "initial" : "center",
