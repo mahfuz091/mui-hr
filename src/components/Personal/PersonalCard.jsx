@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { MdEdit, MdCalendarMonth } from "react-icons/md";
-import { DatePicker } from "@mui/x-date-pickers";
+
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 
@@ -22,14 +22,46 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-const PersonalCard = ({
-  handleUpdateProfile,
-  setGender,
-  setDateOfBirth,
-  dateOfBirth,
-}) => {
-  const { user, isEditing, setEditing } = useContext(HrContext);
+// Axios
+
+import axiosInstance from "@/lib/axios-instance";
+
+const PersonalCard = () => {
+  const { user, isEditing, setEditing, getUser } = useContext(HrContext);
   const date_of_birth = user?.auth?.date_of_birth;
+  const [gender, setGender] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(dayjs);
+
+  const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
+    .toString()
+    .padStart(2, "0")}-${dateOfBirth?.$D.toString().padStart(2, "0")}`;
+
+  const designation_id = user?.auth?.designation_id;
+  const handleUpdateProfile = async (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const date_of_birth = date;
+    const user = { name, email, date_of_birth, gender, designation_id };
+    const token = localStorage.getItem("accessToken");
+
+    try {
+      const response = await axiosInstance.post("/api/profile", user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = response.data.data;
+      // console.log(data);
+      getUser();
+      // setControl(!control);
+      setEditing(false);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  // console.log(user);
 
   // console.log("user", user);
   return (
@@ -62,7 +94,7 @@ const PersonalCard = ({
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
           <form action='' onSubmit={handleUpdateProfile}>
-            <FormControl fullwidth>
+            <FormControl fullWidth>
               <Typography>Employee Id</Typography>
             </FormControl>
             <TextField

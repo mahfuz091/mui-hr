@@ -20,7 +20,13 @@ const LeaveSummery = () => {
         <Box sx={{ padding: "30px 0", display: "none" }}>
           <Grid container sx={{ marginTop: "20px" }}>
             {myLeaveBalance?.leaveTypes?.map((leave) => (
-              <Grid sx={{ margin: "0 auto" }} item xs={12} md={4}>
+              <Grid
+                key={leave.id}
+                sx={{ margin: "0 auto" }}
+                item
+                xs={12}
+                md={4}
+              >
                 <Box
                   sx={{
                     width: "300px",

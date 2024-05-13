@@ -16,9 +16,6 @@ import InformationOutline from "mdi-material-ui/InformationOutline";
 import PersonalCard from "@/components/Personal/PersonalCard";
 import Personal from "@/components/Personal/Personal";
 
-// Axios
-
-import axiosInstance from "@/lib/axios-instance";
 import Job from "@/components/Job/Job";
 
 // Day js
@@ -54,45 +51,11 @@ const TabName = styled("span")(({ theme }) => ({
 }));
 
 const DashboardProfile = () => {
+  const { user } = useContext(HrContext);
   const [value, setValue] = useState("account");
-  const [gender, setGender] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState(dayjs);
-
-  const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
-    .toString()
-    .padStart(2, "0")}-${dateOfBirth?.$D.toString().padStart(2, "0")}`;
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { user, setEditing, control, setControl, getUser } =
-    useContext(HrContext);
-  const designation_id = user?.auth?.designation_id;
-  const handleUpdateProfile = async (e) => {
-    e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const date_of_birth = date;
-    const user = { name, email, date_of_birth, gender, designation_id };
-    const token = localStorage.getItem("accessToken");
-
-    try {
-      const response = await axiosInstance.post("/api/profile", user, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = response.data.data;
-      // console.log(data);
-      getUser();
-      // setControl(!control);
-      setEditing(false);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-  // console.log(user);
   return (
     <Fragment>
       <Box
@@ -184,13 +147,7 @@ const DashboardProfile = () => {
           </TabList>
 
           <TabPanel sx={{ p: 0 }} value='account'>
-            <Personal
-              user={user}
-              handleUpdateProfile={handleUpdateProfile}
-              setGender={setGender}
-              setDateOfBirth={setDateOfBirth}
-              dateOfBirth={dateOfBirth}
-            />
+            <Personal />
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='job'>
             <Job></Job>

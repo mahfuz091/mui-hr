@@ -140,7 +140,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
         {menuItems.map((text, index) => (
           <ListItem
             className={isNavLinkActive(text.path) ? "active" : ""}
-            key={text}
+            key={index}
             disablePadding
             sx={{ display: "block" }}
           >

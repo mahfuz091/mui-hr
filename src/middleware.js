@@ -15,13 +15,28 @@ export default async function middleware(req) {
   const isAuthenticated = true;
   console.log(isAuthenticated);
 
-  // User is authenticated
-  if (mainRoutes.includes(req.nextUrl.pathname)) {
-    const absoluteURL = new URL("/dashboard", req.nextUrl.origin);
-    return NextResponse.redirect(absoluteURL.toString());
-  } else if (!session && protectedRoutes.includes(req.nextUrl.pathname)) {
-    // Redirect to sign-in page for protected routes
+  // // User is authenticated
+  // if (mainRoutes.includes(req.nextUrl.pathname)) {
+  //   const absoluteURL = new URL("/dashboard", req.nextUrl.origin);
+  //   return NextResponse.redirect(absoluteURL.toString());
+  // } else if (!session && protectedRoutes.includes(req.nextUrl.pathname)) {
+  //   // Redirect to sign-in page for protected routes
+  //   const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);
+  //   return NextResponse.redirect(absoluteURL.toString());
+  // }
+  if (!session && isPathInProtectedRoutes(req.nextUrl.pathname)) {
+    // Redirect to sign-in page
     const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);
     return NextResponse.redirect(absoluteURL.toString());
   }
+
+  // If user is authenticated and accessing main routes, redirect to dashboard
+  if (isAuthenticated && mainRoutes.includes(req.nextUrl.pathname)) {
+    const absoluteURL = new URL("/dashboard", req.nextUrl.origin);
+    return NextResponse.redirect(absoluteURL.toString());
+  }
+}
+
+function isPathInProtectedRoutes(pathname) {
+  return protectedRoutes.some((route) => pathname.startsWith(route));
 }

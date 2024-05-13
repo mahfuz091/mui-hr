@@ -33,8 +33,12 @@ const DataTable = ({ title, data }) => {
         <Table sx={{ minWidth: 650 }}>
           <TableHead>
             <TableRow>
-              {headers.map((header) => (
-                <TableCell sx={{ padding: "15px 15px 15px 25px" }} align='left'>
+              {headers.map((header, index) => (
+                <TableCell
+                  key={index}
+                  sx={{ padding: "15px 15px 15px 25px" }}
+                  align='left'
+                >
                   {header.toUpperCase()}
                 </TableCell>
               ))}
@@ -45,6 +49,7 @@ const DataTable = ({ title, data }) => {
               <TableRow key={index}>
                 {headers.map((header) => (
                   <TableCell
+                    key={header}
                     sx={{ padding: "15px 15px 15px 25px" }}
                     align='left'
                   >

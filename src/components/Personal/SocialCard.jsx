@@ -121,7 +121,7 @@ const SocialCard = () => {
               <Typography variant='body2'>Linkedin Url</Typography>
             </Box>
           </Grid>
-          <Grid item xs={8} fullWidth>
+          <Grid item xs={8}>
             <Box
               sx={{
                 display: "flex",

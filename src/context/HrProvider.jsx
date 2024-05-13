@@ -17,12 +17,12 @@ const HrProvider = ({ children }) => {
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   const [skills, setSkills] = useState([]);
   const [userSkills, setUserSkills] = useState([]);
-  // console.log(userLeaves);
+  console.log(skills);
   // console.log(leaveControl);
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
+    if (token && user) {
       try {
         const response = await axiosInstance.get("/api/profile/contacts", {
           headers: {
@@ -81,7 +81,7 @@ const HrProvider = ({ children }) => {
 
   const getLeaves = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token && user) {
+    if (token) {
       try {
         const response = await axiosInstance.get("/api/leave-types", {
           headers: {
@@ -183,19 +183,12 @@ const HrProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    // getUser();
-    if (token && user) {
-      // getContact();
-      // getEducation();
-      getSkill();
-      // getUserSkills();
-    }
-  }, [user]);
+    getSkill();
+    getLeaves();
+  }, []);
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (token) {
-      getLeaves();
       getUserLeaves();
       getMyLeaveBalance();
     }

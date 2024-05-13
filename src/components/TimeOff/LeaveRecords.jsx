@@ -24,7 +24,7 @@ const LeaveRecords = () => {
     getMyLeaveBalance,
     getUserLeaves,
   } = useContext(HrContext);
-  // console.log(userLeaves);
+  // console.log(leaves);
   const handleLeaveDelete = async (id) => {
     // console.log(id);
     const token = localStorage.getItem("accessToken");

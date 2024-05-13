@@ -10,37 +10,23 @@ import EducationCard from "./EducationCard";
 import SkillCard from "./SkillCard";
 import SideContactCard from "./SideContactCard";
 
-const Personal = ({
-  handleUpdateProfile,
-  user,
-  setGender,
-  setDateOfBirth,
-  dateOfBirth,
-}) => {
+const Personal = () => {
   return (
-    <div>
-      <h5>Personal</h5>
-      <Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={8}>
-            <PersonalCard
-              handleUpdateProfile={handleUpdateProfile}
-              setGender={setGender}
-              setDateOfBirth={setDateOfBirth}
-              dateOfBirth={dateOfBirth}
-            ></PersonalCard>
-            <ContactCard></ContactCard>
-            <SocialCard></SocialCard>
-            <BankCard></BankCard>
-            <EducationCard />
-            <SkillCard />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <SideContactCard></SideContactCard>
-          </Grid>
+    <Box sx={{ marginTop: "20px" }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8}>
+          <PersonalCard></PersonalCard>
+          <ContactCard></ContactCard>
+          <SocialCard></SocialCard>
+          <BankCard></BankCard>
+          <EducationCard />
+          <SkillCard />
         </Grid>
-      </Box>
-    </div>
+        <Grid item xs={12} md={4}>
+          <SideContactCard></SideContactCard>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 
