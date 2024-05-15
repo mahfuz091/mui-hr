@@ -17,7 +17,7 @@ const HrProvider = ({ children }) => {
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   const [skills, setSkills] = useState([]);
   const [userSkills, setUserSkills] = useState([]);
-  console.log(skills);
+  // console.log(skills);
   // console.log(leaveControl);
 
   const getContact = async () => {
@@ -43,7 +43,6 @@ const HrProvider = ({ children }) => {
   const getUser = async () => {
     const token = localStorage.getItem("accessToken");
     if (!token && !user) {
-      console.log("Clicked");
       setUser(null);
     } else {
       try {
@@ -162,24 +161,23 @@ const HrProvider = ({ children }) => {
 
   const getSkill = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const response = await axiosInstance.get(
-          "/api/skills?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const data = response.data.data;
-        setSkills(data);
 
-        setControl(!control);
-      } catch (error) {
-        console.log(error);
-      }
-    } else return;
+    try {
+      const response = await axiosInstance.get(
+        "/api/skills?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = response.data.data;
+      setSkills(data);
+
+      setControl(!control);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

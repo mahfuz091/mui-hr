@@ -92,7 +92,8 @@ const DashLayout = ({ children }) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box component='section' sx={{ display: "flex" }}>
+      {/* sx={{ display: "flex" }} */}
       <CssBaseline />
       <NavBar handleDrawerOpen={handleDrawerOpen} open={open}></NavBar>
 
