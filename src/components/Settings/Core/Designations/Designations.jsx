@@ -84,7 +84,7 @@ const Designations = () => {
           borderRadius: "10px",
         }}
       >
-        {designations.data.designations.map((designation) => (
+        {designations?.data?.designations?.map((designation) => (
           <Typography
             sx={{ fontSize: "18px", fontWeight: "600", paddingY: "5px" }}
             key={designation.id}
