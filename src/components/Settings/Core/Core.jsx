@@ -1,9 +1,13 @@
-import { Box, Grid, Link, Typography } from "@mui/material";
+"use client";
+import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import GroupsIcon from "@mui/icons-material/Groups";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Core = () => {
+  const router = useRouter();
   return (
     <Box>
       <Typography
@@ -15,7 +19,10 @@ const Core = () => {
       <Box sx={{ padding: "20px", background: "#fff", borderRadius: "10px" }}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <Link sx={{ textDecoration: "none" }} href='settings/designations'>
+            <Link
+              style={{ textDecoration: "none", color: "#1976d2" }}
+              href='settings/designations'
+            >
               <Typography
                 sx={{
                   display: "flex",
@@ -31,7 +38,10 @@ const Core = () => {
             </Link>
           </Grid>
           <Grid item xs={4}>
-            <Link sx={{ textDecoration: "none" }} href='settings/departments'>
+            <Link
+              style={{ textDecoration: "none", color: "#1976d2" }}
+              href='settings/departments'
+            >
               <Typography
                 sx={{
                   display: "flex",
