@@ -3,6 +3,7 @@ import "./globals.css";
 import * as React from "react";
 import HrProvider from "@/context/HrProvider";
 import Layout from "@/components/Layout/Layout";
+import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <HrProvider>
           <Layout>{children}</Layout>
+          <Toaster position='top-right' />
         </HrProvider>
       </body>
     </html>

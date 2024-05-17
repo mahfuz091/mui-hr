@@ -34,7 +34,7 @@ const SideContactCard = () => {
               background: "#EDF2F7",
             }}
           >
-            <EmailIcon sx={{ fontSize: 18 }} color='primary' />
+            <EmailIcon sx={{ fontSize: "18px" }} color='primary' />
           </Box>{" "}
           <Link
             sx={{ textDecoration: "none" }}

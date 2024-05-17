@@ -1,3 +1,5 @@
+import { differenceInCalendarDays, addDays, isWeekend } from "date-fns";
+
 export const handleURLQueries = (router, path) => {
   if (Object.keys(router.query).length && path) {
     const arr = Object.keys(router.query);
@@ -12,12 +14,10 @@ export const handleURLQueries = (router, path) => {
   return false;
 };
 
-import { differenceInCalendarDays, addDays, isWeekend } from "date-fns";
-
-// Define custom weekend days (e.g., Friday and Saturday)
+// Define custom weekend days (e.g., Saturday and Sunday)
 const customWeekendDays = [6, 0]; // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
-export function calculateBusinessDays(startDate, endDate) {
+export const calculateBusinessDays = (startDate, endDate) => {
   let currentDate = new Date(startDate);
   let businessDays = 0;
 
@@ -32,4 +32,4 @@ export function calculateBusinessDays(startDate, endDate) {
   }
 
   return businessDays;
-}
+};

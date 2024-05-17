@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios-instance";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import { useRouter } from "next/navigation";
 
 export const HrContext = createContext(null);
 
@@ -17,8 +19,22 @@ const HrProvider = ({ children }) => {
   const [myLeaveBalance, setMyLeaveBalance] = useState(null);
   const [skills, setSkills] = useState([]);
   const [userSkills, setUserSkills] = useState([]);
+  const [axiosSecure] = useAxiosSecure();
+  const router = useRouter();
   // console.log(skills);
   // console.log(leaveControl);
+
+  const logOut = async () => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = axiosSecure.post("/api/logout");
+      console.log(response.data);
+      localStorage.removeItem(token);
+      router.push("/users/sign-in");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
@@ -217,6 +233,7 @@ const HrProvider = ({ children }) => {
     getUserLeaves,
     getMyLeaveBalance,
     getContact,
+    logOut,
   };
   return <HrContext.Provider value={hrToolInfo}>{children}</HrContext.Provider>;
 };

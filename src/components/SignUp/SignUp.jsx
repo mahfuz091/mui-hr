@@ -1,8 +1,18 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
@@ -14,6 +24,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import axiosInstance from "@/lib/axios-instance";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -23,7 +34,20 @@ const SignUp = () => {
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
   const [organization, setOrganization] = useState("");
   const [designationId, setDesignationId] = useState("");
+  const [designations, setDesignations] = useState([]);
   const router = useRouter();
+  const [axiosSecure] = useAxiosSecure();
+  console.log(designations);
+
+  const getDesignations = async () => {
+    try {
+      const response = await axiosSecure.get("/api/designations");
+      const data = response.data;
+      setDesignations(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const date = `${dateOfBirth?.$y}-${(dateOfBirth?.$M + 1)
     .toString()
@@ -80,6 +104,14 @@ const SignUp = () => {
       console.error("Error:", error);
     }
   };
+
+  const handleDesignationChange = (event) => {
+    setDesignationId(event.target.value);
+  };
+
+  useEffect(() => {
+    getDesignations();
+  }, []);
 
   return (
     <Container maxWidth='sm'>
@@ -185,13 +217,32 @@ const SignUp = () => {
             value={organization}
             onChange={(e) => setOrganization(e.target.value)}
           />
-          <TextField
+          {/* <TextField
             fullWidth
             margin='normal'
             label='Designation Id'
             value={designationId}
             onChange={(e) => setDesignationId(e.target.value)}
-          />
+          /> */}
+
+          <Box sx={{ minWidth: 120, marginY: "10px" }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Desigation</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={level}
+                label='Desigation'
+                onChange={handleDesignationChange}
+              >
+                {designations?.data?.designations?.map((designation, index) => (
+                  <MenuItem key={designation?.id} value={designation?.id}>
+                    {designation?.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
 
           <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
             <img
