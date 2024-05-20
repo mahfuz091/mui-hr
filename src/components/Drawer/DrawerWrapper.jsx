@@ -240,7 +240,6 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
                   justifyContent: "center",
                 }}
               >
-                {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
                 {text.icon}
               </ListItemIcon>
               <ListItemText

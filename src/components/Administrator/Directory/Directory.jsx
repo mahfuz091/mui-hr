@@ -9,7 +9,7 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
@@ -17,6 +17,7 @@ import IconButton from "@mui/material/IconButton";
 import { styled, alpha } from "@mui/material/styles";
 import { HrContext } from "@/context/HrProvider";
 import Link from "next/link";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -54,6 +55,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const Directory = () => {
   const user = useContext(HrContext);
+  const [axiosSecure] = useAxiosSecure();
+  const [users, setUsers] = useState([]);
+  console.log(users);
+
+  const getAllUsers = async () => {
+    try {
+      const response = await axiosSecure.get("/api/users");
+
+      setUsers(response.data.data.users);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
   return (
     <Box>
       <Box
@@ -85,6 +104,37 @@ const Directory = () => {
 
       <Box sx={{ marginTop: "60px" }}>
         <Grid container spacing={2}>
+          {users?.map((user) => (
+            <Grid key={user.id} item xs={4}>
+              <Card>
+                <CardContent>
+                  <Box
+                    sx={{ display: "flex", alignItems: "center", gap: "20px" }}
+                  >
+                    <Avatar
+                      alt='John Doe'
+                      sx={{ width: 40, height: 40 }}
+                      src={user?.auth?.avatar}
+                    ></Avatar>
+                    <Box>
+                      <Typography
+                        variant='h4'
+                        sx={{ fontSize: "16px", fontWeight: "600" }}
+                      >
+                        {user?.name || "Name"}
+                      </Typography>
+                      <Typography
+                        variant='h4'
+                        sx={{ fontSize: "14px", fontWeight: "400" }}
+                      >
+                        {user?.designation?.title || "Developer"}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
           <Grid item xs={4}>
             <Card>
               <CardContent>

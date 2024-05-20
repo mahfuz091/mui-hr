@@ -3,6 +3,7 @@ import { Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import GroupsIcon from "@mui/icons-material/Groups";
+import GraphicEqIcon from "@mui/icons-material/GraphicEq";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -52,6 +53,25 @@ const Core = () => {
                 <GroupsIcon />{" "}
                 <Box sx={{ color: "#000" }} component='span'>
                   Departments
+                </Box>
+              </Typography>
+            </Link>
+          </Grid>
+          <Grid item xs={4}>
+            <Link
+              style={{ textDecoration: "none", color: "#1976d2" }}
+              href='settings/skills'
+            >
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                <GraphicEqIcon />{" "}
+                <Box sx={{ color: "#000" }} component='span'>
+                  Skills
                 </Box>
               </Typography>
             </Link>
