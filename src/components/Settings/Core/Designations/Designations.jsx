@@ -7,6 +7,7 @@ import {
   Modal,
   Typography,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +33,7 @@ const Designations = () => {
   const [designations, setDesignations] = useState([]);
   const [designation, setDesignation] = useState("");
   const [control, setControl] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -42,10 +44,12 @@ const Designations = () => {
   console.log(designations);
 
   const getDesignations = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosSecure.get("/api/designations");
       const data = response.data;
       setDesignations(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +106,11 @@ const Designations = () => {
           borderRadius: "10px",
         }}
       >
+        {isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        ) : null}
         {designations?.data?.designations?.map((designation) => (
           <Box
             key={designation.id}

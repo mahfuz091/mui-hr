@@ -26,9 +26,9 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 import axiosInstance from "@/lib/axios-instance";
 
-const PersonalCard = () => {
-  const { user, isEditing, setEditing, getUser } = useContext(HrContext);
-  const date_of_birth = user?.auth?.date_of_birth;
+const PersonalCard = ({ user }) => {
+  const { isEditing, setEditing, getUser } = useContext(HrContext);
+  const date_of_birth = user?.date_of_birth;
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
 
@@ -100,10 +100,10 @@ const PersonalCard = () => {
             <TextField
               fullWidth
               margin='normal'
-              placeholder={user?.auth?.name}
+              placeholder={user?.name}
               label='Name'
               name='name'
-              defaultValue={user?.auth?.name}
+              defaultValue={user?.name}
             ></TextField>
             <TextField
               fullWidth
@@ -195,7 +195,7 @@ const PersonalCard = () => {
               <Typography variant='body2'>Name</Typography>
             </Grid>
             <Grid item xs={12} sm={8}>
-              <Typography variant='body2'>{user?.auth?.name}</Typography>
+              <Typography variant='body2'>{user?.name}</Typography>
             </Grid>
           </Grid>
           <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
@@ -203,7 +203,7 @@ const PersonalCard = () => {
               <Typography variant='body2'>Email</Typography>
             </Grid>
             <Grid item xs={12} sm={8}>
-              <Typography variant='body2'>{user?.auth?.email}</Typography>
+              <Typography variant='body2'>{user?.email}</Typography>
             </Grid>
           </Grid>
           <Grid container sx={{ padding: "5px 20px" }} spacing={1}>
@@ -211,9 +211,7 @@ const PersonalCard = () => {
               <Typography variant='body2'>Date Of Birth</Typography>
             </Grid>
             <Grid item xs={12} sm={8}>
-              <Typography variant='body2'>
-                {user?.auth?.date_of_birth}
-              </Typography>
+              <Typography variant='body2'>{user?.date_of_birth}</Typography>
             </Grid>
           </Grid>
           <Grid container sx={{ padding: "5px 20px" }} spacing={1}>

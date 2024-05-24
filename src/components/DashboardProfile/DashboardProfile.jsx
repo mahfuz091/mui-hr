@@ -1,7 +1,7 @@
 "use client";
 import { styled } from "@mui/material/styles";
 import { Avatar, Badge, Box, Typography } from "@mui/material";
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import { HrContext } from "@/context/HrProvider";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
@@ -21,6 +21,7 @@ import Job from "@/components/Job/Job";
 // Day js
 import dayjs from "dayjs";
 import TimeOff from "../TimeOff/TimeOff";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 // ** Styled Components
 
@@ -50,12 +51,29 @@ const TabName = styled("span")(({ theme }) => ({
   },
 }));
 
-const DashboardProfile = () => {
-  const { user } = useContext(HrContext);
+const DashboardProfile = (id) => {
+  // const { user } = useContext(HrContext);
+  // console.log(id);
+  const [user, setUser] = useState([]);
+  const [axiosSecure] = useAxiosSecure();
+  console.log(user);
+
+  const getUser = async (id) => {
+    try {
+      const response = await axiosSecure.get(`/api/user/${id.id}`);
+      console.log(response);
+      setUser(response.data.data.user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const [value, setValue] = useState("account");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useEffect(() => {
+    getUser(id);
+  }, []);
   return (
     <Fragment>
       <Box
@@ -83,10 +101,10 @@ const DashboardProfile = () => {
             variant='h4'
             sx={{ fontSize: { xs: "24px", md: "32px" }, fontWeight: 700 }}
           >
-            {user?.auth?.name}
+            {user?.name}
           </Typography>
           <Typography variant='body2' sx={{ color: "rgb(108 134 159)" }}>
-            {user?.auth?.designation?.title}
+            {user?.position?.designation?.title}
           </Typography>
         </Box>
       </Box>
@@ -147,7 +165,7 @@ const DashboardProfile = () => {
           </TabList>
 
           <TabPanel sx={{ p: 0 }} value='account'>
-            <Personal />
+            <Personal user={user} />
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='job'>
             <Job></Job>

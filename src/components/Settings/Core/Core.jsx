@@ -19,7 +19,7 @@ const Core = () => {
       </Typography>
       <Box sx={{ padding: "20px", background: "#fff", borderRadius: "10px" }}>
         <Grid container spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={6} md={4}>
             <Link
               style={{ textDecoration: "none", color: "#1976d2" }}
               href='settings/designations'
@@ -38,7 +38,7 @@ const Core = () => {
               </Typography>
             </Link>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6} md={4}>
             <Link
               style={{ textDecoration: "none", color: "#1976d2" }}
               href='settings/departments'
@@ -57,7 +57,7 @@ const Core = () => {
               </Typography>
             </Link>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={6} md={4}>
             <Link
               style={{ textDecoration: "none", color: "#1976d2" }}
               href='settings/skills'

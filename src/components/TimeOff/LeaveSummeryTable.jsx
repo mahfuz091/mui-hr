@@ -14,7 +14,7 @@ import {
 
 const LeaveSummeryTable = () => {
   const { userLeaves, myLeaveBalance } = useContext(HrContext);
-  // console.log(userLeaves, myLeaveBalance);
+  console.log("userLeaves", myLeaveBalance);
   return (
     <Fragment>
       <Paper
@@ -40,8 +40,8 @@ const LeaveSummeryTable = () => {
               {myLeaveBalance?.leaveTypes?.map((userLeave) => (
                 <TableRow key={userLeave.id}>
                   <TableCell>{userLeave?.name}</TableCell>
-                  <TableCell>{userLeave.total_days}</TableCell>
-                  <TableCell> {userLeave.total_days}</TableCell>
+                  <TableCell>{userLeave.total_allotment}</TableCell>
+                  <TableCell> {userLeave.total_allotment}</TableCell>
                   <TableCell>{userLeave.balance}</TableCell>
                   <TableCell>{userLeave.balance}</TableCell>
                 </TableRow>

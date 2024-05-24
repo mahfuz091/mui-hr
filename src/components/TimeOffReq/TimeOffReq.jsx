@@ -32,6 +32,8 @@ import { HrContext } from "@/context/HrProvider";
 import Swal from "sweetalert2";
 import { calculateBusinessDays } from "@/lib/utils";
 import DateRangePicker from "../DateRangePicker/DateRangePicker";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 // Style
 const style = {
@@ -69,6 +71,7 @@ const TimeOffReq = () => {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [dates, setDates] = useState([]);
+  const [axiosSecure] = useAxiosSecure();
 
   const handleOpen = () => setOpen(true);
 
@@ -104,20 +107,18 @@ const TimeOffReq = () => {
     const end_date = `${endDate?.$y}-${(endDate?.$M + 1)
       .toString()
       .padStart(2, "0")}-${endDate?.$D.toString().padStart(2, "0")}`;
-    const days_taken = businessDays;
+    const requested_days = businessDays;
     const reason = e.target.reason.value;
     const leaveReq = {
       leave_type_id,
       start_date,
       end_date,
-      days_taken,
+      requested_days,
       reason,
     };
-    console.log(leaveReq);
+    // console.log(leaveReq);
     // const diff = differenceInDays(new Date(startDate), new Date()) + 1;
     // const diff = dayjs.diff(startDate, "days");
-
-    const token = localStorage.getItem("accessToken");
 
     if (difference < 3) {
       // handleClose();
@@ -130,7 +131,7 @@ const TimeOffReq = () => {
         (leaveBalance) => leaveBalance?.id === leave_type_id
       );
 
-      if (balance?.balance < days_taken) {
+      if (balance?.balance < requested_days) {
         // handleClose();
 
         setLeaveType("");
@@ -144,17 +145,14 @@ const TimeOffReq = () => {
         // });
       } else {
         try {
-          const response = await axiosInstance.post("/api/leaves", leaveReq, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
+          const response = await axiosSecure.post("/api/leaves", leaveReq);
           const data = response.data.data;
           handleClose();
           // setLeaveControl(!leaveControl);
           setLeaveType("");
           getMyLeaveBalance();
           getUserLeaves();
+          toast.success(response?.data?.message);
         } catch (error) {
           console.log(error);
           handleClose();

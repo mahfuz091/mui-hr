@@ -21,6 +21,7 @@ import axiosInstance from "@/lib/axios-instance";
 import CloseIcon from "@mui/icons-material/Close";
 import { HrContext } from "@/context/HrProvider";
 import EditSkill from "../EditSkill/EditSkill";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 // style
 const style = {
@@ -41,6 +42,8 @@ const style = {
 const SkillCard = () => {
   const { control, setControl, skills, userSkills, getUserSkills } =
     useContext(HrContext);
+
+  const [axiosSecure] = useAxiosSecure();
 
   useEffect(() => {
     getUserSkills();
@@ -68,15 +71,7 @@ const SkillCard = () => {
     // console.log("Clicked", userSkill);
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await axiosInstance.post(
-        "/api/profile/skills",
-        userSkill,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosSecure.post("/api/profile/skills", userSkill);
       const data = response.data.data;
       // console.log(data);
       // setControl(!control);

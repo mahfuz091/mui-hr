@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 import MuiDrawer from "@mui/material/Drawer";
@@ -43,6 +42,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { Person, UsbRounded } from "@mui/icons-material";
 import { handleURLQueries } from "@/lib/utils";
 import { ImageListItem } from "@mui/material";
+import { HrContext } from "@/context/HrProvider";
+import { useContext } from "react";
 
 // import logo from "@/assets/images/oyolloo-logo-color-horizontal.png";
 
@@ -65,11 +66,6 @@ const menuItems = [
   },
 ];
 const menuItemsTwo = [
-  {
-    title: "Directory",
-    path: "/dashboard/directory",
-    icon: <AccountBoxIcon />,
-  },
   {
     title: "Calender",
     path: "/dashboard/calender",
@@ -151,7 +147,16 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const theme = useTheme();
   const router = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
+  // console.log(pathname);
+  const { user } = useContext(HrContext);
+
+  // Filter menu items based on user permissions
+  const filteredMenuItems = menuItemsTwo.filter(
+    (item) =>
+      !item.permission ||
+      user?.auth?.permissions?.includes(item.permission) ||
+      user?.auth?.roles.some((role) => role.name === "Administrator")
+  );
 
   const isNavLinkActive = (path) => {
     if (pathname === path) {
@@ -182,6 +187,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
         </IconButton>
       </DrawerHeader>
       <Divider />
+
       <List>
         {menuItems.map((text, index) => (
           <ListItem
@@ -218,7 +224,38 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
       </List>
       <Divider />
       <List>
-        {menuItemsTwo.map((text, index) => (
+        {user?.auth?.permissions?.includes("manage_user") ||
+        user?.auth?.roles.some((role) => role.name === "Administrator") ? (
+          <ListItem
+            className={isNavLinkActive("/dashboard/directory") ? "active" : ""}
+            disablePadding
+            sx={{ display: "block" }}
+          >
+            <ListItemButton
+              onClick={() => handleClick("/dashboard/directory")}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
+              }}
+            >
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary='Directory'
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ) : null}
+        {filteredMenuItems.map((text, index) => (
           <ListItem
             className={isNavLinkActive(text.path) ? "active" : ""}
             key={index}
@@ -250,6 +287,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
           </ListItem>
         ))}
       </List>
+
       <Divider />
       <List>
         <ListItem

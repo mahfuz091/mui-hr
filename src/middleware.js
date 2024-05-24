@@ -10,20 +10,10 @@ export default async function middleware(req) {
   // Do something with the cookie value
   console.log("Cookie Value:", session);
 
-  // Check if the "auth" cookie is present and has a specific value
+  // Check if he "auth" cookie is present and has a specific value
   // const isAuthenticated = cookies["auth"] === "authenticated";
   const isAuthenticated = true;
-  console.log(isAuthenticated);
 
-  // // User is authenticated
-  // if (mainRoutes.includes(req.nextUrl.pathname)) {
-  //   const absoluteURL = new URL("/dashboard", req.nextUrl.origin);
-  //   return NextResponse.redirect(absoluteURL.toString());
-  // } else if (!session && protectedRoutes.includes(req.nextUrl.pathname)) {
-  //   // Redirect to sign-in page for protected routes
-  //   const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);
-  //   return NextResponse.redirect(absoluteURL.toString());
-  // }
   if (!session && isPathInProtectedRoutes(req.nextUrl.pathname)) {
     // Redirect to sign-in page
     const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);

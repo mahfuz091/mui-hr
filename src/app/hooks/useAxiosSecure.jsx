@@ -10,6 +10,7 @@ const axiosSecure = axios.create({
 const useAxiosSecure = () => {
   const router = useRouter();
   const logOut = useContext(HrContext);
+
   useEffect(() => {
     axiosSecure.interceptors.request.use((config) => {
       const token = localStorage.getItem("accessToken");

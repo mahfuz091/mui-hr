@@ -134,15 +134,13 @@ const HrProvider = ({ children }) => {
       setUserLeaves(null);
     } else {
       try {
-        const response = await axiosInstance.get(
-          `/api/leaves?user_id=${user?.auth?.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axiosInstance.get("/api/leaves", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = response.data.data;
+        console.log(data);
         setUserLeaves(data);
       } catch (error) {
         console.log(error);
@@ -179,14 +177,11 @@ const HrProvider = ({ children }) => {
     const token = localStorage.getItem("accessToken");
 
     try {
-      const response = await axiosInstance.get(
-        "/api/skills?search=&orderBy&orderDirection=&paginate=false&page=1&perPage=2",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosInstance.get("/api/skills", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = response.data.data;
       setSkills(data);
 

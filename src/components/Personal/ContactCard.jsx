@@ -6,8 +6,8 @@ import { useContext } from "react";
 import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 
-const ContactCard = () => {
-  const { user, contact, getContact } = useContext(HrContext);
+const ContactCard = ({ contact }) => {
+  const { user, getContact } = useContext(HrContext);
   const [isEditing, setEditing] = useState(false);
   // const [contact, setContact] = useState(null);
   // console.log(contact);

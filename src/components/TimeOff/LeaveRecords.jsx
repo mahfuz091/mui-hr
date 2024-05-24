@@ -61,21 +61,22 @@ const LeaveRecords = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userLeaves?.leaveTypes?.map((userLeave) => (
+              {userLeaves?.leaveRequests?.map((userLeave) => (
                 <TableRow key={userLeave.id}>
                   <TableCell>
-                    {
-                      leaves?.leaveTypes?.find(
+                    {/* {
+                      leaves?.leaveRequests?.find(
                         (leave) => leave.id === userLeave?.leave_type_id
                       )?.name
-                    }
+                    } */}
+                    {userLeave.leave_type.name}
                   </TableCell>
                   <TableCell>
                     {/* {userLeave.start_date} to {userLeave.end_date} */}
                     {dayjs(userLeave.start_date).format("DD MMM, YYYY")} to
                     {dayjs(userLeave.end_date).format("DD MMM, YYYY")}
                   </TableCell>
-                  <TableCell>{userLeave.days_taken}</TableCell>
+                  <TableCell>{userLeave.requested_days}</TableCell>
                   <TableCell>
                     <Box
                       sx={{

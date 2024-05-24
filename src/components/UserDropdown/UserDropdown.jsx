@@ -43,6 +43,8 @@ const BadgeContentSpan = styled("span")(({ theme }) => ({
 const UserDropdown = () => {
   const { user, control, setControl, getUser } = useContext(HrContext);
 
+  // console.log(user);
+
   // ** States
   const [anchorEl, setAnchorEl] = useState(null);
 

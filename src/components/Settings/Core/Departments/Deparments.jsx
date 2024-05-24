@@ -7,6 +7,7 @@ import {
   Modal,
   Typography,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +33,7 @@ const Deparments = () => {
   const [departments, setDepartments] = useState([]);
   const [department, setdepartment] = useState("");
   const [control, setControl] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -42,10 +44,12 @@ const Deparments = () => {
   console.log(departments?.data?.departments);
 
   const getdepartments = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosSecure.get("/api/departments");
       const data = response.data;
       setDepartments(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -100,6 +104,11 @@ const Deparments = () => {
           borderRadius: "10px",
         }}
       >
+        {isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        ) : null}
         {departments?.data?.departments?.map((department) => (
           <Box
             key={department.id}

@@ -7,6 +7,7 @@ import {
   Modal,
   Typography,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
@@ -32,6 +33,7 @@ const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [skill, setDkill] = useState("");
   const [control, setControl] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [open, setOpen] = useState(false);
 
@@ -39,13 +41,13 @@ const Skills = () => {
   const handleClose = () => setOpen(false);
 
   const [axiosSecure] = useAxiosSecure();
-  console.log(skills);
 
   const getskills = async () => {
+    setIsLoading(true);
     try {
       const response = await axiosSecure.get("/api/skills");
-      const data = response.data;
       setSkills(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -68,7 +70,6 @@ const Skills = () => {
   };
 
   const handleskillDelete = async (id) => {
-    console.log(id);
     try {
       const response = await axiosSecure.delete(`/api/skills/${id}`);
       console.log(response);
@@ -102,6 +103,11 @@ const Skills = () => {
           borderRadius: "10px",
         }}
       >
+        {isLoading ? (
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </Box>
+        ) : null}
         {skills?.data?.skills?.map((skill) => (
           <Box
             key={skill.id}
