@@ -15,6 +15,7 @@ import InformationOutline from "mdi-material-ui/InformationOutline";
 import { Forum, ViewModule } from "@mui/icons-material";
 import { Calendar } from "mdi-material-ui";
 import OverView from "../OverView/OverView";
+import Forms from "../Forms/Forms";
 
 // ** Styled Components
 
@@ -46,7 +47,7 @@ const TabName = styled("span")(({ theme }) => ({
 
 const DashBoardMe = () => {
   const { loggedUser } = useContext(HrContext);
-  const [value, setValue] = useState("account");
+  const [value, setValue] = useState("overview");
 
   // console.log(gender);
 
@@ -76,7 +77,7 @@ const DashBoardMe = () => {
             }}
           >
             <Tab
-              value='account'
+              value='overview'
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <ViewModule />
@@ -85,7 +86,7 @@ const DashBoardMe = () => {
               }
             />
             <Tab
-              value='job'
+              value='calendar'
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Calendar />
@@ -94,7 +95,7 @@ const DashBoardMe = () => {
               }
             />
             <Tab
-              value='timeoff'
+              value='forms'
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Forum />
@@ -104,14 +105,12 @@ const DashBoardMe = () => {
             />
           </TabList>
 
-          <TabPanel sx={{ p: 0 }} value='account'>
+          <TabPanel sx={{ p: 0 }} value='overview'>
             <OverView />
           </TabPanel>
-          <TabPanel sx={{ p: 0 }} value='job'>
-            {/* <Job></Job> */}
-          </TabPanel>
-          <TabPanel sx={{ p: 0 }} value='info'>
-            {/* <TabInfo /> */}
+          <TabPanel sx={{ p: 0 }} value='calendar'></TabPanel>
+          <TabPanel sx={{ p: 0 }} value='forms'>
+            <Forms></Forms>
           </TabPanel>
         </TabContext>
       </Box>

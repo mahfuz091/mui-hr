@@ -16,8 +16,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import PhoneIcon from "@mui/icons-material/Phone";
 
-const SideContactCard = () => {
-  const { user, contact } = useContext(HrContext);
+const SideContactCard = ({ user }) => {
+  // const { user, contact } = useContext(HrContext);
   // console.log(contact);
   return (
     <Card>
@@ -36,11 +36,8 @@ const SideContactCard = () => {
           >
             <EmailIcon sx={{ fontSize: "18px" }} color='primary' />
           </Box>{" "}
-          <Link
-            sx={{ textDecoration: "none" }}
-            href={`mailto:${user?.auth?.email}`}
-          >
-            {user?.auth?.email}
+          <Link sx={{ textDecoration: "none" }} href={`mailto:${user?.email}`}>
+            {user?.email}
           </Link>
         </Box>
         <Box
@@ -67,9 +64,9 @@ const SideContactCard = () => {
           <Link
             sx={{ textDecoration: "none" }}
             target='blank'
-            href={user?.auth?.socials?.linkedin}
+            href={user?.socials?.linkedin}
           >
-            {user?.auth?.name}
+            {user?.name}
           </Link>
         </Box>
         <Box
@@ -95,9 +92,9 @@ const SideContactCard = () => {
           </Box>{" "}
           <Link
             sx={{ textDecoration: "none" }}
-            href={`tel:${contact?.work_phone_number}`}
+            href={`tel:${user?.contacts?.work_phone_number}`}
           >
-            {contact?.work_phone_number}
+            {user?.contacts?.work_phone_number}
           </Link>
         </Box>
         <Box
@@ -123,9 +120,9 @@ const SideContactCard = () => {
           </Box>{" "}
           <Link
             sx={{ textDecoration: "none" }}
-            href={`tel:${contact?.mobile_number}`}
+            href={`tel:${user?.contacts?.mobile_number}`}
           >
-            {contact?.mobile_number}
+            {user?.contacts?.mobile_number}
           </Link>
         </Box>
       </Box>

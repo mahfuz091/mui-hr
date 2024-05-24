@@ -15,7 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = () => {
-  const { setControl, control, getUser } = useContext(HrContext);
+  const { setControl, control, getLoggedUser } = useContext(HrContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -49,7 +49,7 @@ const SignIn = () => {
 
       router.push("/dashboard/me");
       // setControl(!control);
-      getUser();
+      getLoggedUser();
     } catch (error) {
       console.error("Error:", error);
       setError(true);

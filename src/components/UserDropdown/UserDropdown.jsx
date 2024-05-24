@@ -194,6 +194,7 @@ const UserDropdown = () => {
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
         <Link
+          style={{ textDecoration: "none" }}
           onClick={() => setAnchorEl(null)}
           href={`/dashboard/employees/${loggedUser.id}`}
         >

@@ -11,11 +11,13 @@ import {
   TableContainer,
   Button,
 } from "@mui/material";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import dayjs from "dayjs";
 import axiosInstance from "@/lib/axios-instance";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 const LeaveRecords = () => {
+  const [axiosSecure] = useAxiosSecure();
   const {
     userLeaves,
     leaves,
@@ -24,7 +26,29 @@ const LeaveRecords = () => {
     getMyLeaveBalance,
     getUserLeaves,
   } = useContext(HrContext);
-  // console.log(leaves);
+
+  const [leaveRequests, setLeaveRequests] = useState([]);
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [year, setYear] = useState(dayjs().format("YYYY"));
+  console.log("U", leaveRequests);
+  const getAllLeaves = async (id) => {
+    const params = {
+      year: year,
+      perPage: perPage,
+      page: page,
+      paginate: true,
+    };
+    try {
+      const response = await axiosSecure.get("/api/leaves", { params });
+      setLeaveRequests(response.data.data.leaveRequests);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getAllLeaves();
+  }, []);
   const handleLeaveDelete = async (id) => {
     // console.log(id);
     const token = localStorage.getItem("accessToken");
@@ -61,7 +85,7 @@ const LeaveRecords = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userLeaves?.leaveRequests?.map((userLeave) => (
+              {leaveRequests?.items?.map((userLeave) => (
                 <TableRow key={userLeave.id}>
                   <TableCell>
                     {/* {
@@ -91,12 +115,29 @@ const LeaveRecords = () => {
                         textTransform: "capitalize",
                       }}
                     >
-                      {userLeave.status}
+                      {userLeave?.approvals?.length === 0
+                        ? "pending"
+                        : userLeave?.approvals?.[0]?.approval_level
+                        ? userLeave?.approvals?.length === 2
+                          ? userLeave?.approvals?.[1]?.approval_level ===
+                            "final"
+                            ? "approved"
+                            : ""
+                          : "unknown"
+                        : "unknown"}
                     </Box>
                   </TableCell>
                   <TableCell>Remarks</TableCell>
                   <TableCell>
-                    {userLeave.status === "approved" ? (
+                    {(userLeave?.approvals?.length === 0
+                      ? "pending"
+                      : userLeave?.approvals?.[0]?.approval_level
+                      ? userLeave?.approvals?.length === 2
+                        ? userLeave?.approvals?.[1]?.approval_level === "final"
+                          ? "approved"
+                          : ""
+                        : "unknown"
+                      : "unknown") === "approved" ? (
                       ""
                     ) : (
                       <Button

@@ -31,7 +31,7 @@ const Personal = ({ user, getUser }) => {
           <SkillCard user={user} getUser={getUser} />
         </Grid>
         <Grid item xs={12} md={4}>
-          <SideContactCard></SideContactCard>
+          <SideContactCard user={user}></SideContactCard>
         </Grid>
       </Grid>
     </Box>

@@ -70,7 +70,7 @@ const BankCard = ({ user, getUser }) => {
         }}
       >
         <Typography variant='h6'>Bank Details</Typography>
-        {loggedUser.id === user.id
+        {loggedUser?.id === user?.id
           ? // If the user is not in editing mode, display the Edit button
             !isEditing && (
               <Button

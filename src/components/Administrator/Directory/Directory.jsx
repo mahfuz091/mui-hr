@@ -153,7 +153,10 @@ const Directory = () => {
                       src={user?.auth?.avatar}
                     ></Avatar>
                     <Box>
-                      <Link href={`employees/${user?.id}`}>
+                      <Link
+                        style={{ textDecoration: "none", color: "inherit" }}
+                        href={`employees/${user?.id}`}
+                      >
                         <Typography
                           variant='h4'
                           sx={{ fontSize: "16px", fontWeight: "600" }}
