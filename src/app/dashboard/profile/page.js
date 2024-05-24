@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 const ProfilePage = () => {
-  return <DashboardProfile />;
+  return <></>;
 };
 
 export default ProfilePage;
