@@ -16,11 +16,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 import { HrContext } from "@/context/HrProvider";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
-const SocialCard = () => {
+const SocialCard = ({ user, getUser }) => {
   const [isEditing, setEditing] = useState(false);
+  const [axiosSecure] = useAxiosSecure();
   // console.log(isEditing);
-  const { user, setControl, control, getUser } = useContext(HrContext);
+  const { loggedUser } = useContext(HrContext);
   // console.log(user);
   const handleSocial = async (e) => {
     e.preventDefault();
@@ -29,15 +31,11 @@ const SocialCard = () => {
     const social = { facebook, linkedin };
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await axiosInstance.post("/api/profile/social", social, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosSecure.post("/api/profile/social", social);
       const data = response.data.data;
       console.log(data);
       // setControl(!control);
-      getUser();
+      getUser({ id: user.id });
       setEditing(false);
     } catch (error) {
       console.log(error);
@@ -61,15 +59,19 @@ const SocialCard = () => {
         }}
       >
         <Typography variant='h6'>Social</Typography>
-        {isEditing ? null : (
-          <Button
-            variant='outlined'
-            sx={{ color: "#000", display: "flex", gap: "5px" }}
-            onClick={() => setEditing(true)}
-          >
-            <MdEdit></MdEdit> Edit
-          </Button>
-        )}
+        {loggedUser?.id === user?.id
+          ? // If the user is not in editing mode, display the Edit button
+            !isEditing && (
+              <Button
+                variant='outlined'
+                sx={{ color: "#000", display: "flex", gap: "5px" }}
+                onClick={() => setEditing(true)}
+              >
+                <MdEdit /> {/* Icon for the edit button */}
+                Edit
+              </Button>
+            )
+          : null}
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
@@ -77,17 +79,17 @@ const SocialCard = () => {
             <TextField
               fullWidth
               margin='normal'
-              placeholder={user?.auth?.socials?.facebook || "facebook url"}
+              placeholder={user?.socials?.facebook || "facebook url"}
               label='Facebook Url'
-              defaultValue={user?.auth?.socials?.facebook || ""}
+              defaultValue={user?.socials?.facebook || ""}
               name='facebook'
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder={user?.auth?.socials?.linkedin || "linkedin url"}
+              placeholder={user?.socials?.linkedin || "linkedin url"}
               label='Linkedin Url'
-              defaultValue={user?.auth?.socials?.linkedin || ""}
+              defaultValue={user?.socials?.linkedin || ""}
               name='linkedin'
             ></TextField>
 
@@ -129,17 +131,11 @@ const SocialCard = () => {
                 gap: "10px",
               }}
             >
-              <Link
-                sx={{ maxWidth: "100%" }}
-                href={user?.auth?.socials?.facebook}
-              >
-                {user?.auth?.socials?.facebook}
+              <Link sx={{ maxWidth: "100%" }} href={user?.socials?.facebook}>
+                {user?.socials?.facebook}
               </Link>
-              <Link
-                sx={{ maxWidth: "100%" }}
-                href={user?.auth?.socials?.linkedin}
-              >
-                {user?.auth?.socials?.linkedin}
+              <Link sx={{ maxWidth: "100%" }} href={user?.socials?.linkedin}>
+                {user?.socials?.linkedin}
               </Link>
             </Box>
           </Grid>

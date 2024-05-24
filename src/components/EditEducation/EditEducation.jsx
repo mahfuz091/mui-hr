@@ -19,6 +19,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import { HrContext } from "@/context/HrProvider";
 import SchoolIcon from "@mui/icons-material/School";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 const style = {
   position: "absolute",
@@ -35,8 +36,9 @@ const style = {
   },
 };
 
-const EditEducation = ({ education }) => {
-  const { control, setControl, getEducation } = useContext(HrContext);
+const EditEducation = ({ education, getUser, userId }) => {
+  const [axiosSecure] = useAxiosSecure();
+  // const { control, setControl, getEducation } = useContext(HrContext);
   // Edit Modal
 
   const [open2, setOpen2] = useState(false);
@@ -60,18 +62,13 @@ const EditEducation = ({ education }) => {
     const token = localStorage.getItem("accessToken");
     // console.log(token);
     try {
-      const response = await axiosInstance.delete(
-        `/api/profile/educations/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const response = await axiosSecure.delete(
+        `/api/profile/educations/${id}`
       );
       const data = response.data.data;
       handleDropClose();
       // setControl(!control);
-      getEducation();
+      getUser({ id: userId });
     } catch (error) {
       console.log(error);
     }
@@ -102,19 +99,14 @@ const EditEducation = ({ education }) => {
     const token = localStorage.getItem("accessToken");
     // console.log(token);
     try {
-      const response = await axiosInstance.post(
+      const response = await axiosSecure.post(
         `/api/profile/educations/${id}`,
-        education,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        education
       );
       const data = response.data.data;
       handleDropClose();
       handleClose2();
-      getEducation();
+      getUser({ id: userId });
       // setControl(!control);
     } catch (error) {
       console.log(error);

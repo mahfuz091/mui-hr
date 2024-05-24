@@ -46,7 +46,7 @@ const style = {
 };
 
 const DashboardHome = () => {
-  const { user, setControl, control } = useContext(HrContext);
+  const { loggedUser, setControl, control } = useContext(HrContext);
   const [greet, setGreet] = useState("");
 
   // console.log(leaveTypes);
@@ -79,13 +79,13 @@ const DashboardHome = () => {
         <Avatar
           alt='John Doe'
           sx={{ width: 60, height: 60 }}
-          src={user?.auth?.avatar}
+          src={loggedUser?.avatar}
         ></Avatar>
         <Typography variant='h1' sx={{ fontSize: "24px", fontWeight: "700" }}>
           {greet}
         </Typography>
         <Typography variant='h1' sx={{ fontSize: "24px", fontWeight: "700" }}>
-          {user?.auth?.name || "Name"}
+          {loggedUser?.name || "Name"}
         </Typography>
       </Box>
       <TimeOffReq />

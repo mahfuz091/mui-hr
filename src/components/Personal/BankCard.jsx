@@ -16,9 +16,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
 import { HrContext } from "@/context/HrProvider";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
-const BankCard = () => {
-  const { user, setControl, control, getUser } = useContext(HrContext);
+const BankCard = ({ user, getUser }) => {
+  const { loggedUser } = useContext(HrContext);
+  const [axiosSecure] = useAxiosSecure();
   const [isEditing, setEditing] = useState(false);
 
   const handleBank = async (e) => {
@@ -38,18 +40,13 @@ const BankCard = () => {
     };
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await axiosInstance.post(
+      const response = await axiosSecure.post(
         "/api/profile/bank-details",
-        bank,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        bank
       );
       const data = response.data.data;
       // console.log("bank", data);
-      getUser();
+      getUser({ id: user.id });
       // setControl(!control);
       setEditing(false);
     } catch (error) {
@@ -73,15 +70,19 @@ const BankCard = () => {
         }}
       >
         <Typography variant='h6'>Bank Details</Typography>
-        {isEditing ? null : (
-          <Button
-            variant='outlined'
-            sx={{ color: "#000", display: "flex", gap: "5px" }}
-            onClick={() => setEditing(true)}
-          >
-            <MdEdit></MdEdit> Edit
-          </Button>
-        )}
+        {loggedUser.id === user.id
+          ? // If the user is not in editing mode, display the Edit button
+            !isEditing && (
+              <Button
+                variant='outlined'
+                sx={{ color: "#000", display: "flex", gap: "5px" }}
+                onClick={() => setEditing(true)}
+              >
+                <MdEdit /> {/* Icon for the edit button */}
+                Edit
+              </Button>
+            )
+          : null}
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
@@ -92,7 +93,7 @@ const BankCard = () => {
               placeholder='Account Name'
               label='Account Name'
               name='accountName'
-              defaultValue={user?.auth?.bank_details?.account_name}
+              defaultValue={user?.bank_details?.account_name}
             ></TextField>
             <TextField
               fullWidth
@@ -100,7 +101,7 @@ const BankCard = () => {
               placeholder='Bank Name'
               label='Bank Name'
               name='bankName'
-              defaultValue={user?.auth?.bank_details?.bank_name}
+              defaultValue={user?.bank_details?.bank_name}
             ></TextField>
             <TextField
               fullWidth
@@ -108,7 +109,7 @@ const BankCard = () => {
               placeholder='Branch Name'
               label='Branch Name'
               name='branchName'
-              defaultValue={user?.auth?.bank_details?.branch_name}
+              defaultValue={user?.bank_details?.branch_name}
             ></TextField>
             <TextField
               fullWidth
@@ -116,17 +117,15 @@ const BankCard = () => {
               placeholder='Account No'
               label='Account No'
               name='accountNumber'
-              defaultValue={user?.auth?.bank_details?.account_number}
+              defaultValue={user?.bank_details?.account_number}
             ></TextField>
             <TextField
               fullWidth
               margin='normal'
-              placeholder={
-                user?.auth?.bank_details?.routing_number || "Routing No"
-              }
+              placeholder={user?.bank_details?.routing_number || "Routing No"}
               label='Routing No'
               name='routingNumber'
-              defaultValue={user?.auth?.bank_details?.routing_number || ""}
+              defaultValue={user?.bank_details?.routing_number || ""}
             ></TextField>
 
             <Box
@@ -153,7 +152,7 @@ const BankCard = () => {
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
-                {user?.auth?.bank_details?.account_name}
+                {user?.bank_details?.account_name}
               </Typography>
             </Grid>
           </Grid>
@@ -163,7 +162,7 @@ const BankCard = () => {
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
-                {user?.auth?.bank_details?.bank_name}
+                {user?.bank_details?.bank_name}
               </Typography>
             </Grid>
           </Grid>
@@ -174,7 +173,7 @@ const BankCard = () => {
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
-                {user?.auth?.bank_details?.branch_name}
+                {user?.bank_details?.branch_name}
               </Typography>
             </Grid>
           </Grid>
@@ -184,7 +183,7 @@ const BankCard = () => {
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
-                {user?.auth?.bank_details?.account_number}
+                {user?.bank_details?.account_number}
               </Typography>
             </Grid>
           </Grid>
@@ -194,7 +193,7 @@ const BankCard = () => {
             </Grid>
             <Grid item xs={12} sm={8}>
               <Typography variant='body2'>
-                {user?.auth?.bank_details?.routing_number}
+                {user?.bank_details?.routing_number}
               </Typography>
             </Grid>
           </Grid>

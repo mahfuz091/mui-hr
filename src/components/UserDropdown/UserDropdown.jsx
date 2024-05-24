@@ -30,6 +30,7 @@ import HelpCircleOutline from "mdi-material-ui/HelpCircleOutline";
 import { ArrowCircleDown } from "@mui/icons-material";
 import { HrContext } from "@/context/HrProvider";
 import { ArrowDown, ChevronDown } from "mdi-material-ui";
+import Link from "next/link";
 
 // ** Styled Components
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -41,7 +42,7 @@ const BadgeContentSpan = styled("span")(({ theme }) => ({
 }));
 
 const UserDropdown = () => {
-  const { user, control, setControl, getUser } = useContext(HrContext);
+  const { loggedUser, control, setControl, getUser } = useContext(HrContext);
 
   // console.log(user);
 
@@ -54,7 +55,7 @@ const UserDropdown = () => {
   // const [user, setUser] = useState([]);
 
   useEffect(() => {
-    getUser();
+    // getUser();
   }, []);
 
   const handleDropdownOpen = (event) => {
@@ -91,9 +92,9 @@ const UserDropdown = () => {
     setAnchorEl(null);
     router.push("/dashboard/account/edit");
   };
-  const handleProfile = () => {
+  const handleProfile = (id) => {
     setAnchorEl(null);
-    router.push("/dashboard/profile");
+    router.push(`/dashboard/employees/&{id}`);
   };
   const styles = {
     py: 2,
@@ -133,7 +134,7 @@ const UserDropdown = () => {
           <Avatar
             alt='John Doe'
             sx={{ width: 40, height: 40 }}
-            src={user?.auth?.avatar}
+            src={loggedUser?.avatar}
           />
         </Badge>
         <Typography
@@ -144,7 +145,7 @@ const UserDropdown = () => {
             display: { xs: "none", md: "block" },
           }}
         >
-          {user?.auth?.name || "Name"}
+          {loggedUser?.name || "Name"}
         </Typography>
         <Box sx={{ marginTop: "5px", display: { xs: "none", md: "block" } }}>
           <ChevronDown />
@@ -180,24 +181,29 @@ const UserDropdown = () => {
               }}
             >
               <Typography sx={{ fontWeight: 600 }}>
-                {user?.auth?.name || "Name"}
+                {loggedUser?.name || "Name"}
               </Typography>
               <Typography
                 variant='body2'
                 sx={{ fontSize: "0.8rem", color: "text.disabled" }}
               >
-                {user?.auth?.designation?.title}
+                {loggedUser?.designation?.title}
               </Typography>
             </Box>
           </Box>
         </Box>
         <Divider sx={{ mt: 0, mb: 1 }} />
-        <MenuItem sx={{ p: 0 }} onClick={() => handleProfile()}>
-          <Box sx={styles}>
-            <AccountOutline sx={{ marginRight: 2 }} />
-            Go to my Profile
-          </Box>
-        </MenuItem>
+        <Link
+          onClick={() => setAnchorEl(null)}
+          href={`/dashboard/employees/${loggedUser.id}`}
+        >
+          <MenuItem sx={{ p: 0 }}>
+            <Box sx={styles}>
+              <AccountOutline sx={{ marginRight: 2 }} />
+              Go to my Profile
+            </Box>
+          </MenuItem>
+        </Link>
         <MenuItem sx={{ p: 0 }} onClick={() => handleAccount()}>
           <Box sx={styles}>
             <CogOutline sx={{ marginRight: 2 }} />

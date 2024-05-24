@@ -41,9 +41,7 @@ const smallDeviceStyle = {
   width: "80%", // Change width to 80% for small devices
 };
 
-const EditSkill = ({ skill }) => {
-  const { control, setControl, getUserSkills } = useContext(HrContext);
-
+const EditSkill = ({ skill, user, getUser }) => {
   // Edit Modal
 
   const [open2, setOpen2] = useState(false);
@@ -74,7 +72,7 @@ const EditSkill = ({ skill }) => {
       const data = response.data.data;
       handleDropClose();
       // setControl(!control);
-      getUserSkills();
+      getUser({ id: user.id });
     } catch (error) {
       console.log(error);
     }

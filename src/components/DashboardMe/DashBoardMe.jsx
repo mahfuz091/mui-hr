@@ -45,7 +45,7 @@ const TabName = styled("span")(({ theme }) => ({
 }));
 
 const DashBoardMe = () => {
-  const { user, getUser } = useContext(HrContext);
+  const { loggedUser } = useContext(HrContext);
   const [value, setValue] = useState("account");
 
   // console.log(gender);
@@ -53,19 +53,17 @@ const DashBoardMe = () => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  useEffect(() => {
-    getUser();
-  }, []);
+
   return (
     <Fragment>
       <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
         <Avatar
           alt='John Doe'
           sx={{ width: 40, height: 40 }}
-          src={user?.auth?.avatar}
+          src={loggedUser?.avatar}
         ></Avatar>
         <Typography variant='h1' sx={{ fontSize: "24px", fontWeight: "700" }}>
-          {user?.auth?.name || "Name"}
+          {loggedUser?.name || "Name"}
         </Typography>
       </Box>
       <Box sx={{ marginTop: "30px" }}>

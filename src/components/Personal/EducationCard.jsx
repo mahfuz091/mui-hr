@@ -20,6 +20,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { HrContext } from "@/context/HrProvider";
 import SchoolIcon from "@mui/icons-material/School";
 import EditEducation from "../EditEducation/EditEducation";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 const style = {
   position: "absolute",
   top: "50%",
@@ -39,13 +40,15 @@ const smallDeviceStyle = {
   width: "80%", // Change width to 80% for small devices
 };
 
-const EducationCard = () => {
-  const { control, setControl, educations, getEducation } =
-    useContext(HrContext);
+const EducationCard = ({ user, getUser, educations }) => {
+  const [axiosSecure] = useAxiosSecure();
+  console.log(educations);
 
-  useEffect(() => {
-    getEducation();
-  }, []);
+  const { loggedUser } = useContext(HrContext);
+
+  // useEffect(() => {
+  //   getEducation();
+  // }, []);
 
   // console.log(educations);
   const [open, setOpen] = useState(false);
@@ -74,19 +77,14 @@ const EducationCard = () => {
     console.log(education);
     const token = localStorage.getItem("accessToken");
     try {
-      const response = await axiosInstance.post(
+      const response = await axiosSecure.post(
         "/api/profile/educations",
-        education,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        education
       );
       const data = response.data.data;
       // console.log(data);
       // setControl(!control);
-      getEducation();
+      getUser({ id: user.id });
       handleClose();
     } catch (error) {
       console.log(error);
@@ -117,19 +115,23 @@ const EducationCard = () => {
         >
           <SchoolIcon /> Education
         </Typography>
-        <Button
-          variant='outlined'
-          sx={{ color: "#000", display: "flex", gap: "5px" }}
-          onClick={handleOpen}
-        >
-          <MdAdd /> Add
-        </Button>
+        {loggedUser?.id === user?.id ? (
+          <Button
+            variant='outlined'
+            sx={{ color: "#000", display: "flex", gap: "5px" }}
+            onClick={handleOpen}
+          >
+            <MdAdd /> Add
+          </Button>
+        ) : null}
       </Box>
       <Box>
-        {educations?.educations?.map((education) => (
+        {educations?.map((education) => (
           <EditEducation
             key={education.id}
             education={education}
+            getUser={getUser}
+            userId={user.id}
           ></EditEducation>
         ))}
       </Box>

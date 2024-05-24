@@ -56,12 +56,13 @@ const DashboardProfile = (id) => {
   // console.log(id);
   const [user, setUser] = useState([]);
   const [axiosSecure] = useAxiosSecure();
-  console.log(user);
+  // console.log(user);
 
   const getUser = async (id) => {
+    console.log(id);
     try {
       const response = await axiosSecure.get(`/api/user/${id.id}`);
-      console.log(response);
+      // console.log(response);
       setUser(response.data.data.user);
     } catch (error) {
       console.log(error);
@@ -165,7 +166,7 @@ const DashboardProfile = (id) => {
           </TabList>
 
           <TabPanel sx={{ p: 0 }} value='account'>
-            <Personal user={user} />
+            <Personal user={user} getUser={getUser} />
           </TabPanel>
           <TabPanel sx={{ p: 0 }} value='job'>
             <Job></Job>

@@ -35,14 +35,14 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const NavBar = ({ handleDrawerOpen, open }) => {
-  const { user, getUser, control } = useContext(HrContext);
+  const { loggedUser, getLoggedUser, control } = useContext(HrContext);
   const router = useRouter();
   const handleLogIn = () => {
     router.push("/users/sign-in");
   };
 
   useEffect(() => {
-    getUser();
+    getLoggedUser();
   }, [control]);
 
   // console.log(user);
@@ -64,7 +64,7 @@ const NavBar = ({ handleDrawerOpen, open }) => {
         <img style={{ maxWidth: "220px" }} src={logo.src} alt='' />
         <Box sx={{ flexGrow: 1 }} />
         <Box>
-          {user ? (
+          {loggedUser ? (
             <UserDropdown></UserDropdown>
           ) : (
             <Button onClick={handleLogIn} color='inherit'>

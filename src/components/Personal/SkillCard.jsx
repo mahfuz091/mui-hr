@@ -39,18 +39,18 @@ const style = {
   },
 };
 
-const SkillCard = () => {
-  const { control, setControl, skills, userSkills, getUserSkills } =
-    useContext(HrContext);
+const SkillCard = ({ user, getUser }) => {
+  const { control, setControl, skills, loggedUser } = useContext(HrContext);
+  console.log(user);
 
   const [axiosSecure] = useAxiosSecure();
 
-  useEffect(() => {
-    getUserSkills();
-  }, []);
+  // useEffect(() => {
+  //   getUserSkills();
+  // }, []);
 
   const restSkill = skills?.skills?.filter(
-    (skill) => !userSkills?.skills?.find((sk) => sk.id === skill.id)
+    (skill) => !user.skills?.skills?.find((sk) => sk.id === skill.id)
   );
 
   // console.log(restSkill);
@@ -75,7 +75,7 @@ const SkillCard = () => {
       const data = response.data.data;
       // console.log(data);
       // setControl(!control);
-      getUserSkills();
+      getUser({ id: user.id });
       handleClose();
     } catch (error) {
       console.log(error);
@@ -114,17 +114,24 @@ const SkillCard = () => {
         >
           <ImportContactsIcon /> Skills
         </Typography>
-        <Button
-          variant='outlined'
-          sx={{ color: "#000", display: "flex", gap: "5px" }}
-          onClick={handleOpen}
-        >
-          <MdAdd /> Add
-        </Button>
+        {loggedUser?.id === user?.id ? (
+          <Button
+            variant='outlined'
+            sx={{ color: "#000", display: "flex", gap: "5px" }}
+            onClick={handleOpen}
+          >
+            <MdAdd /> Add
+          </Button>
+        ) : null}
       </Box>
       <Box>
-        {userSkills?.skills?.map((skill) => (
-          <EditSkill key={skill.id} skill={skill}></EditSkill>
+        {user?.skills?.map((skill) => (
+          <EditSkill
+            key={skill.id}
+            skill={skill}
+            user={user}
+            getUser={getUser}
+          ></EditSkill>
         ))}
       </Box>
       <Modal

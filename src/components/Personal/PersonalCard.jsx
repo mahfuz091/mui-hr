@@ -25,10 +25,16 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // Axios
 
 import axiosInstance from "@/lib/axios-instance";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
-const PersonalCard = ({ user }) => {
-  const { isEditing, setEditing, getUser } = useContext(HrContext);
+const PersonalCard = ({ user, getUser }) => {
+  const [axiosSecure] = useAxiosSecure();
+  // console.log(user);
+
+  const { isEditing, setEditing, loggedUser } = useContext(HrContext);
+
   const date_of_birth = user?.date_of_birth;
+
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
 
@@ -36,25 +42,21 @@ const PersonalCard = ({ user }) => {
     .toString()
     .padStart(2, "0")}-${dateOfBirth?.$D.toString().padStart(2, "0")}`;
 
-  const designation_id = user?.auth?.designation_id;
+  const designation_id = user?.designation_id;
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const date_of_birth = date;
-    const user = { name, email, date_of_birth, gender, designation_id };
-    const token = localStorage.getItem("accessToken");
+    const newUser = { name, email, date_of_birth, gender, designation_id };
 
     try {
-      const response = await axiosInstance.post("/api/profile", user, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosSecure.post("/api/profile", newUser);
 
       const data = response.data.data;
       // console.log(data);
-      getUser();
+
+      getUser({ id: user.id });
       // setControl(!control);
       setEditing(false);
     } catch (error) {
@@ -81,15 +83,19 @@ const PersonalCard = ({ user }) => {
         }}
       >
         <Typography variant='h6'>Personal</Typography>
-        {isEditing ? null : (
-          <Button
-            variant='outlined'
-            sx={{ color: "#000", display: "flex", gap: "5px" }}
-            onClick={() => setEditing(true)}
-          >
-            <MdEdit></MdEdit> Edit
-          </Button>
-        )}
+        {loggedUser?.id === user?.id
+          ? // If the user is not in editing mode, display the Edit button
+            !isEditing && (
+              <Button
+                variant='outlined'
+                sx={{ color: "#000", display: "flex", gap: "5px" }}
+                onClick={() => setEditing(true)}
+              >
+                <MdEdit /> {/* Icon for the edit button */}
+                Edit
+              </Button>
+            )
+          : null}
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
@@ -108,10 +114,10 @@ const PersonalCard = ({ user }) => {
             <TextField
               fullWidth
               margin='normal'
-              placeholder={user?.auth?.email}
+              placeholder={user?.email}
               name='email'
               label='Email'
-              defaultValue={user?.auth?.email}
+              defaultValue={user?.email}
             ></TextField>
             <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
               <DemoContainer
@@ -211,7 +217,7 @@ const PersonalCard = ({ user }) => {
               <Typography variant='body2'>Date Of Birth</Typography>
             </Grid>
             <Grid item xs={12} sm={8}>
-              <Typography variant='body2'>{user?.date_of_birth}</Typography>
+              <Typography variant='body2'>{date_of_birth}</Typography>
             </Grid>
           </Grid>
           <Grid container sx={{ padding: "5px 20px" }} spacing={1}>

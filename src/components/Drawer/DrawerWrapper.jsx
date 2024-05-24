@@ -148,7 +148,7 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
   const router = useRouter();
   const pathname = usePathname();
   // console.log(pathname);
-  const { user } = useContext(HrContext);
+  const { loggedUser } = useContext(HrContext);
 
   // Filter menu items based on user permissions
   const filteredMenuItems = menuItemsTwo.filter(
@@ -224,8 +224,8 @@ const DrawerWrapper = ({ open, handleDrawerClose }) => {
       </List>
       <Divider />
       <List>
-        {user?.auth?.permissions?.includes("manage_user") ||
-        user?.auth?.roles.some((role) => role.name === "Administrator") ? (
+        {loggedUser?.permissions?.includes("manage_user") ||
+        loggedUser?.roles.some((role) => role.name === "Administrator") ? (
           <ListItem
             className={isNavLinkActive("/dashboard/directory") ? "active" : ""}
             disablePadding

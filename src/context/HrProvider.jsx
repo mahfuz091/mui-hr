@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 export const HrContext = createContext(null);
 
 const HrProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [loggedUser, setLoggedUser] = useState(null);
   const [control, setControl] = useState(false);
   const [leaveControl, setLeaveControl] = useState(false);
   const [isEditing, setEditing] = useState(false);
@@ -38,7 +38,7 @@ const HrProvider = ({ children }) => {
 
   const getContact = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token && user) {
+    if (token && loggedUser) {
       try {
         const response = await axiosInstance.get("/api/profile/contacts", {
           headers: {
@@ -56,9 +56,9 @@ const HrProvider = ({ children }) => {
     }
   };
 
-  const getUser = async () => {
+  const getLoggedUser = async () => {
     const token = localStorage.getItem("accessToken");
-    if (!token && !user) {
+    if (!token && !loggedUser) {
       setUser(null);
     } else {
       try {
@@ -68,7 +68,7 @@ const HrProvider = ({ children }) => {
           },
         });
         const data = response.data.data;
-        setUser(data);
+        setLoggedUser(data.auth);
       } catch (error) {
         console.log(error);
       }
@@ -77,7 +77,7 @@ const HrProvider = ({ children }) => {
 
   const getEducation = async () => {
     const token = localStorage.getItem("accessToken");
-    if (!token && !user) {
+    if (!token && !loggedUser) {
       setEducations([]);
     } else {
       try {
@@ -113,7 +113,7 @@ const HrProvider = ({ children }) => {
 
   const getMyLeaveBalance = async () => {
     const token = localStorage.getItem("accessToken");
-    if (token && user) {
+    if (token && loggedUser) {
       try {
         const response = await axiosInstance.get("/api/leaves/available", {
           headers: {
@@ -130,7 +130,7 @@ const HrProvider = ({ children }) => {
 
   const getUserLeaves = async () => {
     const token = localStorage.getItem("accessToken");
-    if (!token && !user) {
+    if (!token && !loggedUser) {
       setUserLeaves(null);
     } else {
       try {
@@ -151,7 +151,7 @@ const HrProvider = ({ children }) => {
   // Get User Skill
   const getUserSkills = async () => {
     const token = localStorage.getItem("accessToken");
-    if (!token && !user) {
+    if (!token && !loggdUser) {
       setUserSkills([]);
     } else {
       try {
@@ -200,14 +200,15 @@ const HrProvider = ({ children }) => {
     if (token) {
       getUserLeaves();
       getMyLeaveBalance();
+      getLoggedUser;
     }
-  }, [user, leaveControl]);
+  }, [loggedUser, leaveControl]);
 
   const hrToolInfo = {
-    user,
+    loggedUser,
     control,
     setControl,
-    getUser,
+    getLoggedUser,
     setEditing,
     isEditing,
     contact,

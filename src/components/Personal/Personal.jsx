@@ -10,17 +10,25 @@ import EducationCard from "./EducationCard";
 import SkillCard from "./SkillCard";
 import SideContactCard from "./SideContactCard";
 
-const Personal = ({ user }) => {
+const Personal = ({ user, getUser }) => {
   return (
     <Box sx={{ marginTop: "20px" }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <PersonalCard user={user}></PersonalCard>
-          <ContactCard contact={user?.contacts}></ContactCard>
-          <SocialCard user={user}></SocialCard>
-          <BankCard user={user}></BankCard>
-          <EducationCard user={user} />
-          <SkillCard user={user} />
+          <PersonalCard user={user} getUser={getUser}></PersonalCard>
+          <ContactCard
+            contact={user?.contacts}
+            userId={user.id}
+            getUser={getUser}
+          ></ContactCard>
+          <SocialCard user={user} getUser={getUser}></SocialCard>
+          <BankCard user={user} getUser={getUser}></BankCard>
+          <EducationCard
+            user={user}
+            getUser={getUser}
+            educations={user?.educations}
+          />
+          <SkillCard user={user} getUser={getUser} />
         </Grid>
         <Grid item xs={12} md={4}>
           <SideContactCard></SideContactCard>

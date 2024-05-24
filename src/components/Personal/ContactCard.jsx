@@ -5,16 +5,18 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { MdEdit } from "react-icons/md";
 import axiosInstance from "@/lib/axios-instance";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
-const ContactCard = ({ contact }) => {
-  const { user, getContact } = useContext(HrContext);
+const ContactCard = ({ contact, getUser, userId }) => {
+  const { loggedUser } = useContext(HrContext);
   const [isEditing, setEditing] = useState(false);
+  const [axiosSecure] = useAxiosSecure();
   // const [contact, setContact] = useState(null);
   // console.log(contact);
 
-  useEffect(() => {
-    getContact();
-  }, [user]);
+  // useEffect(() => {
+  //   getContact();
+  // }, [user]);
 
   const handleContact = async (e) => {
     e.preventDefault();
@@ -30,21 +32,13 @@ const ContactCard = ({ contact }) => {
       skype,
       discord,
     };
-    const token = localStorage.getItem("accessToken");
+
     try {
-      const response = await axiosInstance.post(
-        "/api/profile/contacts",
-        contact,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosSecure.post("/api/profile/contacts", contact);
       const data = response.data.data;
 
       // setControl(!control);
-      getContact();
+      getUser({ id: userId });
       setEditing(false);
     } catch (error) {
       console.log(error);
@@ -67,15 +61,19 @@ const ContactCard = ({ contact }) => {
         }}
       >
         <Typography variant='h6'>Contact</Typography>
-        {isEditing ? null : (
-          <Button
-            variant='outlined'
-            sx={{ color: "#000", display: "flex", gap: "5px" }}
-            onClick={() => setEditing(true)}
-          >
-            <MdEdit></MdEdit> Edit
-          </Button>
-        )}
+        {loggedUser?.id === userId
+          ? // If the user is not in editing mode, display the Edit button
+            !isEditing && (
+              <Button
+                variant='outlined'
+                sx={{ color: "#000", display: "flex", gap: "5px" }}
+                onClick={() => setEditing(true)}
+              >
+                <MdEdit /> {/* Icon for the edit button */}
+                Edit
+              </Button>
+            )
+          : null}
       </Box>
       {isEditing ? (
         <Box sx={{ padding: "20px" }}>
