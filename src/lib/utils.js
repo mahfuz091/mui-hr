@@ -15,11 +15,26 @@ export const handleURLQueries = (router, path) => {
 };
 
 // Define custom weekend days (e.g., Saturday and Sunday)
-const customWeekendDays = [6, 0]; // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+// const customWeekendDays = [6, 0]; // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
-export const calculateBusinessDays = (startDate, endDate) => {
+export const calculateBusinessDays = (startDate, endDate, setting) => {
   let currentDate = new Date(startDate);
   let businessDays = 0;
+
+  const dayNameToNumber = (dayName) => {
+    const days = {
+      Sunday: 0,
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Saturday: 6,
+    };
+    return days[dayName];
+  };
+
+  const customWeekendDays = setting?.value?.map(dayNameToNumber);
 
   while (currentDate <= new Date(endDate)) {
     if (

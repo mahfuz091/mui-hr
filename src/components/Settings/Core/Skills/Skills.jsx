@@ -46,7 +46,7 @@ const Skills = () => {
     setIsLoading(true);
     try {
       const response = await axiosSecure.get("/api/skills");
-      setSkills(data);
+      setSkills(response.data);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import {
   Box,
   Avatar,
@@ -68,10 +68,12 @@ const TimeOffReq = () => {
   } = useContext(HrContext);
   const [open, setOpen] = useState(false);
   const [leaveTypes, setLeaveTypes] = useState([]);
+  const [setting, setSetting] = useState({});
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [dates, setDates] = useState([]);
   const [axiosSecure] = useAxiosSecure();
+  console.log(setting);
 
   const handleOpen = () => setOpen(true);
 
@@ -81,12 +83,26 @@ const TimeOffReq = () => {
     setError(false);
   };
 
+  const getWeekendSettings = async () => {
+    const params = {
+      group: "general",
+      name: "weekend",
+    };
+    try {
+      const response = await axiosSecure.get("api/settings", { params });
+
+      setSetting(response?.data?.data?.setting);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // const [endDate, setEndDate] = useState("");
   const startDate = dates && dates.length > 0 ? dates[0] : "";
   const endDate = dates && dates.length > 0 ? dates[1] : "";
   // console.log(startDate, endDate);
 
-  const businessDays = calculateBusinessDays(startDate, endDate);
+  const businessDays = calculateBusinessDays(startDate, endDate, setting);
   const difference = differenceInDays(new Date(startDate), new Date());
 
   // console.log(difference);
@@ -171,6 +187,10 @@ const TimeOffReq = () => {
 
     // console.log(leaveReq);
   };
+
+  useEffect(() => {
+    getWeekendSettings();
+  }, []);
 
   return (
     <Fragment>

@@ -80,6 +80,7 @@ const Directory = () => {
 
   const getAllUsers = async (perPage, page) => {
     setIsLoading(true);
+    setUsers([]);
     const params = {
       paginate: true,
       page: page,
