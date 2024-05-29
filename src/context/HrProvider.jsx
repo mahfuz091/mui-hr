@@ -191,6 +191,8 @@ const HrProvider = ({ children }) => {
     }
   };
 
+  console.log(skills);
+
   useEffect(() => {
     getSkill();
     getLeaves();

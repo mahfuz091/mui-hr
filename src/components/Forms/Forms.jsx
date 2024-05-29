@@ -12,13 +12,14 @@ import {
   TableCell,
   Paper,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import no_record from "../../assets/images/no-record.svg";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 import toast from "react-hot-toast";
 import TableRows from "./TableRows";
 import dayjs from "dayjs";
+import { HrContext } from "@/context/HrProvider";
 
 const Forms = () => {
   const [axiosSecure] = useAxiosSecure();
@@ -27,6 +28,7 @@ const Forms = () => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
   const [year, setYear] = useState(dayjs().format("YYYY"));
+  const { loggedUser } = useContext(HrContext);
   console.log(leaveRequests);
   const getAllLeaves = async (id) => {
     const params = {
@@ -61,8 +63,17 @@ const Forms = () => {
     }
   };
 
+  const filterLeave = Array.isArray(leaveRequests)
+    ? leaveRequests.filter(
+        (leaveRequest) =>
+          leaveRequest?.user?.direct_manager_id === loggedUser.id
+      )
+    : [];
+
+  console.log("filter", filterLeave);
+
   useEffect(() => {
-    getAllLeaves(27);
+    getAllLeaves(28);
   }, []);
   return (
     <Box sx={{ marginTop: "15px" }}>

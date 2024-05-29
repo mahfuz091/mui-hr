@@ -56,6 +56,17 @@ const DashboardProfile = (id) => {
   // console.log(id);
   const [user, setUser] = useState([]);
   const [axiosSecure] = useAxiosSecure();
+  const [designations, setDesignations] = useState([]);
+  console.log(designations);
+  const getDesignations = async () => {
+    try {
+      const response = await axiosSecure.get("/api/designations");
+      const data = response.data;
+      setDesignations(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // console.log(user);
 
   const getUser = async (id) => {
@@ -74,6 +85,7 @@ const DashboardProfile = (id) => {
   };
   useEffect(() => {
     getUser(id);
+    getDesignations();
   }, []);
   return (
     <Fragment>
@@ -105,7 +117,11 @@ const DashboardProfile = (id) => {
             {user?.name}
           </Typography>
           <Typography variant='body2' sx={{ color: "rgb(108 134 159)" }}>
-            {user?.position?.designation?.title}
+            {
+              designations?.data?.designations?.find(
+                (d) => d.id === user?.designation_id
+              )?.title
+            }
           </Typography>
         </Box>
       </Box>

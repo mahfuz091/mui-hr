@@ -66,7 +66,17 @@ const Directory = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [perPage, setPerPage] = useState(21);
   const [totalQty, setTotalQty] = useState(0);
-  console.log(users);
+  const [designations, setDesignations] = useState([]);
+  console.log(designations);
+  const getDesignations = async () => {
+    try {
+      const response = await axiosSecure.get("/api/designations");
+      const data = response.data;
+      setDesignations(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getAllUsers = async (perPage, page) => {
     setIsLoading(true);
@@ -95,6 +105,7 @@ const Directory = () => {
 
   useEffect(() => {
     getAllUsers(perPage, pageNumber);
+    getDesignations();
   }, [pageNumber]);
 
   return (
@@ -109,7 +120,7 @@ const Directory = () => {
         <Typography sx={{ fontSize: "22px", fontWeight: "600" }} variant='h3'>
           Directory
         </Typography>
-        <Link href={"/users/sign-up"}>
+        <Link href={"/users/sign_up"}>
           {" "}
           <Button variant='contained' sx={{ textTransform: "inherit" }}>
             Add employee
@@ -168,7 +179,11 @@ const Directory = () => {
                         variant='h4'
                         sx={{ fontSize: "14px", fontWeight: "400" }}
                       >
-                        {user?.designation?.title || "Developer"}
+                        {
+                          designations?.data?.designations?.find(
+                            (d) => d.id === user?.designation_id
+                          )?.title
+                        }
                       </Typography>
                     </Box>
                   </Box>

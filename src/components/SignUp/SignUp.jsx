@@ -34,16 +34,28 @@ const SignUp = () => {
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
   const [organization, setOrganization] = useState("");
   const [designationId, setDesignationId] = useState("");
+  const [dManagerId, setDManagerId] = useState("");
+  const [lManagerId, setLManagerId] = useState("");
   const [designations, setDesignations] = useState([]);
+  const [users, setUsers] = useState([]);
   const router = useRouter();
   const [axiosSecure] = useAxiosSecure();
-  console.log(designations);
+  console.log(users);
 
   const getDesignations = async () => {
     try {
       const response = await axiosSecure.get("/api/designations");
       const data = response.data;
       setDesignations(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getAllUsers = async () => {
+    try {
+      const response = await axiosSecure.get("/api/users");
+      const data = response.data;
+      setUsers(response.data.data.users);
     } catch (error) {
       console.log(error);
     }
@@ -85,10 +97,12 @@ const SignUp = () => {
       password_confirmation: confirmPassword,
       organization,
       designation_id: designationId,
+      lead_manager_id: lManagerId,
+      direct_manager_id: dManagerId,
     };
     console.log(user);
     try {
-      const response = await axiosInstance.post("/api/registration", user, {
+      const response = await axiosSecure.post("/api/registration", user, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -99,7 +113,7 @@ const SignUp = () => {
 
       //   localStorage.setItem("accessToken", accessToken);
       //   localStorage.setItem("user", JSON.stringify(data));
-      router.push("/users/sign-in");
+      router.push("/dashboard/directory");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -108,9 +122,16 @@ const SignUp = () => {
   const handleDesignationChange = (event) => {
     setDesignationId(event.target.value);
   };
+  const handleDirectManagerChange = (event) => {
+    setDManagerId(event.target.value);
+  };
+  const handleLeadManagerChange = (event) => {
+    setLManagerId(event.target.value);
+  };
 
   useEffect(() => {
     getDesignations();
+    getAllUsers();
   }, []);
 
   return (
@@ -119,6 +140,7 @@ const SignUp = () => {
         sx={{
           padding: "50px 30px",
           marginTop: "50px",
+          background: "#fff",
 
           borderRadius: "16px",
         }}
@@ -238,6 +260,46 @@ const SignUp = () => {
                 {designations?.data?.designations?.map((designation, index) => (
                   <MenuItem key={designation?.id} value={designation?.id}>
                     {designation?.title}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>
+                Direct Manager
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={level}
+                label='Desigation'
+                onChange={handleDirectManagerChange}
+              >
+                {users?.map((designation, index) => (
+                  <MenuItem key={designation?.id} value={designation?.id}>
+                    {designation?.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>
+                Lead Manager
+              </InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={level}
+                label='Desigation'
+                onChange={handleLeadManagerChange}
+              >
+                {users?.map((designation, index) => (
+                  <MenuItem key={designation?.id} value={designation?.id}>
+                    {designation?.name}
                   </MenuItem>
                 ))}
               </Select>

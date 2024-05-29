@@ -31,6 +31,7 @@ import { ArrowCircleDown } from "@mui/icons-material";
 import { HrContext } from "@/context/HrProvider";
 import { ArrowDown, ChevronDown } from "mdi-material-ui";
 import Link from "next/link";
+import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 
 // ** Styled Components
 const BadgeContentSpan = styled("span")(({ theme }) => ({
@@ -43,6 +44,7 @@ const BadgeContentSpan = styled("span")(({ theme }) => ({
 
 const UserDropdown = () => {
   const { loggedUser, control, setControl, getUser } = useContext(HrContext);
+  const [axiosSecure] = useAxiosSecure();
 
   // console.log(user);
 
@@ -70,13 +72,8 @@ const UserDropdown = () => {
     setAnchorEl(null);
   };
   const handleLogOut = async () => {
-    const token = localStorage.getItem("accessToken");
     try {
-      const response = await axiosInstance.get("/api/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosSecure.post("/api/logout");
       const data = response.data.data;
       setAnchorEl(null);
       localStorage.removeItem("accessToken");
