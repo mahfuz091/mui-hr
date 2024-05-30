@@ -32,11 +32,11 @@ const Forms = () => {
   console.log(leaveRequests);
   const getAllLeaves = async (id) => {
     const params = {
-      user_id: id,
       year: year,
       perPage: perPage,
       page: page,
       paginate: true,
+      manager_id: loggedUser.id,
     };
     try {
       const response = await axiosSecure.get("/api/leaves", { params });

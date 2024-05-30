@@ -39,7 +39,7 @@ export const calculateBusinessDays = (startDate, endDate, setting) => {
   while (currentDate <= new Date(endDate)) {
     if (
       !isWeekend(currentDate) &&
-      !customWeekendDays.includes(currentDate.getDay())
+      !customWeekendDays?.includes(currentDate.getDay())
     ) {
       businessDays++;
     }
