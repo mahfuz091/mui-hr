@@ -5,8 +5,8 @@ const protectedRoutes = ["/dashboard"];
 const mainRoutes = ["/"];
 
 export default async function middleware(req) {
-  const sessionValue = req.cookies.get("session")?.value;
-  const session = req.cookies.get("session");
+  const sessionCookie = req.cookies.get("session");
+  const session = sessionCookie?.value;
 
   // Do something with the cookie value
   console.log("Cookie Value:", session);
@@ -15,27 +15,37 @@ export default async function middleware(req) {
   // const isAuthenticated = cookies["auth"] === "authenticated";
   const isAuthenticated = true;
 
-  if (!sessionValue && isPathInProtectedRoutes(req.nextUrl.pathname)) {
-    const expirationDate = new Date();
-    expirationDate.setHours(expirationDate.getHours() + 12);
+  // if (!sessionValue && isPathInProtectedRoutes(req.nextUrl.pathname)) {
+  //   // Redirect to sign-in page
+  //   const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);
+  //   return NextResponse.redirect(absoluteURL.toString());
+  // }
+  if (!session) {
+    if (isPathInProtectedRoutes(req.nextUrl.pathname)) {
+      const res = NextResponse.redirect(
+        new URL("/users/sign-in", req.nextUrl.origin)
+      );
+      res.cookies.set("session", "", { expires: new Date(0) });
+      return res;
+    }
+  } else {
+    const sessionExpiryDate = new Date(sessionCookie.expires);
+    const now = new Date();
 
-    // Format the expiration date as a string in UTC format
-    const expiresUTC = expirationDate.toUTCString();
-
-    // Redirect to sign-in page
-    // const absoluteURL = new URL("/users/sign-in", req.nextUrl.origin);
-    // return NextResponse.redirect(absoluteURL.toString());
-    // Delete the expired session cookie
-
-    const res = NextResponse.redirect(
-      new URL("/users/sign-in", req.nextUrl.origin)
-    );
-    res.cookies.set("session", "", {
-      expires: new Date(expirationDate.getTime() + 6 * 60 * 60 * 1000),
-    });
-    return res;
+    if (sessionExpiryDate < now) {
+      const res = NextResponse.redirect(
+        new URL("/users/sign-in", req.nextUrl.origin)
+      );
+      res.cookies.set("session", "", { expires: new Date(0) });
+      return res;
+    } else {
+      // Extend the session cookie expiry by 12 hours
+      const newExpiryDate = new Date(now.getTime() + 12 * 60 * 60 * 1000);
+      const res = NextResponse.next();
+      res.cookies.set("session", session, { expires: newExpiryDate });
+      return res;
+    }
   }
-
   // If user is authenticated and accessing main routes, redirect to dashboard
   if (isAuthenticated && mainRoutes.includes(req.nextUrl.pathname)) {
     const absoluteURL = new URL("/dashboard", req.nextUrl.origin);
