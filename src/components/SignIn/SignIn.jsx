@@ -26,7 +26,7 @@ const SignIn = () => {
 
     const user = { email, password };
     const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + 1);
+    expirationDate.setHours(expirationDate.getHours() + 0.1);
 
     // Format the expiration date as a string in UTC format
     const expiresUTC = expirationDate.toUTCString();
@@ -61,6 +61,7 @@ const SignIn = () => {
         sx={{
           padding: "50px 30px",
           marginTop: "50px",
+          background: "#fff",
 
           borderRadius: "16px",
         }}

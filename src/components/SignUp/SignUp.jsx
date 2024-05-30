@@ -10,6 +10,7 @@ import {
   Select,
   TextField,
   Typography,
+  OutlinedInput,
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
@@ -23,14 +24,43 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
-import axiosInstance from "@/lib/axios-instance";
+
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+    },
+  },
+};
+
+const names = [
+  "Administrator",
+  "Tool Administrator",
+  "Tool Manager",
+  "Data Analyst",
+  "HR Director",
+  "HR Administrator",
+  "HR Manager",
+  "HR Specialist",
+  "Payroll Manager",
+  "Recruitment Manager",
+  "Learning & Development Manager",
+  "Team Manager",
+  "Project Manager",
+  "Jr. Project Manager",
+  "Employee",
+];
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(dayjs);
   const [organization, setOrganization] = useState("");
   const [designationId, setDesignationId] = useState("");
@@ -40,7 +70,8 @@ const SignUp = () => {
   const [users, setUsers] = useState([]);
   const router = useRouter();
   const [axiosSecure] = useAxiosSecure();
-  console.log(users);
+  const [roles, setRoles] = useState([]);
+  console.log(roles);
 
   const getDesignations = async () => {
     try {
@@ -86,19 +117,21 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const image = event.target.img.files[0];
-    console.log(image);
+    // console.log(image);
 
     const user = {
       name,
       email,
       password,
       date_of_birth: date,
+      gender: gender,
       avatar: image,
       password_confirmation: confirmPassword,
       organization,
       designation_id: designationId,
       lead_manager_id: lManagerId,
       direct_manager_id: dManagerId,
+      roles: roles,
     };
     console.log(user);
     try {
@@ -128,7 +161,18 @@ const SignUp = () => {
   const handleLeadManagerChange = (event) => {
     setLManagerId(event.target.value);
   };
-
+  const handleGenderChange = (event) => {
+    setGender(event.target.value);
+  };
+  const handleRoleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setRoles(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
   useEffect(() => {
     getDesignations();
     getAllUsers();
@@ -232,6 +276,22 @@ const SignUp = () => {
               </Box>
             </DemoContainer>
           </LocalizationProvider>
+          <Box sx={{ minWidth: 120, marginY: "10px" }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
+              <Select
+                labelId='demo-simple-select-label'
+                id='demo-simple-select'
+                // value={level}
+                label='Desigation'
+                onChange={handleGenderChange}
+              >
+                <MenuItem value='Male'>Male</MenuItem>
+                <MenuItem value='Male'>Female</MenuItem>
+                <MenuItem value='Male'>Others</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <TextField
             fullWidth
             margin='normal'
@@ -300,6 +360,30 @@ const SignUp = () => {
                 {users?.map((designation, index) => (
                   <MenuItem key={designation?.id} value={designation?.id}>
                     {designation?.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+            <FormControl fullWidth>
+              <InputLabel id='demo-multiple-name-label'>Roles</InputLabel>
+              <Select
+                labelId='demo-multiple-name-label'
+                id='demo-multiple-name'
+                multiple
+                value={roles}
+                onChange={handleRoleChange}
+                input={<OutlinedInput label='Roles' />}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    // style={getStyles(name, roles, theme)}
+                  >
+                    {name}
                   </MenuItem>
                 ))}
               </Select>
