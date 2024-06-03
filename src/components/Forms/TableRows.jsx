@@ -17,24 +17,23 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { HrContext } from "@/context/HrProvider";
 
-const TableRows = ({ leaveRequest }) => {
+const TableRows = ({ leaveRequest, leaveApprove }) => {
   const { loggedUser } = useContext(HrContext);
   const [open, setOpen] = useState(false);
-  console.log(loggedUser);
+  console.log("leaveRequest", leaveRequest);
   const approvar =
     loggedUser?.permissions.includes("approve_leave") ||
     loggedUser?.roles?.map((role) => role.name === "Administrator");
   console.log(approvar);
-  const status =
-    leaveRequest?.approvals?.length === 0
-      ? "pending"
-      : leaveRequest?.approvals?.[0]?.approval_level
-      ? leaveRequest?.approvals?.length === 2
-        ? leaveRequest?.approvals?.[1]?.approval_level === "final"
-          ? "approved"
-          : ""
-        : "unknown"
-      : "unknown";
+  const status = !leaveRequest?.approvals?.length
+    ? "pending"
+    : leaveRequest.approvals.length === 1
+    ? "recommend"
+    : leaveRequest.approvals.length === 2
+    ? leaveRequest.approvals[1]?.approval_level === "final"
+      ? "approved"
+      : "recommend"
+    : "unknown";
 
   const [axiosSecure] = useAxiosSecure();
   //   console.log(user);

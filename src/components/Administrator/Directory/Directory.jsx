@@ -70,8 +70,9 @@ const Directory = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [paginate, setpaginate] = useState(true);
-  console.log("Fil", filteredUsers);
-  console.log("users", users);
+
+  // console.log("Fil", filteredUsers);
+  // console.log("users", users);
 
   // console.log(designations);
   const getDesignations = async () => {
@@ -118,7 +119,7 @@ const Directory = () => {
 
     try {
       const response = await axiosSecure.get("/api/users", { params });
-      console.log("ful", response);
+      // console.log("ful", response);
 
       setFilteredUsers(response.data.data?.users?.items);
       setTotalQty(response.data.data.users.total);
@@ -150,7 +151,6 @@ const Directory = () => {
     } else {
       setpaginate(false);
       getAllSearchUsers(perPage, pageNumber, searchTerm, paginate);
-      console.log("SEARCH CLICK");
     }
   };
 
@@ -194,9 +194,10 @@ const Directory = () => {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder='Search by name or email ...'
+          placeholder='Search by name  ...'
           inputProps={{ "aria-label": "search" }}
           onChange={(e) => handleSearch(e.target.value)}
+          name='search'
         />
       </Search>
 

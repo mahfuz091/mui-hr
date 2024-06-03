@@ -30,7 +30,7 @@ const Forms = () => {
   const [year, setYear] = useState(dayjs().format("YYYY"));
   const { loggedUser } = useContext(HrContext);
   console.log(leaveRequests);
-  const getAllLeaves = async (id) => {
+  const getAllLeaves = async () => {
     const params = {
       year: year,
       perPage: perPage,
@@ -58,6 +58,7 @@ const Forms = () => {
       );
       console.log(response);
       toast.success(response.data.message[0]);
+      getAllLeaves();
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +74,7 @@ const Forms = () => {
   console.log("filter", filterLeave);
 
   useEffect(() => {
-    getAllLeaves(28);
+    getAllLeaves();
   }, []);
   return (
     <Box sx={{ marginTop: "15px" }}>
@@ -108,6 +109,7 @@ const Forms = () => {
                         <TableRows
                           key={leaveRequest.id}
                           leaveRequest={leaveRequest}
+                          leaveApprove={leaveApprove}
                         ></TableRows>
                       ))}
                     </TableBody>
