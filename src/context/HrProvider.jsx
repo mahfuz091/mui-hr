@@ -27,7 +27,7 @@ const HrProvider = ({ children }) => {
   const logOut = async () => {
     const token = localStorage.getItem("accessToken");
     try {
-      const response = axiosSecure.post("/api/logout");
+      const response = axiosInstance.post("/api/logout");
       console.log(response.data);
       localStorage.removeItem(token);
       router.push("/users/sign-in");
@@ -140,7 +140,7 @@ const HrProvider = ({ children }) => {
           },
         });
         const data = response.data.data;
-        console.log(data);
+        // console.log(data);
         setUserLeaves(data);
       } catch (error) {
         console.log(error);
@@ -191,7 +191,7 @@ const HrProvider = ({ children }) => {
     }
   };
 
-  console.log(skills);
+  // console.log(skills);
 
   useEffect(() => {
     getSkill();

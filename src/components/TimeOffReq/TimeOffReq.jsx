@@ -73,7 +73,7 @@ const TimeOffReq = () => {
   const [errorText, setErrorText] = useState("");
   const [dates, setDates] = useState([]);
   const [axiosSecure] = useAxiosSecure();
-  console.log(setting);
+  // console.log("Setting", setting);
 
   const handleOpen = () => setOpen(true);
 

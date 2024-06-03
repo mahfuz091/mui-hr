@@ -15,7 +15,7 @@ export const handleURLQueries = (router, path) => {
 };
 
 // Define custom weekend days (e.g., Saturday and Sunday)
-// const customWeekendDays = [6, 0]; // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+// const customWeekendDays = [1, 0]; // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
 
 export const calculateBusinessDays = (startDate, endDate, setting) => {
   let currentDate = new Date(startDate);
@@ -35,10 +35,17 @@ export const calculateBusinessDays = (startDate, endDate, setting) => {
   };
 
   const customWeekendDays = setting?.value?.map(dayNameToNumber);
+  // console.log(customWeekendDays);
+
+  const addDays = (date, days) => {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  };
 
   while (currentDate <= new Date(endDate)) {
     if (
-      !isWeekend(currentDate) &&
+      // !isWeekend(currentDate) &&
       !customWeekendDays?.includes(currentDate.getDay())
     ) {
       businessDays++;
@@ -46,5 +53,22 @@ export const calculateBusinessDays = (startDate, endDate, setting) => {
     currentDate = addDays(currentDate, 1);
   }
 
+  // console.log(businessDays);
   return businessDays;
 };
+// export function calculateBusinessDays(startDate, endDate) {
+//   let currentDate = new Date(startDate);
+//   let businessDays = 0;
+
+//   while (currentDate <= new Date(endDate)) {
+//     if (
+//       // !isWeekend(currentDate) &&
+//       !customWeekendDays.includes(currentDate.getDay())
+//     ) {
+//       businessDays++;
+//     }
+//     currentDate = addDays(currentDate, 1);
+//   }
+
+//   return businessDays;
+// }

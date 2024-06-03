@@ -128,7 +128,7 @@ const SignUp = () => {
       avatar: image,
       password_confirmation: confirmPassword,
       organization,
-      designation_id: designationId,
+
       lead_manager_id: lManagerId,
       direct_manager_id: dManagerId,
       roles: roles,
@@ -212,71 +212,78 @@ const SignUp = () => {
           Welcome to Oyolloo
         </Typography>
         <form onSubmit={handleSubmit} encType='multipart/form-data'>
-          <TextField
-            fullWidth
-            margin='normal'
-            label='Name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <TextField
-            fullWidth
-            margin='normal'
-            label='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <TextField
-            fullWidth
-            margin='normal'
-            label='Password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            fullWidth
-            margin='normal'
-            label='Confirm Password'
-            type='password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          {/* <TextField
-        fullWidth
-        margin='normal'
-        label='Date Of Birth'
-        type='date'
-        value={dateOfBirth}
-        onChange={(e) => setDateOfBirth(e.target.value)}
-      /> */}
-          <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
-            <DemoContainer
-              components={["DatePicker", "DatePicker"]}
-              sx={{ position: "relative" }}
-            >
-              <MobileDatePicker
-                views={["year", "month", "day"]}
-                sx={{ width: "100%" }}
-                fullWidth
-                label='Date Of Birth'
-                // defaul tValue={dayjs(date_of_birth)}
-                onChange={(newValue) => setDateOfBirth(newValue)}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "20px",
-                  marginTop: "0 !important",
-                  fontSize: "24px",
-                }}
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
+            <TextField
+              sx={{ marginY: 0 }}
+              fullWidth
+              margin='normal'
+              label='Name'
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
+            <TextField
+              sx={{ marginY: 0 }}
+              fullWidth
+              margin='normal'
+              label='Email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
+            <TextField
+              sx={{ marginY: 0 }}
+              fullWidth
+              margin='normal'
+              label='Password'
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Box>
+          <Box sx={{ minWidth: 120, marginTop: "15px" }}>
+            <TextField
+              sx={{ marginY: 0 }}
+              fullWidth
+              margin='normal'
+              label='Confirm Password'
+              type='password'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </Box>
+
+          <Box sx={{ minWidth: 120, marginY: "7px" }}>
+            <LocalizationProvider fullWidth dateAdapter={AdapterDayjs}>
+              <DemoContainer
+                components={["DatePicker", "DatePicker"]}
+                sx={{ position: "relative", marginY: 0 }}
               >
-                <MdCalendarMonth sx={{ fontSize: "24px" }} />
-              </Box>
-            </DemoContainer>
-          </LocalizationProvider>
-          <Box sx={{ minWidth: 120, marginY: "10px" }}>
+                <MobileDatePicker
+                  views={["year", "month", "day"]}
+                  sx={{ width: "100%", marginY: 0 }}
+                  fullWidth
+                  label='Date Of Birth'
+                  // defaul tValue={dayjs(date_of_birth)}
+                  onChange={(newValue) => setDateOfBirth(newValue)}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "20px",
+                    marginTop: "0 !important",
+                    fontSize: "24px",
+                  }}
+                >
+                  <MdCalendarMonth sx={{ fontSize: "24px" }} />
+                </Box>
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
             <FormControl fullWidth>
               <InputLabel id='demo-simple-select-label'>Gender</InputLabel>
               <Select
@@ -292,40 +299,18 @@ const SignUp = () => {
               </Select>
             </FormControl>
           </Box>
-          <TextField
-            fullWidth
-            margin='normal'
-            label='Organization'
-            value={organization}
-            onChange={(e) => setOrganization(e.target.value)}
-          />
-          {/* <TextField
-            fullWidth
-            margin='normal'
-            label='Designation Id'
-            value={designationId}
-            onChange={(e) => setDesignationId(e.target.value)}
-          /> */}
-
-          <Box sx={{ minWidth: 120, marginY: "10px" }}>
-            <FormControl fullWidth>
-              <InputLabel id='demo-simple-select-label'>Desigation</InputLabel>
-              <Select
-                labelId='demo-simple-select-label'
-                id='demo-simple-select'
-                // value={level}
-                label='Desigation'
-                onChange={handleDesignationChange}
-              >
-                {designations?.data?.designations?.map((designation, index) => (
-                  <MenuItem key={designation?.id} value={designation?.id}>
-                    {designation?.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
+            <TextField
+              sx={{ marginY: "0" }}
+              fullWidth
+              margin='normal'
+              label='Organization'
+              value={organization}
+              onChange={(e) => setOrganization(e.target.value)}
+            />
           </Box>
-          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
             <FormControl fullWidth>
               <InputLabel id='demo-simple-select-label'>
                 Direct Manager
@@ -345,7 +330,8 @@ const SignUp = () => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
             <FormControl fullWidth>
               <InputLabel id='demo-simple-select-label'>
                 Lead Manager
@@ -365,7 +351,7 @@ const SignUp = () => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ minWidth: 120, marginY: "20px" }}>
+          <Box sx={{ minWidth: 120, marginY: "15px" }}>
             <FormControl fullWidth>
               <InputLabel id='demo-multiple-name-label'>Roles</InputLabel>
               <Select

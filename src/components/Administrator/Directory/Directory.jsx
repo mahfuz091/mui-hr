@@ -67,7 +67,13 @@ const Directory = () => {
   const [perPage, setPerPage] = useState(21);
   const [totalQty, setTotalQty] = useState(0);
   const [designations, setDesignations] = useState([]);
-  console.log(designations);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [paginate, setpaginate] = useState(true);
+  console.log("Fil", filteredUsers);
+  console.log("users", users);
+
+  // console.log(designations);
   const getDesignations = async () => {
     try {
       const response = await axiosSecure.get("/api/designations");
@@ -78,36 +84,91 @@ const Directory = () => {
     }
   };
 
-  const getAllUsers = async (perPage, page) => {
+  const getAllUsers = async (perPage, page, search, paginate) => {
     setIsLoading(true);
+    setpaginate(true);
     setUsers([]);
     const params = {
       paginate: true,
+
       page: page,
       perPage: perPage,
     };
+
     try {
       const response = await axiosSecure.get("/api/users", { params });
 
-      setUsers(response.data.data.users);
+      setUsers(response.data.data?.users?.items);
       setTotalQty(response.data.data.users.total);
       setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+  const getAllSearchUsers = async (perPage, page, search, paginate) => {
+    setIsLoading(true);
+    setpaginate(false);
+    setUsers([]);
+    const params = {
+      paginate: true,
+      search: search,
+      page: page,
+      perPage: perPage,
+    };
+
+    try {
+      const response = await axiosSecure.get("/api/users", { params });
+      console.log("ful", response);
+
+      setFilteredUsers(response.data.data?.users?.items);
+      setTotalQty(response.data.data.users.total);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const handleSearch = (searchTerm) => {
+  //   setSearchTerm(searchTerm);
+  //   if (searchTerm === "") {
+  //     setFilteredUsers(users);
+  //   } else {
+  //     const filteredResults = users?.items?.filter(
+  //       (user) =>
+  //         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //         user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  //     );
+  //     setFilteredUsers({ ...users, items: filteredResults });
+  //   }
+  // };
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    setpaginate(false);
+    if (searchTerm === "") {
+      setpaginate(true);
+      getAllUsers(perPage, pageNumber, searchTerm, paginate);
+    } else {
+      setpaginate(false);
+      getAllSearchUsers(perPage, pageNumber, searchTerm, paginate);
+      console.log("SEARCH CLICK");
+    }
+  };
+
   const handlePageChange = (event, value) => {
     setPageNumber(value);
   };
 
   const startIdx = (pageNumber - 1) * perPage + 1;
   const endIdx = Math.min(pageNumber * perPage, totalQty);
-  console.log(endIdx);
+  // console.log(endIdx);
 
   useEffect(() => {
-    getAllUsers(perPage, pageNumber);
+    getAllUsers(perPage, pageNumber, searchTerm, paginate);
     getDesignations();
   }, [pageNumber]);
+
+  const displayUsers = searchTerm === "" ? users : filteredUsers;
+  // const displayUsers = users;
 
   return (
     <Box>
@@ -135,6 +196,7 @@ const Directory = () => {
         <StyledInputBase
           placeholder='Search by name or email ...'
           inputProps={{ "aria-label": "search" }}
+          onChange={(e) => handleSearch(e.target.value)}
         />
       </Search>
 
@@ -152,7 +214,7 @@ const Directory = () => {
         ) : null}
 
         <Grid container spacing={2}>
-          {users?.items?.map((user) => (
+          {displayUsers?.map((user) => (
             <Grid key={user.id} item xs={4}>
               <Card>
                 <CardContent>
