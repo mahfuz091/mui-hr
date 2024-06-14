@@ -10,7 +10,14 @@ import {
   Card,
   CardContent,
   Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
+  Paper,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,6 +29,7 @@ import { styled, alpha } from "@mui/material/styles";
 import { HrContext } from "@/context/HrProvider";
 import Link from "next/link";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
+import UserRows from "./UserRows";
 // import Pagination from "@/components/Pagination/Pagination";
 
 const Search = styled("div")(({ theme }) => ({
@@ -214,7 +222,7 @@ const Directory = () => {
           </Box>
         ) : null}
 
-        <Grid container spacing={2}>
+        {/* <Grid container spacing={2}>
           {displayUsers?.map((user) => (
             <Grid key={user.id} item xs={4}>
               <Card>
@@ -255,7 +263,30 @@ const Directory = () => {
               </Card>
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+
+        <TableContainer component={Paper} sx={{ borderRadius: "10px" }}>
+          <Table sx={{ minWidth: 650 }}>
+            <TableHead>
+              <TableRow sx={{ background: "#FBFCFE" }}>
+                <TableCell>Sl</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Designation</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {displayUsers?.map((user, index) => (
+                <UserRows
+                  key={user.id}
+                  user={user}
+                  index={index}
+                  designations={designations}
+                ></UserRows>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Box>
       {/* <Pagination
         currentPage={pageNumber}

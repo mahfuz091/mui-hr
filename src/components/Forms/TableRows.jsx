@@ -17,7 +17,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import useAxiosSecure from "@/app/hooks/useAxiosSecure";
 import { HrContext } from "@/context/HrProvider";
 
-const TableRows = ({ leaveRequest, leaveApprove }) => {
+const TableRows = ({ leaveRequest, leaveApprove, leaveFinalApprove }) => {
   const { loggedUser } = useContext(HrContext);
   const [open, setOpen] = useState(false);
   console.log("leaveRequest", leaveRequest);
@@ -28,11 +28,11 @@ const TableRows = ({ leaveRequest, leaveApprove }) => {
   const status = !leaveRequest?.approvals?.length
     ? "pending"
     : leaveRequest.approvals.length === 1
-    ? "recommend"
+    ? "recommended"
     : leaveRequest.approvals.length === 2
     ? leaveRequest.approvals[1]?.approval_level === "final"
       ? "approved"
-      : "recommend"
+      : "recommended"
     : "unknown";
 
   const [axiosSecure] = useAxiosSecure();
@@ -92,7 +92,7 @@ const TableRows = ({ leaveRequest, leaveApprove }) => {
               Approved
             </MenuItem>
           ) : status === "recommended" ? (
-            <MenuItem onClick={() => leaveApprove(leaveRequest?.id)}>
+            <MenuItem onClick={() => leaveFinalApprove(leaveRequest?.id)}>
               Final Approved
             </MenuItem>
           ) : null}

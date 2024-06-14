@@ -29,7 +29,7 @@ const Forms = () => {
   const [perPage, setPerPage] = useState(5);
   const [year, setYear] = useState(dayjs().format("YYYY"));
   const { loggedUser } = useContext(HrContext);
-  console.log(leaveRequests);
+
   const getAllLeaves = async () => {
     const params = {
       year: year,
@@ -38,11 +38,19 @@ const Forms = () => {
       paginate: true,
       manager_id: loggedUser.id,
     };
-    try {
-      const response = await axiosSecure.get("/api/leaves", { params });
-      setLeaveRequests(response.data.data.leaveRequests);
-    } catch (error) {
-      console.log(error);
+    if (
+      loggedUser.all_permissions.includes("approve_leave") ||
+      loggedUser.roles.some((r) => r.name == "Administrator")
+    ) {
+      console.log("CC");
+      try {
+        const response = await axiosSecure.get("/api/leaves", { params });
+        setLeaveRequests(response.data.data.leaveRequests);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setLeaveRequests([]);
     }
   };
 
@@ -64,6 +72,24 @@ const Forms = () => {
     }
   };
 
+  const leaveFinalApprove = async (id) => {
+    const status = {
+      status: "approved",
+      approval_level: "final",
+    };
+    try {
+      const response = await axiosSecure.post(
+        `api/leaves/approvals/${id}`,
+        status
+      );
+      console.log(response);
+      toast.success(response.data.message[0]);
+      getAllLeaves();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const filterLeave = Array.isArray(leaveRequests)
     ? leaveRequests.filter(
         (leaveRequest) =>
@@ -71,11 +97,12 @@ const Forms = () => {
       )
     : [];
 
-  console.log("filter", filterLeave);
+  // console.log("filter", leaveRequests);
 
   useEffect(() => {
     getAllLeaves();
   }, []);
+
   return (
     <Box sx={{ marginTop: "15px" }}>
       <Typography>My Forms</Typography>
@@ -110,6 +137,7 @@ const Forms = () => {
                           key={leaveRequest.id}
                           leaveRequest={leaveRequest}
                           leaveApprove={leaveApprove}
+                          leaveFinalApprove={leaveFinalApprove}
                         ></TableRows>
                       ))}
                     </TableBody>

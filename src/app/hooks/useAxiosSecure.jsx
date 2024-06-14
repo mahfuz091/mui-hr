@@ -19,7 +19,6 @@ const useAxiosSecure = () => {
       }
       return config;
     });
-    0;
 
     axiosSecure.interceptors.response.use(
       (response) => response,
@@ -28,8 +27,7 @@ const useAxiosSecure = () => {
           error.response &&
           (error.response.status === 401 || error.response.status === 403)
         ) {
-          await logOut();
-          router.push("/users/sign-in");
+          // router.push("/users/sign-in");
         }
         return Promise.reject(error);
       }
