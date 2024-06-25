@@ -1,6 +1,9 @@
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell, TableRow, Tooltip } from "@mui/material";
 import Link from "next/link";
 import React from "react";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+// import Tooltip from "@/components/Tooltip/Tooltip";
+import { Edit } from "@mui/icons-material";
 
 const UserRows = ({ user, index, designations }) => {
   return (
@@ -21,7 +24,11 @@ const UserRows = ({ user, index, designations }) => {
           )?.title
         }
       </TableCell>
-      <TableCell>s</TableCell>
+      <TableCell>
+        <Tooltip title='Edit'>
+          <Edit />
+        </Tooltip>
+      </TableCell>
     </TableRow>
   );
 };

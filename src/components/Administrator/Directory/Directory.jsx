@@ -18,6 +18,7 @@ import {
   TableRow,
   Typography,
   Paper,
+  Tooltip,
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -264,6 +265,7 @@ const Directory = () => {
             </Grid>
           ))}
         </Grid> */}
+        <Tooltip title='Delete'>Delete</Tooltip>
 
         <TableContainer component={Paper} sx={{ borderRadius: "10px" }}>
           <Table sx={{ minWidth: 650 }}>
